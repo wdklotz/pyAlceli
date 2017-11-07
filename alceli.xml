@@ -1,0 +1,574 @@
+<?xml version="1.0" ?>
+<alceli>
+ <Linac bpmFrequency="800000000.0" length="3.93599999999999" name="Linac">
+  <Cavities>
+   <Cavity ampl="1.0" frequency="816000000.0" name="pillbox1" pos="0.152"/>
+   <Cavity ampl="1.0" frequency="816000000.0" name="pillbox2" pos="0.19599999999999998"/>
+   <Cavity ampl="1.0" frequency="816000000.0" name="pillbox3" pos="0.23999999999999996"/>
+   <Cavity ampl="1.0" frequency="816000000.0" name="pillbox4" pos="0.284"/>
+   <Cavity ampl="1.0" frequency="816000000.0" name="pillbox5" pos="0.328"/>
+   <Cavity ampl="1.0" frequency="816000000.0" name="pillbox6" pos="0.37200000000000005"/>
+   <Cavity ampl="1.0" frequency="816000000.0" name="pillbox7" pos="0.4160000000000001"/>
+   <Cavity ampl="1.0" frequency="816000000.0" name="pillbox8" pos="0.46000000000000013"/>
+   <Cavity ampl="1.0" frequency="816000000.0" name="pillbox9" pos="0.5040000000000001"/>
+   <Cavity ampl="1.0" frequency="816000000.0" name="pillbox10" pos="0.808"/>
+   <Cavity ampl="1.0" frequency="816000000.0" name="pillbox11" pos="0.8520000000000001"/>
+   <Cavity ampl="1.0" frequency="816000000.0" name="pillbox12" pos="0.8960000000000001"/>
+   <Cavity ampl="1.0" frequency="816000000.0" name="pillbox13" pos="0.9400000000000002"/>
+   <Cavity ampl="1.0" frequency="816000000.0" name="pillbox14" pos="0.9840000000000002"/>
+   <Cavity ampl="1.0" frequency="816000000.0" name="pillbox15" pos="1.0280000000000002"/>
+   <Cavity ampl="1.0" frequency="816000000.0" name="pillbox16" pos="1.0720000000000003"/>
+   <Cavity ampl="1.0" frequency="816000000.0" name="pillbox17" pos="1.1160000000000003"/>
+   <Cavity ampl="1.0" frequency="816000000.0" name="pillbox18" pos="1.1600000000000004"/>
+   <Cavity ampl="1.0" frequency="816000000.0" name="pillbox19" pos="1.4640000000000006"/>
+   <Cavity ampl="1.0" frequency="816000000.0" name="pillbox20" pos="1.5080000000000007"/>
+   <Cavity ampl="1.0" frequency="816000000.0" name="pillbox21" pos="1.5520000000000007"/>
+   <Cavity ampl="1.0" frequency="816000000.0" name="pillbox22" pos="1.5960000000000008"/>
+   <Cavity ampl="1.0" frequency="816000000.0" name="pillbox23" pos="1.6400000000000008"/>
+   <Cavity ampl="1.0" frequency="816000000.0" name="pillbox24" pos="1.6840000000000008"/>
+   <Cavity ampl="1.0" frequency="816000000.0" name="pillbox25" pos="1.7280000000000009"/>
+   <Cavity ampl="1.0" frequency="816000000.0" name="pillbox26" pos="1.772000000000001"/>
+   <Cavity ampl="1.0" frequency="816000000.0" name="pillbox27" pos="1.816000000000001"/>
+   <Cavity ampl="1.0" frequency="816000000.0" name="pillbox28" pos="2.120000000000001"/>
+   <Cavity ampl="1.0" frequency="816000000.0" name="pillbox29" pos="2.1640000000000006"/>
+   <Cavity ampl="1.0" frequency="816000000.0" name="pillbox30" pos="2.208"/>
+   <Cavity ampl="1.0" frequency="816000000.0" name="pillbox31" pos="2.252"/>
+   <Cavity ampl="1.0" frequency="816000000.0" name="pillbox32" pos="2.2959999999999994"/>
+   <Cavity ampl="1.0" frequency="816000000.0" name="pillbox33" pos="2.339999999999999"/>
+   <Cavity ampl="1.0" frequency="816000000.0" name="pillbox34" pos="2.3839999999999986"/>
+   <Cavity ampl="1.0" frequency="816000000.0" name="pillbox35" pos="2.427999999999998"/>
+   <Cavity ampl="1.0" frequency="816000000.0" name="pillbox36" pos="2.4719999999999978"/>
+   <Cavity ampl="1.0" frequency="816000000.0" name="pillbox37" pos="2.775999999999997"/>
+   <Cavity ampl="1.0" frequency="816000000.0" name="pillbox38" pos="2.8199999999999967"/>
+   <Cavity ampl="1.0" frequency="816000000.0" name="pillbox39" pos="2.8639999999999963"/>
+   <Cavity ampl="1.0" frequency="816000000.0" name="pillbox40" pos="2.907999999999996"/>
+   <Cavity ampl="1.0" frequency="816000000.0" name="pillbox41" pos="2.9519999999999955"/>
+   <Cavity ampl="1.0" frequency="816000000.0" name="pillbox42" pos="2.995999999999995"/>
+   <Cavity ampl="1.0" frequency="816000000.0" name="pillbox43" pos="3.0399999999999947"/>
+   <Cavity ampl="1.0" frequency="816000000.0" name="pillbox44" pos="3.0839999999999943"/>
+   <Cavity ampl="1.0" frequency="816000000.0" name="pillbox45" pos="3.127999999999994"/>
+   <Cavity ampl="1.0" frequency="816000000.0" name="pillbox46" pos="3.4319999999999937"/>
+   <Cavity ampl="1.0" frequency="816000000.0" name="pillbox47" pos="3.4759999999999933"/>
+   <Cavity ampl="1.0" frequency="816000000.0" name="pillbox48" pos="3.519999999999993"/>
+   <Cavity ampl="1.0" frequency="816000000.0" name="pillbox49" pos="3.5639999999999925"/>
+   <Cavity ampl="1.0" frequency="816000000.0" name="pillbox50" pos="3.607999999999992"/>
+   <Cavity ampl="1.0" frequency="816000000.0" name="pillbox51" pos="3.6519999999999917"/>
+   <Cavity ampl="1.0" frequency="816000000.0" name="pillbox52" pos="3.6959999999999913"/>
+   <Cavity ampl="1.0" frequency="816000000.0" name="pillbox53" pos="3.739999999999991"/>
+   <Cavity ampl="1.0" frequency="816000000.0" name="pillbox54" pos="3.7839999999999905"/>
+  </Cavities>
+  <accElement length="0.05" name="QFH1" pos="0.025" type="QUAD">
+   <parameters aperture="0.02" aprt_type="1" field="40.0"/>
+  </accElement>
+  <accElement length="0.0" name="RFGH1" pos="0.152" type="RFGAP">
+   <parameters E0L="0.00011088000000000001" E0TL="8.906865287768729e-05" EzFile="./SF_WDK2g44.TBL" aperture="0.02" aprt_type="1" cavity="pillbox1" mode="0" phase="-20.0"/>
+   <TTFs beta_max="1.0" beta_min="0.0">
+    <polyT order="2" pcoefs=" 1.0 0.0 0.0"/>
+    <polyS order="2" pcoefs=" 1.0 0.0 0.0"/>
+    <polyTP order="2" pcoefs=" 1.0 0.0 0.0"/>
+    <polySP order="2" pcoefs=" 1.0 0.0 0.0"/>
+   </TTFs>
+  </accElement>
+  <accElement length="0.0" name="RFGH2" pos="0.19599999999999998" type="RFGAP">
+   <parameters E0L="0.00011088000000000001" E0TL="8.906865287768729e-05" EzFile="./SF_WDK2g44.TBL" aperture="0.02" aprt_type="1" cavity="pillbox2" mode="0" phase="-20.0"/>
+   <TTFs beta_max="1.0" beta_min="0.0">
+    <polyT order="2" pcoefs=" 1.0 0.0 0.0"/>
+    <polyS order="2" pcoefs=" 1.0 0.0 0.0"/>
+    <polyTP order="2" pcoefs=" 1.0 0.0 0.0"/>
+    <polySP order="2" pcoefs=" 1.0 0.0 0.0"/>
+   </TTFs>
+  </accElement>
+  <accElement length="0.0" name="RFGH3" pos="0.23999999999999996" type="RFGAP">
+   <parameters E0L="0.00011088000000000001" E0TL="8.906865287768729e-05" EzFile="./SF_WDK2g44.TBL" aperture="0.02" aprt_type="1" cavity="pillbox3" mode="0" phase="-20.0"/>
+   <TTFs beta_max="1.0" beta_min="0.0">
+    <polyT order="2" pcoefs=" 1.0 0.0 0.0"/>
+    <polyS order="2" pcoefs=" 1.0 0.0 0.0"/>
+    <polyTP order="2" pcoefs=" 1.0 0.0 0.0"/>
+    <polySP order="2" pcoefs=" 1.0 0.0 0.0"/>
+   </TTFs>
+  </accElement>
+  <accElement length="0.0" name="RFGH4" pos="0.284" type="RFGAP">
+   <parameters E0L="0.00011088000000000001" E0TL="8.906865287768729e-05" EzFile="./SF_WDK2g44.TBL" aperture="0.02" aprt_type="1" cavity="pillbox4" mode="0" phase="-20.0"/>
+   <TTFs beta_max="1.0" beta_min="0.0">
+    <polyT order="2" pcoefs=" 1.0 0.0 0.0"/>
+    <polyS order="2" pcoefs=" 1.0 0.0 0.0"/>
+    <polyTP order="2" pcoefs=" 1.0 0.0 0.0"/>
+    <polySP order="2" pcoefs=" 1.0 0.0 0.0"/>
+   </TTFs>
+  </accElement>
+  <accElement length="0.0" name="RFGH5" pos="0.328" type="RFGAP">
+   <parameters E0L="0.00011088000000000001" E0TL="8.906865287768729e-05" EzFile="./SF_WDK2g44.TBL" aperture="0.02" aprt_type="1" cavity="pillbox5" mode="0" phase="-20.0"/>
+   <TTFs beta_max="1.0" beta_min="0.0">
+    <polyT order="2" pcoefs=" 1.0 0.0 0.0"/>
+    <polyS order="2" pcoefs=" 1.0 0.0 0.0"/>
+    <polyTP order="2" pcoefs=" 1.0 0.0 0.0"/>
+    <polySP order="2" pcoefs=" 1.0 0.0 0.0"/>
+   </TTFs>
+  </accElement>
+  <accElement length="0.0" name="RFGH6" pos="0.37200000000000005" type="RFGAP">
+   <parameters E0L="0.00011088000000000001" E0TL="8.906865287768729e-05" EzFile="./SF_WDK2g44.TBL" aperture="0.02" aprt_type="1" cavity="pillbox6" mode="0" phase="-20.0"/>
+   <TTFs beta_max="1.0" beta_min="0.0">
+    <polyT order="2" pcoefs=" 1.0 0.0 0.0"/>
+    <polyS order="2" pcoefs=" 1.0 0.0 0.0"/>
+    <polyTP order="2" pcoefs=" 1.0 0.0 0.0"/>
+    <polySP order="2" pcoefs=" 1.0 0.0 0.0"/>
+   </TTFs>
+  </accElement>
+  <accElement length="0.0" name="RFGH7" pos="0.4160000000000001" type="RFGAP">
+   <parameters E0L="0.00011088000000000001" E0TL="8.906865287768729e-05" EzFile="./SF_WDK2g44.TBL" aperture="0.02" aprt_type="1" cavity="pillbox7" mode="0" phase="-20.0"/>
+   <TTFs beta_max="1.0" beta_min="0.0">
+    <polyT order="2" pcoefs=" 1.0 0.0 0.0"/>
+    <polyS order="2" pcoefs=" 1.0 0.0 0.0"/>
+    <polyTP order="2" pcoefs=" 1.0 0.0 0.0"/>
+    <polySP order="2" pcoefs=" 1.0 0.0 0.0"/>
+   </TTFs>
+  </accElement>
+  <accElement length="0.0" name="RFGH8" pos="0.46000000000000013" type="RFGAP">
+   <parameters E0L="0.00011088000000000001" E0TL="8.906865287768729e-05" EzFile="./SF_WDK2g44.TBL" aperture="0.02" aprt_type="1" cavity="pillbox8" mode="0" phase="-20.0"/>
+   <TTFs beta_max="1.0" beta_min="0.0">
+    <polyT order="2" pcoefs=" 1.0 0.0 0.0"/>
+    <polyS order="2" pcoefs=" 1.0 0.0 0.0"/>
+    <polyTP order="2" pcoefs=" 1.0 0.0 0.0"/>
+    <polySP order="2" pcoefs=" 1.0 0.0 0.0"/>
+   </TTFs>
+  </accElement>
+  <accElement length="0.0" name="RFGH9" pos="0.5040000000000001" type="RFGAP">
+   <parameters E0L="0.00011088000000000001" E0TL="8.906865287768729e-05" EzFile="./SF_WDK2g44.TBL" aperture="0.02" aprt_type="1" cavity="pillbox9" mode="0" phase="-20.0"/>
+   <TTFs beta_max="1.0" beta_min="0.0">
+    <polyT order="2" pcoefs=" 1.0 0.0 0.0"/>
+    <polyS order="2" pcoefs=" 1.0 0.0 0.0"/>
+    <polyTP order="2" pcoefs=" 1.0 0.0 0.0"/>
+    <polySP order="2" pcoefs=" 1.0 0.0 0.0"/>
+   </TTFs>
+  </accElement>
+  <accElement length="0.1" name="QDH2" pos="0.6560000000000001" type="QUAD">
+   <parameters aperture="0.02" aprt_type="1" field="-40.0"/>
+  </accElement>
+  <accElement length="0.0" name="RFGH10" pos="0.808" type="RFGAP">
+   <parameters E0L="0.00011088000000000001" E0TL="8.906865287768729e-05" EzFile="./SF_WDK2g44.TBL" aperture="0.02" aprt_type="1" cavity="pillbox10" mode="0" phase="-20.0"/>
+   <TTFs beta_max="1.0" beta_min="0.0">
+    <polyT order="2" pcoefs=" 1.0 0.0 0.0"/>
+    <polyS order="2" pcoefs=" 1.0 0.0 0.0"/>
+    <polyTP order="2" pcoefs=" 1.0 0.0 0.0"/>
+    <polySP order="2" pcoefs=" 1.0 0.0 0.0"/>
+   </TTFs>
+  </accElement>
+  <accElement length="0.0" name="RFGH11" pos="0.8520000000000001" type="RFGAP">
+   <parameters E0L="0.00011088000000000001" E0TL="8.906865287768729e-05" EzFile="./SF_WDK2g44.TBL" aperture="0.02" aprt_type="1" cavity="pillbox11" mode="0" phase="-20.0"/>
+   <TTFs beta_max="1.0" beta_min="0.0">
+    <polyT order="2" pcoefs=" 1.0 0.0 0.0"/>
+    <polyS order="2" pcoefs=" 1.0 0.0 0.0"/>
+    <polyTP order="2" pcoefs=" 1.0 0.0 0.0"/>
+    <polySP order="2" pcoefs=" 1.0 0.0 0.0"/>
+   </TTFs>
+  </accElement>
+  <accElement length="0.0" name="RFGH12" pos="0.8960000000000001" type="RFGAP">
+   <parameters E0L="0.00011088000000000001" E0TL="8.906865287768729e-05" EzFile="./SF_WDK2g44.TBL" aperture="0.02" aprt_type="1" cavity="pillbox12" mode="0" phase="-20.0"/>
+   <TTFs beta_max="1.0" beta_min="0.0">
+    <polyT order="2" pcoefs=" 1.0 0.0 0.0"/>
+    <polyS order="2" pcoefs=" 1.0 0.0 0.0"/>
+    <polyTP order="2" pcoefs=" 1.0 0.0 0.0"/>
+    <polySP order="2" pcoefs=" 1.0 0.0 0.0"/>
+   </TTFs>
+  </accElement>
+  <accElement length="0.0" name="RFGH13" pos="0.9400000000000002" type="RFGAP">
+   <parameters E0L="0.00011088000000000001" E0TL="8.906865287768729e-05" EzFile="./SF_WDK2g44.TBL" aperture="0.02" aprt_type="1" cavity="pillbox13" mode="0" phase="-20.0"/>
+   <TTFs beta_max="1.0" beta_min="0.0">
+    <polyT order="2" pcoefs=" 1.0 0.0 0.0"/>
+    <polyS order="2" pcoefs=" 1.0 0.0 0.0"/>
+    <polyTP order="2" pcoefs=" 1.0 0.0 0.0"/>
+    <polySP order="2" pcoefs=" 1.0 0.0 0.0"/>
+   </TTFs>
+  </accElement>
+  <accElement length="0.0" name="RFGH14" pos="0.9840000000000002" type="RFGAP">
+   <parameters E0L="0.00011088000000000001" E0TL="8.906865287768729e-05" EzFile="./SF_WDK2g44.TBL" aperture="0.02" aprt_type="1" cavity="pillbox14" mode="0" phase="-20.0"/>
+   <TTFs beta_max="1.0" beta_min="0.0">
+    <polyT order="2" pcoefs=" 1.0 0.0 0.0"/>
+    <polyS order="2" pcoefs=" 1.0 0.0 0.0"/>
+    <polyTP order="2" pcoefs=" 1.0 0.0 0.0"/>
+    <polySP order="2" pcoefs=" 1.0 0.0 0.0"/>
+   </TTFs>
+  </accElement>
+  <accElement length="0.0" name="RFGH15" pos="1.0280000000000002" type="RFGAP">
+   <parameters E0L="0.00011088000000000001" E0TL="8.906865287768729e-05" EzFile="./SF_WDK2g44.TBL" aperture="0.02" aprt_type="1" cavity="pillbox15" mode="0" phase="-20.0"/>
+   <TTFs beta_max="1.0" beta_min="0.0">
+    <polyT order="2" pcoefs=" 1.0 0.0 0.0"/>
+    <polyS order="2" pcoefs=" 1.0 0.0 0.0"/>
+    <polyTP order="2" pcoefs=" 1.0 0.0 0.0"/>
+    <polySP order="2" pcoefs=" 1.0 0.0 0.0"/>
+   </TTFs>
+  </accElement>
+  <accElement length="0.0" name="RFGH16" pos="1.0720000000000003" type="RFGAP">
+   <parameters E0L="0.00011088000000000001" E0TL="8.906865287768729e-05" EzFile="./SF_WDK2g44.TBL" aperture="0.02" aprt_type="1" cavity="pillbox16" mode="0" phase="-20.0"/>
+   <TTFs beta_max="1.0" beta_min="0.0">
+    <polyT order="2" pcoefs=" 1.0 0.0 0.0"/>
+    <polyS order="2" pcoefs=" 1.0 0.0 0.0"/>
+    <polyTP order="2" pcoefs=" 1.0 0.0 0.0"/>
+    <polySP order="2" pcoefs=" 1.0 0.0 0.0"/>
+   </TTFs>
+  </accElement>
+  <accElement length="0.0" name="RFGH17" pos="1.1160000000000003" type="RFGAP">
+   <parameters E0L="0.00011088000000000001" E0TL="8.906865287768729e-05" EzFile="./SF_WDK2g44.TBL" aperture="0.02" aprt_type="1" cavity="pillbox17" mode="0" phase="-20.0"/>
+   <TTFs beta_max="1.0" beta_min="0.0">
+    <polyT order="2" pcoefs=" 1.0 0.0 0.0"/>
+    <polyS order="2" pcoefs=" 1.0 0.0 0.0"/>
+    <polyTP order="2" pcoefs=" 1.0 0.0 0.0"/>
+    <polySP order="2" pcoefs=" 1.0 0.0 0.0"/>
+   </TTFs>
+  </accElement>
+  <accElement length="0.0" name="RFGH18" pos="1.1600000000000004" type="RFGAP">
+   <parameters E0L="0.00011088000000000001" E0TL="8.906865287768729e-05" EzFile="./SF_WDK2g44.TBL" aperture="0.02" aprt_type="1" cavity="pillbox18" mode="0" phase="-20.0"/>
+   <TTFs beta_max="1.0" beta_min="0.0">
+    <polyT order="2" pcoefs=" 1.0 0.0 0.0"/>
+    <polyS order="2" pcoefs=" 1.0 0.0 0.0"/>
+    <polyTP order="2" pcoefs=" 1.0 0.0 0.0"/>
+    <polySP order="2" pcoefs=" 1.0 0.0 0.0"/>
+   </TTFs>
+  </accElement>
+  <accElement length="0.05" name="QFH3" pos="1.2870000000000004" type="QUAD">
+   <parameters aperture="0.02" aprt_type="1" field="40.0"/>
+  </accElement>
+  <accElement length="0.05" name="QFH4" pos="1.3370000000000006" type="QUAD">
+   <parameters aperture="0.02" aprt_type="1" field="40.0"/>
+  </accElement>
+  <accElement length="0.0" name="RFGH19" pos="1.4640000000000006" type="RFGAP">
+   <parameters E0L="0.00011088000000000001" E0TL="8.906865287768729e-05" EzFile="./SF_WDK2g44.TBL" aperture="0.02" aprt_type="1" cavity="pillbox19" mode="0" phase="-20.0"/>
+   <TTFs beta_max="1.0" beta_min="0.0">
+    <polyT order="2" pcoefs=" 1.0 0.0 0.0"/>
+    <polyS order="2" pcoefs=" 1.0 0.0 0.0"/>
+    <polyTP order="2" pcoefs=" 1.0 0.0 0.0"/>
+    <polySP order="2" pcoefs=" 1.0 0.0 0.0"/>
+   </TTFs>
+  </accElement>
+  <accElement length="0.0" name="RFGH20" pos="1.5080000000000007" type="RFGAP">
+   <parameters E0L="0.00011088000000000001" E0TL="8.906865287768729e-05" EzFile="./SF_WDK2g44.TBL" aperture="0.02" aprt_type="1" cavity="pillbox20" mode="0" phase="-20.0"/>
+   <TTFs beta_max="1.0" beta_min="0.0">
+    <polyT order="2" pcoefs=" 1.0 0.0 0.0"/>
+    <polyS order="2" pcoefs=" 1.0 0.0 0.0"/>
+    <polyTP order="2" pcoefs=" 1.0 0.0 0.0"/>
+    <polySP order="2" pcoefs=" 1.0 0.0 0.0"/>
+   </TTFs>
+  </accElement>
+  <accElement length="0.0" name="RFGH21" pos="1.5520000000000007" type="RFGAP">
+   <parameters E0L="0.00011088000000000001" E0TL="8.906865287768729e-05" EzFile="./SF_WDK2g44.TBL" aperture="0.02" aprt_type="1" cavity="pillbox21" mode="0" phase="-20.0"/>
+   <TTFs beta_max="1.0" beta_min="0.0">
+    <polyT order="2" pcoefs=" 1.0 0.0 0.0"/>
+    <polyS order="2" pcoefs=" 1.0 0.0 0.0"/>
+    <polyTP order="2" pcoefs=" 1.0 0.0 0.0"/>
+    <polySP order="2" pcoefs=" 1.0 0.0 0.0"/>
+   </TTFs>
+  </accElement>
+  <accElement length="0.0" name="RFGH22" pos="1.5960000000000008" type="RFGAP">
+   <parameters E0L="0.00011088000000000001" E0TL="8.906865287768729e-05" EzFile="./SF_WDK2g44.TBL" aperture="0.02" aprt_type="1" cavity="pillbox22" mode="0" phase="-20.0"/>
+   <TTFs beta_max="1.0" beta_min="0.0">
+    <polyT order="2" pcoefs=" 1.0 0.0 0.0"/>
+    <polyS order="2" pcoefs=" 1.0 0.0 0.0"/>
+    <polyTP order="2" pcoefs=" 1.0 0.0 0.0"/>
+    <polySP order="2" pcoefs=" 1.0 0.0 0.0"/>
+   </TTFs>
+  </accElement>
+  <accElement length="0.0" name="RFGH23" pos="1.6400000000000008" type="RFGAP">
+   <parameters E0L="0.00011088000000000001" E0TL="8.906865287768729e-05" EzFile="./SF_WDK2g44.TBL" aperture="0.02" aprt_type="1" cavity="pillbox23" mode="0" phase="-20.0"/>
+   <TTFs beta_max="1.0" beta_min="0.0">
+    <polyT order="2" pcoefs=" 1.0 0.0 0.0"/>
+    <polyS order="2" pcoefs=" 1.0 0.0 0.0"/>
+    <polyTP order="2" pcoefs=" 1.0 0.0 0.0"/>
+    <polySP order="2" pcoefs=" 1.0 0.0 0.0"/>
+   </TTFs>
+  </accElement>
+  <accElement length="0.0" name="RFGH24" pos="1.6840000000000008" type="RFGAP">
+   <parameters E0L="0.00011088000000000001" E0TL="8.906865287768729e-05" EzFile="./SF_WDK2g44.TBL" aperture="0.02" aprt_type="1" cavity="pillbox24" mode="0" phase="-20.0"/>
+   <TTFs beta_max="1.0" beta_min="0.0">
+    <polyT order="2" pcoefs=" 1.0 0.0 0.0"/>
+    <polyS order="2" pcoefs=" 1.0 0.0 0.0"/>
+    <polyTP order="2" pcoefs=" 1.0 0.0 0.0"/>
+    <polySP order="2" pcoefs=" 1.0 0.0 0.0"/>
+   </TTFs>
+  </accElement>
+  <accElement length="0.0" name="RFGH25" pos="1.7280000000000009" type="RFGAP">
+   <parameters E0L="0.00011088000000000001" E0TL="8.906865287768729e-05" EzFile="./SF_WDK2g44.TBL" aperture="0.02" aprt_type="1" cavity="pillbox25" mode="0" phase="-20.0"/>
+   <TTFs beta_max="1.0" beta_min="0.0">
+    <polyT order="2" pcoefs=" 1.0 0.0 0.0"/>
+    <polyS order="2" pcoefs=" 1.0 0.0 0.0"/>
+    <polyTP order="2" pcoefs=" 1.0 0.0 0.0"/>
+    <polySP order="2" pcoefs=" 1.0 0.0 0.0"/>
+   </TTFs>
+  </accElement>
+  <accElement length="0.0" name="RFGH26" pos="1.772000000000001" type="RFGAP">
+   <parameters E0L="0.00011088000000000001" E0TL="8.906865287768729e-05" EzFile="./SF_WDK2g44.TBL" aperture="0.02" aprt_type="1" cavity="pillbox26" mode="0" phase="-20.0"/>
+   <TTFs beta_max="1.0" beta_min="0.0">
+    <polyT order="2" pcoefs=" 1.0 0.0 0.0"/>
+    <polyS order="2" pcoefs=" 1.0 0.0 0.0"/>
+    <polyTP order="2" pcoefs=" 1.0 0.0 0.0"/>
+    <polySP order="2" pcoefs=" 1.0 0.0 0.0"/>
+   </TTFs>
+  </accElement>
+  <accElement length="0.0" name="RFGH27" pos="1.816000000000001" type="RFGAP">
+   <parameters E0L="0.00011088000000000001" E0TL="8.906865287768729e-05" EzFile="./SF_WDK2g44.TBL" aperture="0.02" aprt_type="1" cavity="pillbox27" mode="0" phase="-20.0"/>
+   <TTFs beta_max="1.0" beta_min="0.0">
+    <polyT order="2" pcoefs=" 1.0 0.0 0.0"/>
+    <polyS order="2" pcoefs=" 1.0 0.0 0.0"/>
+    <polyTP order="2" pcoefs=" 1.0 0.0 0.0"/>
+    <polySP order="2" pcoefs=" 1.0 0.0 0.0"/>
+   </TTFs>
+  </accElement>
+  <accElement length="0.1" name="QDH5" pos="1.968000000000001" type="QUAD">
+   <parameters aperture="0.02" aprt_type="1" field="-40.0"/>
+  </accElement>
+  <accElement length="0.0" name="RFGH28" pos="2.120000000000001" type="RFGAP">
+   <parameters E0L="0.00011088000000000001" E0TL="8.906865287768729e-05" EzFile="./SF_WDK2g44.TBL" aperture="0.02" aprt_type="1" cavity="pillbox28" mode="0" phase="-20.0"/>
+   <TTFs beta_max="1.0" beta_min="0.0">
+    <polyT order="2" pcoefs=" 1.0 0.0 0.0"/>
+    <polyS order="2" pcoefs=" 1.0 0.0 0.0"/>
+    <polyTP order="2" pcoefs=" 1.0 0.0 0.0"/>
+    <polySP order="2" pcoefs=" 1.0 0.0 0.0"/>
+   </TTFs>
+  </accElement>
+  <accElement length="0.0" name="RFGH29" pos="2.1640000000000006" type="RFGAP">
+   <parameters E0L="0.00011088000000000001" E0TL="8.906865287768729e-05" EzFile="./SF_WDK2g44.TBL" aperture="0.02" aprt_type="1" cavity="pillbox29" mode="0" phase="-20.0"/>
+   <TTFs beta_max="1.0" beta_min="0.0">
+    <polyT order="2" pcoefs=" 1.0 0.0 0.0"/>
+    <polyS order="2" pcoefs=" 1.0 0.0 0.0"/>
+    <polyTP order="2" pcoefs=" 1.0 0.0 0.0"/>
+    <polySP order="2" pcoefs=" 1.0 0.0 0.0"/>
+   </TTFs>
+  </accElement>
+  <accElement length="0.0" name="RFGH30" pos="2.208" type="RFGAP">
+   <parameters E0L="0.00011088000000000001" E0TL="8.906865287768729e-05" EzFile="./SF_WDK2g44.TBL" aperture="0.02" aprt_type="1" cavity="pillbox30" mode="0" phase="-20.0"/>
+   <TTFs beta_max="1.0" beta_min="0.0">
+    <polyT order="2" pcoefs=" 1.0 0.0 0.0"/>
+    <polyS order="2" pcoefs=" 1.0 0.0 0.0"/>
+    <polyTP order="2" pcoefs=" 1.0 0.0 0.0"/>
+    <polySP order="2" pcoefs=" 1.0 0.0 0.0"/>
+   </TTFs>
+  </accElement>
+  <accElement length="0.0" name="RFGH31" pos="2.252" type="RFGAP">
+   <parameters E0L="0.00011088000000000001" E0TL="8.906865287768729e-05" EzFile="./SF_WDK2g44.TBL" aperture="0.02" aprt_type="1" cavity="pillbox31" mode="0" phase="-20.0"/>
+   <TTFs beta_max="1.0" beta_min="0.0">
+    <polyT order="2" pcoefs=" 1.0 0.0 0.0"/>
+    <polyS order="2" pcoefs=" 1.0 0.0 0.0"/>
+    <polyTP order="2" pcoefs=" 1.0 0.0 0.0"/>
+    <polySP order="2" pcoefs=" 1.0 0.0 0.0"/>
+   </TTFs>
+  </accElement>
+  <accElement length="0.0" name="RFGH32" pos="2.2959999999999994" type="RFGAP">
+   <parameters E0L="0.00011088000000000001" E0TL="8.906865287768729e-05" EzFile="./SF_WDK2g44.TBL" aperture="0.02" aprt_type="1" cavity="pillbox32" mode="0" phase="-20.0"/>
+   <TTFs beta_max="1.0" beta_min="0.0">
+    <polyT order="2" pcoefs=" 1.0 0.0 0.0"/>
+    <polyS order="2" pcoefs=" 1.0 0.0 0.0"/>
+    <polyTP order="2" pcoefs=" 1.0 0.0 0.0"/>
+    <polySP order="2" pcoefs=" 1.0 0.0 0.0"/>
+   </TTFs>
+  </accElement>
+  <accElement length="0.0" name="RFGH33" pos="2.339999999999999" type="RFGAP">
+   <parameters E0L="0.00011088000000000001" E0TL="8.906865287768729e-05" EzFile="./SF_WDK2g44.TBL" aperture="0.02" aprt_type="1" cavity="pillbox33" mode="0" phase="-20.0"/>
+   <TTFs beta_max="1.0" beta_min="0.0">
+    <polyT order="2" pcoefs=" 1.0 0.0 0.0"/>
+    <polyS order="2" pcoefs=" 1.0 0.0 0.0"/>
+    <polyTP order="2" pcoefs=" 1.0 0.0 0.0"/>
+    <polySP order="2" pcoefs=" 1.0 0.0 0.0"/>
+   </TTFs>
+  </accElement>
+  <accElement length="0.0" name="RFGH34" pos="2.3839999999999986" type="RFGAP">
+   <parameters E0L="0.00011088000000000001" E0TL="8.906865287768729e-05" EzFile="./SF_WDK2g44.TBL" aperture="0.02" aprt_type="1" cavity="pillbox34" mode="0" phase="-20.0"/>
+   <TTFs beta_max="1.0" beta_min="0.0">
+    <polyT order="2" pcoefs=" 1.0 0.0 0.0"/>
+    <polyS order="2" pcoefs=" 1.0 0.0 0.0"/>
+    <polyTP order="2" pcoefs=" 1.0 0.0 0.0"/>
+    <polySP order="2" pcoefs=" 1.0 0.0 0.0"/>
+   </TTFs>
+  </accElement>
+  <accElement length="0.0" name="RFGH35" pos="2.427999999999998" type="RFGAP">
+   <parameters E0L="0.00011088000000000001" E0TL="8.906865287768729e-05" EzFile="./SF_WDK2g44.TBL" aperture="0.02" aprt_type="1" cavity="pillbox35" mode="0" phase="-20.0"/>
+   <TTFs beta_max="1.0" beta_min="0.0">
+    <polyT order="2" pcoefs=" 1.0 0.0 0.0"/>
+    <polyS order="2" pcoefs=" 1.0 0.0 0.0"/>
+    <polyTP order="2" pcoefs=" 1.0 0.0 0.0"/>
+    <polySP order="2" pcoefs=" 1.0 0.0 0.0"/>
+   </TTFs>
+  </accElement>
+  <accElement length="0.0" name="RFGH36" pos="2.4719999999999978" type="RFGAP">
+   <parameters E0L="0.00011088000000000001" E0TL="8.906865287768729e-05" EzFile="./SF_WDK2g44.TBL" aperture="0.02" aprt_type="1" cavity="pillbox36" mode="0" phase="-20.0"/>
+   <TTFs beta_max="1.0" beta_min="0.0">
+    <polyT order="2" pcoefs=" 1.0 0.0 0.0"/>
+    <polyS order="2" pcoefs=" 1.0 0.0 0.0"/>
+    <polyTP order="2" pcoefs=" 1.0 0.0 0.0"/>
+    <polySP order="2" pcoefs=" 1.0 0.0 0.0"/>
+   </TTFs>
+  </accElement>
+  <accElement length="0.05" name="QFH6" pos="2.5989999999999975" type="QUAD">
+   <parameters aperture="0.02" aprt_type="1" field="40.0"/>
+  </accElement>
+  <accElement length="0.05" name="QFH7" pos="2.6489999999999974" type="QUAD">
+   <parameters aperture="0.02" aprt_type="1" field="40.0"/>
+  </accElement>
+  <accElement length="0.0" name="RFGH37" pos="2.775999999999997" type="RFGAP">
+   <parameters E0L="0.00011088000000000001" E0TL="8.906865287768729e-05" EzFile="./SF_WDK2g44.TBL" aperture="0.02" aprt_type="1" cavity="pillbox37" mode="0" phase="-20.0"/>
+   <TTFs beta_max="1.0" beta_min="0.0">
+    <polyT order="2" pcoefs=" 1.0 0.0 0.0"/>
+    <polyS order="2" pcoefs=" 1.0 0.0 0.0"/>
+    <polyTP order="2" pcoefs=" 1.0 0.0 0.0"/>
+    <polySP order="2" pcoefs=" 1.0 0.0 0.0"/>
+   </TTFs>
+  </accElement>
+  <accElement length="0.0" name="RFGH38" pos="2.8199999999999967" type="RFGAP">
+   <parameters E0L="0.00011088000000000001" E0TL="8.906865287768729e-05" EzFile="./SF_WDK2g44.TBL" aperture="0.02" aprt_type="1" cavity="pillbox38" mode="0" phase="-20.0"/>
+   <TTFs beta_max="1.0" beta_min="0.0">
+    <polyT order="2" pcoefs=" 1.0 0.0 0.0"/>
+    <polyS order="2" pcoefs=" 1.0 0.0 0.0"/>
+    <polyTP order="2" pcoefs=" 1.0 0.0 0.0"/>
+    <polySP order="2" pcoefs=" 1.0 0.0 0.0"/>
+   </TTFs>
+  </accElement>
+  <accElement length="0.0" name="RFGH39" pos="2.8639999999999963" type="RFGAP">
+   <parameters E0L="0.00011088000000000001" E0TL="8.906865287768729e-05" EzFile="./SF_WDK2g44.TBL" aperture="0.02" aprt_type="1" cavity="pillbox39" mode="0" phase="-20.0"/>
+   <TTFs beta_max="1.0" beta_min="0.0">
+    <polyT order="2" pcoefs=" 1.0 0.0 0.0"/>
+    <polyS order="2" pcoefs=" 1.0 0.0 0.0"/>
+    <polyTP order="2" pcoefs=" 1.0 0.0 0.0"/>
+    <polySP order="2" pcoefs=" 1.0 0.0 0.0"/>
+   </TTFs>
+  </accElement>
+  <accElement length="0.0" name="RFGH40" pos="2.907999999999996" type="RFGAP">
+   <parameters E0L="0.00011088000000000001" E0TL="8.906865287768729e-05" EzFile="./SF_WDK2g44.TBL" aperture="0.02" aprt_type="1" cavity="pillbox40" mode="0" phase="-20.0"/>
+   <TTFs beta_max="1.0" beta_min="0.0">
+    <polyT order="2" pcoefs=" 1.0 0.0 0.0"/>
+    <polyS order="2" pcoefs=" 1.0 0.0 0.0"/>
+    <polyTP order="2" pcoefs=" 1.0 0.0 0.0"/>
+    <polySP order="2" pcoefs=" 1.0 0.0 0.0"/>
+   </TTFs>
+  </accElement>
+  <accElement length="0.0" name="RFGH41" pos="2.9519999999999955" type="RFGAP">
+   <parameters E0L="0.00011088000000000001" E0TL="8.906865287768729e-05" EzFile="./SF_WDK2g44.TBL" aperture="0.02" aprt_type="1" cavity="pillbox41" mode="0" phase="-20.0"/>
+   <TTFs beta_max="1.0" beta_min="0.0">
+    <polyT order="2" pcoefs=" 1.0 0.0 0.0"/>
+    <polyS order="2" pcoefs=" 1.0 0.0 0.0"/>
+    <polyTP order="2" pcoefs=" 1.0 0.0 0.0"/>
+    <polySP order="2" pcoefs=" 1.0 0.0 0.0"/>
+   </TTFs>
+  </accElement>
+  <accElement length="0.0" name="RFGH42" pos="2.995999999999995" type="RFGAP">
+   <parameters E0L="0.00011088000000000001" E0TL="8.906865287768729e-05" EzFile="./SF_WDK2g44.TBL" aperture="0.02" aprt_type="1" cavity="pillbox42" mode="0" phase="-20.0"/>
+   <TTFs beta_max="1.0" beta_min="0.0">
+    <polyT order="2" pcoefs=" 1.0 0.0 0.0"/>
+    <polyS order="2" pcoefs=" 1.0 0.0 0.0"/>
+    <polyTP order="2" pcoefs=" 1.0 0.0 0.0"/>
+    <polySP order="2" pcoefs=" 1.0 0.0 0.0"/>
+   </TTFs>
+  </accElement>
+  <accElement length="0.0" name="RFGH43" pos="3.0399999999999947" type="RFGAP">
+   <parameters E0L="0.00011088000000000001" E0TL="8.906865287768729e-05" EzFile="./SF_WDK2g44.TBL" aperture="0.02" aprt_type="1" cavity="pillbox43" mode="0" phase="-20.0"/>
+   <TTFs beta_max="1.0" beta_min="0.0">
+    <polyT order="2" pcoefs=" 1.0 0.0 0.0"/>
+    <polyS order="2" pcoefs=" 1.0 0.0 0.0"/>
+    <polyTP order="2" pcoefs=" 1.0 0.0 0.0"/>
+    <polySP order="2" pcoefs=" 1.0 0.0 0.0"/>
+   </TTFs>
+  </accElement>
+  <accElement length="0.0" name="RFGH44" pos="3.0839999999999943" type="RFGAP">
+   <parameters E0L="0.00011088000000000001" E0TL="8.906865287768729e-05" EzFile="./SF_WDK2g44.TBL" aperture="0.02" aprt_type="1" cavity="pillbox44" mode="0" phase="-20.0"/>
+   <TTFs beta_max="1.0" beta_min="0.0">
+    <polyT order="2" pcoefs=" 1.0 0.0 0.0"/>
+    <polyS order="2" pcoefs=" 1.0 0.0 0.0"/>
+    <polyTP order="2" pcoefs=" 1.0 0.0 0.0"/>
+    <polySP order="2" pcoefs=" 1.0 0.0 0.0"/>
+   </TTFs>
+  </accElement>
+  <accElement length="0.0" name="RFGH45" pos="3.127999999999994" type="RFGAP">
+   <parameters E0L="0.00011088000000000001" E0TL="8.906865287768729e-05" EzFile="./SF_WDK2g44.TBL" aperture="0.02" aprt_type="1" cavity="pillbox45" mode="0" phase="-20.0"/>
+   <TTFs beta_max="1.0" beta_min="0.0">
+    <polyT order="2" pcoefs=" 1.0 0.0 0.0"/>
+    <polyS order="2" pcoefs=" 1.0 0.0 0.0"/>
+    <polyTP order="2" pcoefs=" 1.0 0.0 0.0"/>
+    <polySP order="2" pcoefs=" 1.0 0.0 0.0"/>
+   </TTFs>
+  </accElement>
+  <accElement length="0.1" name="QDH8" pos="3.279999999999994" type="QUAD">
+   <parameters aperture="0.02" aprt_type="1" field="-40.0"/>
+  </accElement>
+  <accElement length="0.0" name="RFGH46" pos="3.4319999999999937" type="RFGAP">
+   <parameters E0L="0.00011088000000000001" E0TL="8.906865287768729e-05" EzFile="./SF_WDK2g44.TBL" aperture="0.02" aprt_type="1" cavity="pillbox46" mode="0" phase="-20.0"/>
+   <TTFs beta_max="1.0" beta_min="0.0">
+    <polyT order="2" pcoefs=" 1.0 0.0 0.0"/>
+    <polyS order="2" pcoefs=" 1.0 0.0 0.0"/>
+    <polyTP order="2" pcoefs=" 1.0 0.0 0.0"/>
+    <polySP order="2" pcoefs=" 1.0 0.0 0.0"/>
+   </TTFs>
+  </accElement>
+  <accElement length="0.0" name="RFGH47" pos="3.4759999999999933" type="RFGAP">
+   <parameters E0L="0.00011088000000000001" E0TL="8.906865287768729e-05" EzFile="./SF_WDK2g44.TBL" aperture="0.02" aprt_type="1" cavity="pillbox47" mode="0" phase="-20.0"/>
+   <TTFs beta_max="1.0" beta_min="0.0">
+    <polyT order="2" pcoefs=" 1.0 0.0 0.0"/>
+    <polyS order="2" pcoefs=" 1.0 0.0 0.0"/>
+    <polyTP order="2" pcoefs=" 1.0 0.0 0.0"/>
+    <polySP order="2" pcoefs=" 1.0 0.0 0.0"/>
+   </TTFs>
+  </accElement>
+  <accElement length="0.0" name="RFGH48" pos="3.519999999999993" type="RFGAP">
+   <parameters E0L="0.00011088000000000001" E0TL="8.906865287768729e-05" EzFile="./SF_WDK2g44.TBL" aperture="0.02" aprt_type="1" cavity="pillbox48" mode="0" phase="-20.0"/>
+   <TTFs beta_max="1.0" beta_min="0.0">
+    <polyT order="2" pcoefs=" 1.0 0.0 0.0"/>
+    <polyS order="2" pcoefs=" 1.0 0.0 0.0"/>
+    <polyTP order="2" pcoefs=" 1.0 0.0 0.0"/>
+    <polySP order="2" pcoefs=" 1.0 0.0 0.0"/>
+   </TTFs>
+  </accElement>
+  <accElement length="0.0" name="RFGH49" pos="3.5639999999999925" type="RFGAP">
+   <parameters E0L="0.00011088000000000001" E0TL="8.906865287768729e-05" EzFile="./SF_WDK2g44.TBL" aperture="0.02" aprt_type="1" cavity="pillbox49" mode="0" phase="-20.0"/>
+   <TTFs beta_max="1.0" beta_min="0.0">
+    <polyT order="2" pcoefs=" 1.0 0.0 0.0"/>
+    <polyS order="2" pcoefs=" 1.0 0.0 0.0"/>
+    <polyTP order="2" pcoefs=" 1.0 0.0 0.0"/>
+    <polySP order="2" pcoefs=" 1.0 0.0 0.0"/>
+   </TTFs>
+  </accElement>
+  <accElement length="0.0" name="RFGH50" pos="3.607999999999992" type="RFGAP">
+   <parameters E0L="0.00011088000000000001" E0TL="8.906865287768729e-05" EzFile="./SF_WDK2g44.TBL" aperture="0.02" aprt_type="1" cavity="pillbox50" mode="0" phase="-20.0"/>
+   <TTFs beta_max="1.0" beta_min="0.0">
+    <polyT order="2" pcoefs=" 1.0 0.0 0.0"/>
+    <polyS order="2" pcoefs=" 1.0 0.0 0.0"/>
+    <polyTP order="2" pcoefs=" 1.0 0.0 0.0"/>
+    <polySP order="2" pcoefs=" 1.0 0.0 0.0"/>
+   </TTFs>
+  </accElement>
+  <accElement length="0.0" name="RFGH51" pos="3.6519999999999917" type="RFGAP">
+   <parameters E0L="0.00011088000000000001" E0TL="8.906865287768729e-05" EzFile="./SF_WDK2g44.TBL" aperture="0.02" aprt_type="1" cavity="pillbox51" mode="0" phase="-20.0"/>
+   <TTFs beta_max="1.0" beta_min="0.0">
+    <polyT order="2" pcoefs=" 1.0 0.0 0.0"/>
+    <polyS order="2" pcoefs=" 1.0 0.0 0.0"/>
+    <polyTP order="2" pcoefs=" 1.0 0.0 0.0"/>
+    <polySP order="2" pcoefs=" 1.0 0.0 0.0"/>
+   </TTFs>
+  </accElement>
+  <accElement length="0.0" name="RFGH52" pos="3.6959999999999913" type="RFGAP">
+   <parameters E0L="0.00011088000000000001" E0TL="8.906865287768729e-05" EzFile="./SF_WDK2g44.TBL" aperture="0.02" aprt_type="1" cavity="pillbox52" mode="0" phase="-20.0"/>
+   <TTFs beta_max="1.0" beta_min="0.0">
+    <polyT order="2" pcoefs=" 1.0 0.0 0.0"/>
+    <polyS order="2" pcoefs=" 1.0 0.0 0.0"/>
+    <polyTP order="2" pcoefs=" 1.0 0.0 0.0"/>
+    <polySP order="2" pcoefs=" 1.0 0.0 0.0"/>
+   </TTFs>
+  </accElement>
+  <accElement length="0.0" name="RFGH53" pos="3.739999999999991" type="RFGAP">
+   <parameters E0L="0.00011088000000000001" E0TL="8.906865287768729e-05" EzFile="./SF_WDK2g44.TBL" aperture="0.02" aprt_type="1" cavity="pillbox53" mode="0" phase="-20.0"/>
+   <TTFs beta_max="1.0" beta_min="0.0">
+    <polyT order="2" pcoefs=" 1.0 0.0 0.0"/>
+    <polyS order="2" pcoefs=" 1.0 0.0 0.0"/>
+    <polyTP order="2" pcoefs=" 1.0 0.0 0.0"/>
+    <polySP order="2" pcoefs=" 1.0 0.0 0.0"/>
+   </TTFs>
+  </accElement>
+  <accElement length="0.0" name="RFGH54" pos="3.7839999999999905" type="RFGAP">
+   <parameters E0L="0.00011088000000000001" E0TL="8.906865287768729e-05" EzFile="./SF_WDK2g44.TBL" aperture="0.02" aprt_type="1" cavity="pillbox54" mode="0" phase="-20.0"/>
+   <TTFs beta_max="1.0" beta_min="0.0">
+    <polyT order="2" pcoefs=" 1.0 0.0 0.0"/>
+    <polyS order="2" pcoefs=" 1.0 0.0 0.0"/>
+    <polyTP order="2" pcoefs=" 1.0 0.0 0.0"/>
+    <polySP order="2" pcoefs=" 1.0 0.0 0.0"/>
+   </TTFs>
+  </accElement>
+  <accElement length="0.05" name="QFH9" pos="3.9109999999999903" type="QUAD">
+   <parameters aperture="0.02" aprt_type="1" field="40.0"/>
+  </accElement>
+ </Linac>
+</alceli>

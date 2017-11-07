@@ -1,0 +1,4 @@
+source ../pyOrbit/setupEnvironment.sh
+PYTHONPATH=../examples-master-pyOrbit/SNS_Linac/pyorbit_linac_model:$PYTHONPATH
+./START.sh pyorbit_alceli_linac.py 1
+
