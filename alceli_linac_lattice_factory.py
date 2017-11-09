@@ -84,11 +84,11 @@ class ALCELI_LinacLatticeFactory():
 		accSeq_da_arr = acc_da.childAdaptors()
 		#-----let's filter and check that the names in good order 
 		accSeq_da_arr = self.filterSequences_and_OptionalCheck(accSeq_da_arr,names)
-		for i in accSeq_da_arr:    print'DEBUG: ',;PP( i.getAttributes())
+		# for i in accSeq_da_arr:  print'DEBUG: ',;PP( i.getAttributes())
 		#----make linac lattice
-		print'DEBUG: ',;PP(acc_da.getName())
+		# print'DEBUG: ',;PP(acc_da.getName())
 		linacAccLattice = LinacAccLattice(acc_da.getName())
-		print'DEBUG: ',;PP(linacAccLattice.__dict__)
+		# print'DEBUG: ',;PP(linacAccLattice.__dict__)
 		#There are the folowing possible types of elements in the linac tree:
 		#QUAD - quadrupole
 		#RFGAP - RF Gap
@@ -111,7 +111,7 @@ class ALCELI_LinacLatticeFactory():
 		accRF_Cavs = [] 
 		seqPosition = 0.
 		for seq_da in accSeq_da_arr:
-			print'DEBUG:seq: ',;PP(seq_da.getName())
+			# print'DEBUG:seq: ',;PP(seq_da.getName())
 			accSeq = Sequence(seq_da.getName())
 			accSeq.setLinacAccLattice(linacAccLattice)
 			accSeq.setLength(seq_da.doubleValue("length"))
@@ -123,12 +123,12 @@ class ALCELI_LinacLatticeFactory():
 				accSeq.addParam("bpmFrequency",bpmFrequency)
 			#-----------------------------------------
 			accSeqs.append(accSeq)
-			for i in accSeqs: print'DEBUG:accSeqs: ',;PP(i.__dict__)			
+			# for i in accSeqs: print'DEBUG:accSeqs: ',;PP(i.__dict__)			
 			#---- create RF Cavities
 			if(len(seq_da.childAdaptors("Cavities")) == 1):
 				cavs_da = seq_da.childAdaptors("Cavities")[0]	
 				cav_da_arr = cavs_da.childAdaptors("Cavity")
-				for i in cav_da_arr: print'DEBUG:cav_da_arr: ',;PP(i.__dict__)			
+				# for i in cav_da_arr: print'DEBUG:cav_da_arr: ',;PP(i.__dict__)			
 				for cav_da in cav_da_arr:
 					frequency = cav_da.doubleValue("frequency")
 					cav_amp = cav_da.doubleValue("ampl")
@@ -151,7 +151,7 @@ class ALCELI_LinacLatticeFactory():
 			#of this method
 			thinNodes = []
 			for node_da in node_da_arr:
-				i=node_da; print'DEBUG:node_da: ',;PP( i.getName()+' '+i.stringValue('name')+' '+i.stringValue('pos'))
+				# i=node_da; print'DEBUG:node_da: ',;PP( i.getName()+' '+i.stringValue('name')+' '+i.stringValue('pos'))
 				params_da = node_da.childAdaptors("parameters")[0]
 				node_type = node_da.stringValue("type")
 				node_length = node_da.doubleValue("length")
@@ -182,7 +182,7 @@ class ALCELI_LinacLatticeFactory():
 						accNode.setParam("radOut",params_da.doubleValue("radOut"))
 					accNode.setParam("pos",node_pos)
 					accSeq.addNode(accNode)
-					print'DEBUG:accNode: ',;PP(accNode.__dict__)
+					# print'DEBUG:accNode: ',;PP(accNode.__dict__)
 				#------------BEND-----------------
 				elif(node_type == "BEND"):
 					accNode = Bend(node_da.stringValue("name"))                                                                                					
@@ -221,17 +221,17 @@ class ALCELI_LinacLatticeFactory():
 					cav.addRF_GapNode(accNode)
 					if(accNode.isFirstRFGap()):
 						cav.setPhase(accNode.getParam("gap_phase"))
-					print'DEBUG:accNode: ',;PP(accNode.__dict__)
+					# print'DEBUG:accNode: ',;PP(accNode.__dict__)
 					#---- TTFs parameters
 					ttfs_da = node_da.childAdaptors("TTFs")[0]
-					print'DEBUG:ttfs_da: ',;PP(ttfs_da.__dict__)
+					# print'DEBUG:ttfs_da: ',;PP(ttfs_da.__dict__)
 					accNode.setParam("beta_min",ttfs_da.doubleValue("beta_min"))
 					accNode.setParam("beta_max",ttfs_da.doubleValue("beta_max"))					
 					(polyT,polyS,polyTp,polySp) = accNode.getTTF_Polynimials()
-					print'DEBUG:ttfs_da.childAdaptors("polyT"): ',;PP(ttfs_da.childAdaptors("polyT"))
-					print'DEBUG:ttfs_da.childAdaptors("polyS"): ',;PP(ttfs_da.childAdaptors("polyS"))
-					print'DEBUG:ttfs_da.childAdaptors("polyTP"): ',;PP(ttfs_da.childAdaptors("polyTP"))
-					print'DEBUG:ttfs_da.childAdaptors("polySP"): ',;PP(ttfs_da.childAdaptors("polySP"))
+					# print'DEBUG:ttfs_da.childAdaptors("polyT"): ',;PP(ttfs_da.childAdaptors("polyT"))
+					# print'DEBUG:ttfs_da.childAdaptors("polyS"): ',;PP(ttfs_da.childAdaptors("polyS"))
+					# print'DEBUG:ttfs_da.childAdaptors("polyTP"): ',;PP(ttfs_da.childAdaptors("polyTP"))
+					# print'DEBUG:ttfs_da.childAdaptors("polySP"): ',;PP(ttfs_da.childAdaptors("polySP"))
 					polyT_da = ttfs_da.childAdaptors("polyT")[0]
 					polyS_da = ttfs_da.childAdaptors("polyS")[0]
 					polyTp_da = ttfs_da.childAdaptors("polyTP")[0]
@@ -242,7 +242,7 @@ class ALCELI_LinacLatticeFactory():
 					polySp.order(polySp_da.intValue("order"))
 					coef_arr = polyT_da.doubleArrayValue("pcoefs")
 					for coef_ind in range(len(coef_arr)):
-						print'DEBUG:coef_ind,range(len(coef_arr): ',;PP((coef_ind,range(len(coef_arr))))
+						# print'DEBUG:coef_ind,range(len(coef_arr): ',;PP((coef_ind,range(len(coef_arr))))
 						polyT.coefficient(coef_ind,coef_arr[coef_ind])
 					coef_arr = polyS_da.doubleArrayValue("pcoefs")
 					for coef_ind in range(len(coef_arr)):
@@ -258,7 +258,7 @@ class ALCELI_LinacLatticeFactory():
 						accNode.setParam("aperture",params_da.doubleValue("aperture"))						
 					accNode.setParam("pos",node_pos)
 					accSeq.addNode(accNode)
-					print'DEBUG:accNode: ',;PP(accNode.__dict__)
+					# print'DEBUG:accNode: ',;PP(accNode.__dict__)
 				else:
 					if(node_length != 0.):
 						msg = "The LinacLatticeFactory method getLinacAccLattice(names): there is a strange element!"
@@ -375,6 +375,8 @@ class ALCELI_LinacLatticeFactory():
 				newAccNodes.append(accNode0)
 				accNode1 = copyAccNodes[node_ind+1]
 				dist = accNode1.getParam("pos") - accNode1.getLength()/2 - (accNode0.getParam("pos") + accNode0.getLength()/2)
+				print 'DEBUG:dist: ',;PP((accNode0.getName(),'%8.4f' % dist,accNode1.getName()))
+				if(abs(dist)<1.e-10): dist = 0.
 				if(dist < 0.):
 					msg = "The LinacLatticeFactory method getLinacAccLattice(names): two nodes are overlapping!"
 					msg = msg + os.linesep
