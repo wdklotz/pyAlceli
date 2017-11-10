@@ -38,7 +38,7 @@ from orbit.py_linac.lattice_modifications import AddScrapersAperturesToLattice
 #---- BaseRF_Gap to  AxisFieldRF_Gap replacement  ---- It is a possibility ----------
 from orbit.py_linac.lattice_modifications import Replace_BaseRF_Gap_to_AxisField_Nodes
 
-from sns_linac_bunch_generator import SNS_Linac_BunchGenerator
+from alceli_linac_bunch_generator import ALCELI_Linac_BunchGenerator
 
 random.seed(100)
 
@@ -176,7 +176,7 @@ twissY = TwissContainer(alphaY,betaY,emittY)
 twissZ = TwissContainer(alphaZ,betaZ,emittZ)
 
 print "Start Bunch Generation."
-bunch_gen = SNS_Linac_BunchGenerator(twissX,twissY,twissZ)
+bunch_gen = ALCELI_Linac_BunchGenerator(twissX,twissY,twissZ)
 
 #set the initial kinetic energy in GeV
 bunch_gen.setKinEnergy(e_kin_ini)

@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 
 #--------------------------------------------------------
-# The classes will generates bunches for pyORBIT SNS linac 
-# at the entrance of SNS MEBT accelerator line (by default)
+# The classes will generates bunches for pyORBIT ALCELI linac 
+# at the entrance of ALCELI Linac accelerator line (by default)
 # It is parallel, but it is not efficient.
 #--------------------------------------------------------
 
@@ -24,9 +24,9 @@ from orbit.bunch_generators import TwissAnalysis
 
 from bunch import Bunch
 
-class SNS_Linac_BunchGenerator:
+class ALCELI_Linac_BunchGenerator:
 	"""
-	Generates the pyORBIT SNS Linac Bunches.
+	Generates the pyORBIT ALCELI Linac Bunches.
 	Twiss parameters has the fol following units: x in [m], xp in [rad]
 	and the X and Y emittances are un-normalized. The longitudinal emittance 
 	is in [GeV*m].
