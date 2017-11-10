@@ -12,4 +12,6 @@ if [ ! -n "$2" ]
     exit $E_BADARGS
 fi
 
-mpirun -np $2 ${ORBIT_ROOT}/bin/pyORBIT $1 $3 $4 $5 $6 $7
+#mpirun -np $2 ${ORBIT_ROOT}/bin/pyORBIT $1 $3 $4 $5 $6 $7
+${ORBIT_ROOT}/bin/pyORBIT $1 $3 $4 $5 $6 $7
+

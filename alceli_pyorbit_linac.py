@@ -30,19 +30,19 @@ from bunch import BunchTwissAnalysis
 
 from orbit.lattice import AccLattice, AccNode, AccActionsContainer
 
-# # from orbit.py_linac.lattice_modifications import Add_quad_apertures_to_lattice
-# # from orbit.py_linac.lattice_modifications import Add_rfgap_apertures_to_lattice
-# # from orbit.py_linac.lattice_modifications import AddMEBTChopperPlatesAperturesToSNS_Lattice
-# # from orbit.py_linac.lattice_modifications import AddScrapersAperturesToLattice
+from orbit.py_linac.lattice_modifications import Add_quad_apertures_to_lattice
+from orbit.py_linac.lattice_modifications import Add_rfgap_apertures_to_lattice
+from orbit.py_linac.lattice_modifications import AddMEBTChopperPlatesAperturesToSNS_Lattice
+from orbit.py_linac.lattice_modifications import AddScrapersAperturesToLattice
 
 #---- BaseRF_Gap to  AxisFieldRF_Gap replacement  ---- It is a possibility ----------
-#from orbit.py_linac.lattice_modifications import Replace_BaseRF_Gap_to_AxisField_Nodes
+from orbit.py_linac.lattice_modifications import Replace_BaseRF_Gap_to_AxisField_Nodes
 
 from sns_linac_bunch_generator import SNS_Linac_BunchGenerator
 
 random.seed(100)
 
-names = ["HE"]
+names = ["Linac"]
 
 #---- create the factory instance
 alceli_linac_factory = ALCELI_LinacLatticeFactory()
@@ -55,20 +55,18 @@ xml_file_name = "./alceli.xml"
 accLattice = alceli_linac_factory.getLinacAccLattice(names,xml_file_name)
 
 print "Linac lattice is ready. L=",accLattice.getLength()
-sys.exit(1)
 
 #----set up RF Gap Model -------------
 #---- There are three available models at this moment
 #---- BaseRfGap  uses only E0TL*cos(phi)*J0(kr) with E0TL = const
 #---- MatrixRfGap uses a matrix approach like envelope codes
 #---- RfGapTTF uses Transit Time Factors (TTF) like PARMILA
-#cppGapModel = BaseRfGap
+cppGapModel = BaseRfGap
 #cppGapModel = MatrixRfGap
-cppGapModel = RfGapTTF
+# cppGapModel = RfGapTTF
 rf_gaps = accLattice.getRF_Gaps()
 for rf_gap in rf_gaps:
 	rf_gap.setCppGapModel(cppGapModel())
-
 
 #------------------------------------------------------------------
 #---- BaseRF_Gap to  AxisFieldRF_Gap direct replacement
@@ -76,75 +74,73 @@ for rf_gap in rf_gaps:
 #---- because rf fields cover drifts only.
 #---- The DTL needs a special treatment.
 #------------------------------------------------------------------
-"""
+
 #---- axis fields files location 
-dir_location = "../sns_rf_fields/"
-Replace_BaseRF_Gap_to_AxisField_Nodes(accLattice,dir_location,["MEBT","CCL1","CCL2","CCL3","CCL4","SCLMed"])
+dir_location = ""
+z_step = 4.e-4
+Replace_BaseRF_Gap_to_AxisField_Nodes(accLattice,z_step,dir_location,["Linac"])
 
 print "Linac lattice has been modified. New L[m] = ",accLattice.getLength()
-"""
 
 #-----------------------------------------------------
 # Set up Space Charge Acc Nodes
 #-----------------------------------------------------
-from orbit.space_charge.sc3d import setSC3DAccNodes, setUniformEllipsesSCAccNodes
-from spacecharge import SpaceChargeCalcUnifEllipse, SpaceChargeCalc3D
-sc_path_length_min = 0.02
-
-print "Set up Space Charge nodes. "
+# from orbit.space_charge.sc3d import setSC3DAccNodes, setUniformEllipsesSCAccNodes
+# from spacecharge import SpaceChargeCalcUnifEllipse, SpaceChargeCalc3D
+# sc_path_length_min = 0.02
+# 
+# print "Set up Space Charge nodes. "
 
 # set of uniformly charged ellipses Space Charge
-nEllipses = 1
-calcUnifEllips = SpaceChargeCalcUnifEllipse(nEllipses)
-space_charge_nodes = setUniformEllipsesSCAccNodes(accLattice,sc_path_length_min,calcUnifEllips)
+# nEllipses = 1
+# calcUnifEllips = SpaceChargeCalcUnifEllipse(nEllipses)
+# space_charge_nodes = setUniformEllipsesSCAccNodes(accLattice,sc_path_length_min,calcUnifEllips)
 
-"""
+
 # set FFT 3D Space Charge
-sizeX = 64
-sizeY = 64
-sizeZ = 64
-calc3d = SpaceChargeCalc3D(sizeX,sizeY,sizeZ)
-space_charge_nodes =  setSC3DAccNodes(accLattice,sc_path_length_min,calc3d)
-"""
+# sizeX = 64
+# sizeY = 64
+# sizeZ = 64
+# calc3d = SpaceChargeCalc3D(sizeX,sizeY,sizeZ)
+# space_charge_nodes =  setSC3DAccNodes(accLattice,sc_path_length_min,calc3d)
 
-max_sc_length = 0.
-min_sc_length = accLattice.getLength()
-for sc_node in space_charge_nodes:
-	scL = sc_node.getLengthOfSC()
-	if(scL > max_sc_length): max_sc_length = scL
-	if(scL < min_sc_length): min_sc_length = scL
-print "maximal SC length =",max_sc_length,"  min=",min_sc_length
+# max_sc_length = 0.
+# min_sc_length = accLattice.getLength()
+# for sc_node in space_charge_nodes:
+	# scL = sc_node.getLengthOfSC()
+	# if(scL > max_sc_length): max_sc_length = scL
+	# if(scL < min_sc_length): min_sc_length = scL
+# print "maximal SC length =",max_sc_length,"  min=",min_sc_length
 
-print "===== Aperture Nodes START  ======="
-aprtNodes = Add_quad_apertures_to_lattice(accLattice)
-aprtNodes = Add_rfgap_apertures_to_lattice(accLattice,aprtNodes)
-aprtNodes = AddMEBTChopperPlatesAperturesToSNS_Lattice(accLattice,aprtNodes)
+# print "===== Aperture Nodes START  ======="
+# aprtNodes = Add_quad_apertures_to_lattice(accLattice)
+# aprtNodes = Add_rfgap_apertures_to_lattice(accLattice,aprtNodes)
+# aprtNodes = AddMEBTChopperPlatesAperturesToSNS_Lattice(accLattice,aprtNodes)
+# 
+# x_size = 0.042
+# y_size = 0.042
+# aprtNodes = AddScrapersAperturesToLattice(accLattice,"MEBT_Diag:H_SCRP",x_size,y_size,aprtNodes)
+# 
+# x_size = 0.042
+# y_size = 0.042
+# aprtNodes = AddScrapersAperturesToLattice(accLattice,"MEBT_Diag:V_SCRP",x_size,y_size,aprtNodes)
 
-x_size = 0.042
-y_size = 0.042
-aprtNodes = AddScrapersAperturesToLattice(accLattice,"MEBT_Diag:H_SCRP",x_size,y_size,aprtNodes)
 
-x_size = 0.042
-y_size = 0.042
-aprtNodes = AddScrapersAperturesToLattice(accLattice,"MEBT_Diag:V_SCRP",x_size,y_size,aprtNodes)
+# for node in aprtNodes:
+	# print "aprt=",node.getName()," pos =",node.getPosition()
 
-"""
-for node in aprtNodes:
-	print "aprt=",node.getName()," pos =",node.getPosition()
-"""
-
-print "===== Aperture Nodes Added ======="
+# print "===== Aperture Nodes Added ======="
 
 #-----TWISS Parameters at the entrance of MEBT ---------------
 # transverse emittances are unnormalized and in pi*mm*mrad
 # longitudinal emittance is in pi*eV*sec
-e_kin_ini = 0.0025 # in [GeV]
+e_kin_ini = 70.e-3 # in [GeV]
 mass = 0.939294    # in [GeV]
 gamma = (mass + e_kin_ini)/mass
 beta = math.sqrt(gamma*gamma - 1.0)/gamma
 print "relat. gamma=",gamma
 print "relat.  beta=",beta
-frequency = 402.5e+6
+frequency = 816.e+6
 v_light = 2.99792458e+8  # in [m/sec]
 
 #------ emittances are normalized - transverse by gamma*beta and long. by gamma**3*beta 
@@ -198,6 +194,8 @@ print "Bunch Generation completed."
 accLattice.trackDesignBunch(bunch_in)
 
 print "Design tracking completed."
+
+sys.exit(1)
 
 #track through the lattice 
 paramsDict = {"old_pos":-1.,"count":0,"pos_step":0.1}
