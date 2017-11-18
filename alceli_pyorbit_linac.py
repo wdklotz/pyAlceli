@@ -38,16 +38,16 @@ from alceli_linac_lattice_factory import ALCELI_LinacLatticeFactory
 
 random.seed(100)
 
-# names = ["Linac"]
-names = ["HE"]
+names = ["Linac"]
+# names = ["HE"]
 
 #---- create the factory instance
 alceli_linac_factory = ALCELI_LinacLatticeFactory()
 alceli_linac_factory.setMaxDriftLength(0.01)
 
 #---- the XML file name with the structure
-# xml_file_name = "./alceli.xml"
-xml_file_name = "/Users/klotz/Desktop/SIMULINAC/25_09_2017_versuche_70_200MeV.xml"
+xml_file_name = "./alceli.xml"
+# xml_file_name = "/Users/klotz/Desktop/SIMULINAC/25_09_2017_versuche_70_200MeV.xml"
 
 #---- make lattice from XML file 
 accLattice = alceli_linac_factory.getLinacAccLattice(names,xml_file_name)

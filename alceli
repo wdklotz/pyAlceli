@@ -1,8 +1,11 @@
-# source ../pyOrbit/setupEnvironment.sh
-# PYTHONPATH=../examples-master-pyOrbit/SNS_Linac/pyorbit_linac_model:$PYTHONPATH
-
-if [ `uname -s` = 'Darwin' ]
+HOST=`uname -s`
+if [ $HOST = 'Darwin' ]
 then
-    source /Users/klotz/Desktop/pyOrbit_collab-clone/customEnvironment.sh 1>/dev/null
+echo $HOST
+source "/Users/klotz/Desktop/pyOrbit_collab-clone/customEnvironment.sh 1>/dev/null"
+elif [ $HOST = 'Linux' ]
+then
+echo $HOST
+source /home/wdklotz/pyOrbit/setupEnvironment.sh
 fi
 ./START.sh alceli_pyorbit_linac.py 1
