@@ -17,39 +17,37 @@ import math
 import random
 import time
 
-from alceli_linac_lattice_factory import ALCELI_LinacLatticeFactory
+
 
 # from linac import the C++ RF gap classes
 from linac import BaseRfGap, MatrixRfGap, RfGapTTF
-
-from orbit.bunch_generators import TwissContainer
-from orbit.bunch_generators import WaterBagDist3D, GaussDist3D, KVDist3D
-
 from bunch import Bunch
 from bunch import BunchTwissAnalysis
-
+from orbit.bunch_generators import TwissContainer
+from orbit.bunch_generators import WaterBagDist3D, GaussDist3D, KVDist3D
 from orbit.lattice import AccLattice, AccNode, AccActionsContainer
-
 from orbit.py_linac.lattice_modifications import Add_quad_apertures_to_lattice
 from orbit.py_linac.lattice_modifications import Add_rfgap_apertures_to_lattice
 from orbit.py_linac.lattice_modifications import AddMEBTChopperPlatesAperturesToSNS_Lattice
 from orbit.py_linac.lattice_modifications import AddScrapersAperturesToLattice
-
-#---- BaseRF_Gap to  AxisFieldRF_Gap replacement  ---- It is a possibility ----------
+# BaseRF_Gap to  AxisFieldRF_Gap replacement
 from orbit.py_linac.lattice_modifications import Replace_BaseRF_Gap_to_AxisField_Nodes
 
 from alceli_linac_bunch_generator import ALCELI_Linac_BunchGenerator
+from alceli_linac_lattice_factory import ALCELI_LinacLatticeFactory
 
 random.seed(100)
 
-names = ["Linac"]
+# names = ["Linac"]
+names = ["HE"]
 
 #---- create the factory instance
 alceli_linac_factory = ALCELI_LinacLatticeFactory()
 alceli_linac_factory.setMaxDriftLength(0.01)
 
 #---- the XML file name with the structure
-xml_file_name = "./alceli.xml"
+# xml_file_name = "./alceli.xml"
+xml_file_name = "/Users/klotz/Desktop/SIMULINAC/25_09_2017_versuche_70_200MeV.xml"
 
 #---- make lattice from XML file 
 accLattice = alceli_linac_factory.getLinacAccLattice(names,xml_file_name)

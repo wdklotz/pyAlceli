@@ -1,4 +1,8 @@
-source ../pyOrbit/setupEnvironment.sh
-PYTHONPATH=../examples-master-pyOrbit/SNS_Linac/pyorbit_linac_model:$PYTHONPATH
-./START.sh alceli_pyorbit_linac.py 1
+# source ../pyOrbit/setupEnvironment.sh
+# PYTHONPATH=../examples-master-pyOrbit/SNS_Linac/pyorbit_linac_model:$PYTHONPATH
 
+if [ `uname -s` = 'Darwin' ]
+then
+    source /Users/klotz/Desktop/pyOrbit_collab-clone/customEnvironment.sh 1>/dev/null
+fi
+./START.sh alceli_pyorbit_linac.py 1
