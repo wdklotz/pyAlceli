@@ -2,7 +2,7 @@ HOST=`uname -s`
 if [ $HOST = 'Darwin' ]
 then
 echo $HOST
-source "/Users/klotz/Desktop/pyOrbit_collab-clone/customEnvironment.sh 1>/dev/null"
+source /Users/klotz/Desktop/pyOrbit_collab-clone/customEnvironment.sh 1>/dev/null
 elif [ $HOST = 'Linux' ]
 then
 echo $HOST

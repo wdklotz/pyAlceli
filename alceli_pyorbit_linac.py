@@ -4,10 +4,10 @@
 This script will track the bunch through the ALCELI Linac.
 
 At the beginning the lattice can be modified by replacing
-the BaseRF_Gap nodes with AxisFieldRF_Gap nodes for 
-the selected sequences. These nodes will use the 
+the BaseRF_Gap nodes with AxisFieldRF_Gap nodes for
+the selected sequences. These nodes will use the
 RF fields at the axis of the RF gap to track the bunch.
-The usual BaseRF_Gap nodes have a zero length. 
+The usual BaseRF_Gap nodes have a zero length.
 
 The apertures are added to the lattice.
 """
@@ -38,18 +38,18 @@ from alceli_linac_lattice_factory import ALCELI_LinacLatticeFactory
 
 random.seed(100)
 
-names = ["Linac"]
-# names = ["HE"]
+# names = ["Linac"]
+names = ["HE"]
 
 #---- create the factory instance
 alceli_linac_factory = ALCELI_LinacLatticeFactory()
 alceli_linac_factory.setMaxDriftLength(0.01)
 
 #---- the XML file name with the structure
-xml_file_name = "./alceli.xml"
-# xml_file_name = "/Users/klotz/Desktop/SIMULINAC/25_09_2017_versuche_70_200MeV.xml"
+# xml_file_name = "./alceli.xml"
+xml_file_name = "25_09_2017_versuche_70_200MeV.xml"
 
-#---- make lattice from XML file 
+#---- make lattice from XML file
 accLattice = alceli_linac_factory.getLinacAccLattice(names,xml_file_name)
 
 print "Linac lattice is ready. L=",accLattice.getLength()
@@ -73,10 +73,10 @@ for rf_gap in rf_gaps:
 #---- The DTL needs a special treatment.
 #------------------------------------------------------------------
 
-#---- axis fields files location 
+#---- axis fields files location
 dir_location = ""
 z_step = 4.e-4
-Replace_BaseRF_Gap_to_AxisField_Nodes(accLattice,z_step,dir_location,["Linac"])
+Replace_BaseRF_Gap_to_AxisField_Nodes(accLattice,z_step,dir_location,names)
 
 print "Linac lattice has been modified. New L[m] = ",accLattice.getLength()
 
@@ -86,7 +86,7 @@ print "Linac lattice has been modified. New L[m] = ",accLattice.getLength()
 # from orbit.space_charge.sc3d import setSC3DAccNodes, setUniformEllipsesSCAccNodes
 # from spacecharge import SpaceChargeCalcUnifEllipse, SpaceChargeCalc3D
 # sc_path_length_min = 0.02
-# 
+#
 # print "Set up Space Charge nodes. "
 
 # set of uniformly charged ellipses Space Charge
@@ -114,11 +114,11 @@ print "Linac lattice has been modified. New L[m] = ",accLattice.getLength()
 # aprtNodes = Add_quad_apertures_to_lattice(accLattice)
 # aprtNodes = Add_rfgap_apertures_to_lattice(accLattice,aprtNodes)
 # aprtNodes = AddMEBTChopperPlatesAperturesToSNS_Lattice(accLattice,aprtNodes)
-# 
+#
 # x_size = 0.042
 # y_size = 0.042
 # aprtNodes = AddScrapersAperturesToLattice(accLattice,"MEBT_Diag:H_SCRP",x_size,y_size,aprtNodes)
-# 
+#
 # x_size = 0.042
 # y_size = 0.042
 # aprtNodes = AddScrapersAperturesToLattice(accLattice,"MEBT_Diag:V_SCRP",x_size,y_size,aprtNodes)
@@ -141,7 +141,7 @@ print "relat.  beta=",beta
 frequency = 816.e+6
 v_light = 2.99792458e+8  # in [m/sec]
 
-#------ emittances are normalized - transverse by gamma*beta and long. by gamma**3*beta 
+#------ emittances are normalized - transverse by gamma*beta and long. by gamma**3*beta
 (alphaX,betaX,emittX) = (-1.9620, 0.1831, 0.21)
 (alphaY,betaY,emittY) = ( 1.7681, 0.1620, 0.21)
 (alphaZ,betaZ,emittZ) = ( 0.0196, 0.5844, 0.24153)
@@ -195,7 +195,7 @@ print "Design tracking completed."
 
 sys.exit(1)
 
-#track through the lattice 
+#track through the lattice
 paramsDict = {"old_pos":-1.,"count":0,"pos_step":0.1}
 actionContainer = AccActionsContainer("Test Design Bunch Tracking")
 
@@ -233,11 +233,11 @@ def action_entrance(paramsDict):
 	nParts = bunch.getSizeGlobal()
 	(alphaX,betaX,emittX) = (twiss_analysis.getTwiss(0)[0],twiss_analysis.getTwiss(0)[1],twiss_analysis.getTwiss(0)[3]*1.0e+6)
 	(alphaY,betaY,emittY) = (twiss_analysis.getTwiss(1)[0],twiss_analysis.getTwiss(1)[1],twiss_analysis.getTwiss(1)[3]*1.0e+6)
-	(alphaZ,betaZ,emittZ) = (twiss_analysis.getTwiss(2)[0],twiss_analysis.getTwiss(2)[1],twiss_analysis.getTwiss(2)[3]*1.0e+6)		 
+	(alphaZ,betaZ,emittZ) = (twiss_analysis.getTwiss(2)[0],twiss_analysis.getTwiss(2)[1],twiss_analysis.getTwiss(2)[3]*1.0e+6)
 	norm_emittX = emittX*gamma*beta
 	norm_emittY = emittY*gamma*beta
 	#---- phi_de_emittZ will be in [pi*deg*MeV]
-	phi_de_emittZ = z_to_phase_coeff*emittZ	
+	phi_de_emittZ = z_to_phase_coeff*emittZ
 	eKin = bunch.getSyncParticle().kinEnergy()*1.0e+3
 	s = " %35s  %4.5f "%(node.getName(),pos+pos_start)
 	s += "   %6.4f  %6.4f  %6.4f  %6.4f   "%(alphaX,betaX,emittX,norm_emittX)
@@ -250,12 +250,12 @@ def action_entrance(paramsDict):
 	s_prt = " %5d  %35s  %4.5f "%(paramsDict["count"],node.getName(),pos+pos_start)
 	s_prt += "  %5.3f  %5.3f   %5.3f "%(x_rms,y_rms,z_rms_deg)
 	s_prt += "  %10.6f   %8d "%(eKin,nParts)
-	print s_prt	
-	
+	print s_prt
+
 def action_exit(paramsDict):
 	action_entrance(paramsDict)
-	
-	
+
+
 actionContainer.addAction(action_entrance, AccActionsContainer.ENTRANCE)
 actionContainer.addAction(action_exit, AccActionsContainer.EXIT)
 
