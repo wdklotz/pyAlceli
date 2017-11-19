@@ -74,7 +74,7 @@ def action_entrance(paramsDict):
 #     result to console buffer
     console_buffer_row=[]
     console_buffer_row.append(  '%5d'%paramsDict["count"])
-    console_buffer_row.append(  '%35s'%node.getName())
+    console_buffer_row.append(  '%25s'%node.getName())
     console_buffer_row.append( '%4.5f'%(pos+pos_start))
     console_buffer_row.append( '%5.3f'%x_rms)
     console_buffer_row.append( '%5.3f'%y_rms)
@@ -108,15 +108,16 @@ def tblprnt(headr,records):
 # =========================================================================================
 random.seed(100)
 
+# section list
 names = ["HE"]
+
+#---- the XML input file name with the linac structure
+# xml_file_name = "./alceli.xml"
+xml_file_name = "../SIMULINAC/25_09_2017_versuche_70_200MeV.xml"
 
 #---- create the factory instance
 alceli_linac_factory = ALCELI_LinacLatticeFactory()
 alceli_linac_factory.setMaxDriftLength(0.01)
-
-#---- the XML file name with the structure
-# xml_file_name = "./alceli.xml"
-xml_file_name = "../SIMULINAC/25_09_2017_versuche_70_200MeV.xml"
 
 #---- make lattice from XML file
 accLattice = alceli_linac_factory.getLinacAccLattice(names,xml_file_name)
@@ -289,5 +290,5 @@ time_exec = time.clock() - time_start
 file_out.close()
 print " - finished in {:4.2f} [sec]".format(time_exec)
 
-print "RESULTS - RESULTS - RESULTS - RESULTS - RESULTS - RESULTS - RESULTS - RESULTS "
+print "RESULTS - RESULTS - RESULTS - RESULTS - RESULTS - RESULTS - RESULTS - RESULTS - RESULTS - RESULTS "
 print tblprnt(console_buffer_header,console_buffer_rows)
