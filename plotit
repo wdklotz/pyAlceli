@@ -1,11 +1,11 @@
 HOST=`uname -s`
 if [ $HOST = 'Darwin' ]
 then
-echo $HOST
+#echo $HOST
 source ../pyOrbit/customEnvironment.sh 1>/dev/null
 elif [ $HOST = 'Linux' ]
 then
-echo $HOST
+#echo $HOST
 source ../pyOrbit/setupEnvironment.sh
 fi
-./START.sh alceli_pyorbit_linac.py 1
+python alceli_plotit.py

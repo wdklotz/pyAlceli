@@ -376,7 +376,7 @@ class ALCELI_LinacLatticeFactory():
             newAccNodes.append(accNode0)
             accNode1 = copyAccNodes[node_ind+1]
             dist = accNode1.getParam("pos") - accNode1.getLength()/2 - (accNode0.getParam("pos") + accNode0.getLength()/2)
-            print 'DEBUG:dist(ance) (from,to,[m]): ',;PP((accNode0.getName(),accNode1.getName(),'%8.4f' % dist))
+#             print 'DEBUG:dist(ance) (from,to,[m]): ',;PP((accNode0.getName(),accNode1.getName(),'%8.4f' % dist))
             if(abs(dist)<1.e-10): dist = 0.
             if(dist < 0.):
                msg = "The LinacLatticeFactory method getLinacAccLattice(names): two nodes are overlapping!"
