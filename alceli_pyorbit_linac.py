@@ -17,7 +17,6 @@ import math
 import random
 import time
 import json
-import pprint
 
 # from linac & bunch import the C++ RF gap classes
 from linac import BaseRfGap, MatrixRfGap, RfGapTTF
@@ -38,27 +37,27 @@ from alceli_linac_bunch_generator import ALCELI_Linac_BunchGenerator
 from alceli_linac_lattice_factory import ALCELI_LinacLatticeFactory
 from alceli_conf import CONF
 
-PP = pprint.PrettyPrinter(indent=4).pprint
-
 # DEBUG
+import pprint
 import inspect
+PP = pprint.PrettyPrinter(indent=4).pprint
 def lineno():
-   return (inspect.getframeinfo(inspect.currentframe()).filename,inspect.currentframe().f_lineno)
-def DEBUG(arg):
-   if isinstance(arg,str):
-      print'DEBUG{}: '.format(lineno())+arg
-   elif isinstance(arg,(tuple,list,dict)):
-      for i in arg:
-         print 'DEBUG{}: '.format(lineno())
-         PP(i)
-   else:
-      print'DEBUG{}: '.format(lineno()),repr(arg)
+   return inspect.currentframe().f_back.f_lineno
+def DEBUG(line,arg):
+    if isinstance(arg,str):
+        print'DEBUG[{}]: '.format(line)+arg
+    elif isinstance(arg,(tuple,list,dict)):
+        print'DEBUG[{}]: '.format(line)
+        for i in arg:
+            PP(i)
+    else:
+        print'DEBUG[{}]: '.format(line)+repr(arg)
 def DEBUG_ON(*args):
-    DEBUG(args)
-def DEBUG_OFF(args):
+    DEBUG(*args)
+def DEBUG_OFF(*args):
     pass
 
-DEBUG_PYO = DEBUG_ON
+DEBUGmain = DEBUG_OFF
 
 def tblprnt(headr,records):
     """
@@ -85,15 +84,15 @@ def main():
         bunch    = paramsDict["bunch"]
         lattice  = paramsDict["lattice"]
         end_node = lattice.getNodes()[-1]
-        if end_node == node:
-            bunch.dumpBunch(CONF['bunch_out_data'])
+        if CONF['dumpBunchOUT'] and end_node == node:
+            bunch.dumpBunch(CONF['bunchOut_filename'])
         pos = paramsDict["path_length"]
         if(paramsDict["old_pos"] == pos): return
         if(paramsDict["old_pos"] + paramsDict["pos_step"] > pos): return
         paramsDict["old_pos"] = pos
-        paramsDict["count"] += 1
+        paramsDict["count"]  += 1
         gamma = bunch.getSyncParticle().gamma()
-        beta = bunch.getSyncParticle().beta()
+        beta  = bunch.getSyncParticle().beta()
         twiss_analysis.analyzeBunch(bunch)
         x_rms = math.sqrt(twiss_analysis.getTwiss(0)[1]*twiss_analysis.getTwiss(0)[3])*1000.
         y_rms = math.sqrt(twiss_analysis.getTwiss(1)[1]*twiss_analysis.getTwiss(1)[3])*1000.
@@ -104,32 +103,32 @@ def main():
         (alphaX,betaX,emittX) = (twiss_analysis.getTwiss(0)[0],twiss_analysis.getTwiss(0)[1],twiss_analysis.getTwiss(0)[3]*1.0e+6)
         (alphaY,betaY,emittY) = (twiss_analysis.getTwiss(1)[0],twiss_analysis.getTwiss(1)[1],twiss_analysis.getTwiss(1)[3]*1.0e+6)
         (alphaZ,betaZ,emittZ) = (twiss_analysis.getTwiss(2)[0],twiss_analysis.getTwiss(2)[1],twiss_analysis.getTwiss(2)[3]*1.0e+6)
-        norm_emittX = emittX*gamma*beta
-        norm_emittY = emittY*gamma*beta
+        norm_emittX           = emittX*gamma*beta
+        norm_emittY           = emittY*gamma*beta
         #---- phi_de_emittZ will be in [pi*deg*MeV]
         phi_de_emittZ = z_to_phase_coeff*emittZ
-        eKin = bunch.getSyncParticle().kinEnergy()*1.0e+3
+        eKin          = bunch.getSyncParticle().kinEnergy()*1.0e+3
 
-    #     result into file
-        s = " %35s %4.5f "%(node.getName(),pos+pos_start)
+        # result into file
+        s  = " %35s %4.5f "%(node.getName(),pos+pos_start)
         s += "%6.4f %6.4f %6.4f %6.4f "%(alphaX,betaX,emittX,norm_emittX)
         s += "%6.4f %6.4f %6.4f %6.4f "%(alphaY,betaY,emittY,norm_emittY)
         s += "%6.4f %6.4f %6.4f %6.4f "%(alphaZ,betaZ,emittZ,phi_de_emittZ)
         s += "%5.3f %5.3f %5.3f "%(x_rms,y_rms,z_rms_deg)
         s += "%10.6f %8d"%(eKin,nParts)
-        result_file.write(s +"\n")
-        result_file.flush()
+        CONF['result_file'].write(s +"\n")
+        CONF['result_file'].flush()
 
-    #     result to console buffer
+        # result to console buffer
         console_buffer_row = []
         console_buffer_row.append(  '%5d'%paramsDict["count"])
         console_buffer_row.append(  '%25s'%node.getName())
         console_buffer_row.append( '%4.5f'%(pos+pos_start))
         console_buffer_row.append( '%5.3f'%x_rms)
-        # console_buffer_row.append( '%5.3f'%y_rms)
-        # console_buffer_row.append( '%5.3f'%z_rms_deg)
-        # console_buffer_row.append('%10.6f'%eKin)
-        # console_buffer_row.append(   '%8d'%nParts)
+        console_buffer_row.append( '%5.3f'%y_rms)
+        console_buffer_row.append( '%5.3f'%z_rms_deg)
+        console_buffer_row.append('%10.6f'%eKin)
+        console_buffer_row.append(   '%8d'%nParts)
         console_buffer_rows.append(console_buffer_row)
 
         # plot result to memory Buffer
@@ -155,7 +154,7 @@ def main():
             ekin          = eKin,                 #17
             nparts        = nParts,
             viseo         = viseo)
-        plot_results.append(plot_result)
+        CONF['plot_data'].append(plot_result)
 
     def action_exit(paramsDict):
         action_entrance(paramsDict)
@@ -165,15 +164,13 @@ def main():
     # section list
     names = ["HE"]
     # keep twiss results
-    plot_results = []
+    CONF['plot_data'] = []
     #---- the XML input file name with the linac structure
     xml_file_name = "../lattice.xml"
 
     #---- create the factory instance
     alceli_linac_factory = ALCELI_LinacLatticeFactory()
     alceli_linac_factory.setMaxDriftLength(0.01)
-
-    ## make lattice from XML file
     accLattice = alceli_linac_factory.getLinacAccLattice(names,xml_file_name)
     print "Linac lattice is ready. L=",accLattice.getLength()
     #----set up RF Gap Model -------------
@@ -182,12 +179,12 @@ def main():
     #---- MatrixRfGap uses a matrix approach like envelope codes
     #---- RfGapTTF uses Transit Time Factors (TTF) like PARMILA
     # cppGapModel = BaseRfGap
-    cppGapModel = MatrixRfGap
+    cppGapModel = MatrixRfGap()
     # cppGapModel = RfGapTTF
     rf_gaps = accLattice.getRF_Gaps()
     for rf_gap in rf_gaps:
-        DEBUG_PYO(rf_gap)
-        rf_gap.setCppGapModel(cppGapModel())
+        DEBUGmain(lineno(),rf_gap)
+        rf_gap.setCppGapModel(cppGapModel)
 
     #------------------------------------------------------------------
     #---- BaseRF_Gap to  AxisFieldRF_Gap direct replacement
@@ -252,17 +249,16 @@ def main():
 
     # print "===== Aperture Nodes Added ======="
 
-    ## twiss parameters at the entrance
+    # twiss parameters at the entrance
     # transverse emittances are unnormalized and in pi*mm*mrad
     # longitudinal emittance is in pi*eV*sec
-    e_kin_ini = 70.e-3 # in [GeV]
-    mass      = 0.939294    # in [GeV]
-    frequency = 816.e+6
-    v_light   = 2.99792458e+8  # in [m/sec]
-    gamma     = (mass + e_kin_ini)/mass
+    Tkin      = 70.e-3                         # in [GeV]
+    mass      = CONF['proton_mass']*1.e-3       # in [GeV]
+    frequency = 816.e+6                        # in [Hz]
+    Clight    = CONF['lichtgeschwindigkeit']   # in [m/sec]
+    gamma     = (mass + Tkin)/mass
     beta      = math.sqrt(gamma*gamma - 1.0)/gamma
-    print "relat. gamma=",gamma
-    print "relat.  beta=",beta
+    print "At injection: T= {}[GeV], gamma= {}, beta= {}".format(Tkin, gamma, beta)
 
     #------ emittances are normalized - transverse by gamma*beta and long. by gamma**3*beta
     (alphaX,betaX,emittX) = (-1.9620, 0.1831, 0.21)
@@ -274,7 +270,7 @@ def main():
     emittX = 1.0e-6*emittX/(gamma*beta)
     emittY = 1.0e-6*emittY/(gamma*beta)
     emittZ = 1.0e-6*emittZ/(gamma**3*beta)
-    print " ========= XAL Twiss ==========="
+    print " ========= Twiss parameters at injection ==========="
     print " aplha beta emitt[mm*mrad] X= %6.4f %6.4f %6.4f "%(alphaX,betaX,emittX*1.0e+6)
     print " aplha beta emitt[mm*mrad] Y= %6.4f %6.4f %6.4f "%(alphaY,betaY,emittY*1.0e+6)
     print " aplha beta emitt[mm*mrad] Z= %6.4f %6.4f %6.4f "%(alphaZ,betaZ,emittZ*1.0e+6)
@@ -286,7 +282,7 @@ def main():
     emittZ = emittZ*gamma**3*beta**2*mass
     betaZ = betaZ/(gamma**3*beta**2*mass)
 
-    print " ========= PyORBIT Twiss ==========="
+    print " ========= PyORBIT parameters at injection ==========="
     print " aplha beta emitt[mm*mrad] X= %6.4f %6.4f %6.4f "%(alphaX,betaX,emittX*1.0e+6)
     print " aplha beta emitt[mm*mrad] Y= %6.4f %6.4f %6.4f "%(alphaY,betaY,emittY*1.0e+6)
     print " aplha beta emitt[mm*MeV] Z= %6.4f %6.4f %6.4f "%(alphaZ,betaZ,emittZ*1.0e+6)
@@ -299,13 +295,14 @@ def main():
     print "Start Bunch Generation",
     bunch_gen = ALCELI_Linac_BunchGenerator(twissX,twissY,twissZ)
     #set the initial kinetic energy in GeV
-    bunch_gen.setKinEnergy(e_kin_ini)
+    bunch_gen.setKinEnergy(Tkin)
     #set the beam peak current in mA
-    bunch_gen.setBeamCurrent(38.0)
-    bunch_in = bunch_gen.getBunch(nParticles = 10000, distributorClass = WaterBagDist3D)
-    #bunch_in = bunch_gen.getBunch(nParticles = 100000, distributorClass = GaussDist3D)
+    bunch_gen.setBeamCurrent(1.0)
+    # bunch_in = bunch_gen.getBunch(nParticles = 10000, distributorClass = WaterBagDist3D)
+    bunch_in = bunch_gen.getBunch(nParticles = 100000, distributorClass = GaussDist3D)
     #bunch_in = bunch_gen.getBunch(nParticles = 10000, distributorClass = KVDist3D)
-    bunch_in.dumpBunch(CONF['bunch_in_data'])
+    if CONF['dumpBunchIN']:
+        bunch_in.dumpBunch(CONF['bunchIn_filename'])
     print " - finished"
 
     ## design tracking
@@ -320,7 +317,8 @@ def main():
     twiss_analysis = BunchTwissAnalysis()
     paramsDict = {"old_pos":-1.,"count":0,"pos_step":0.1}
 
-    result_file = open(CONF['result_data'],"w")
+    result_file = open(CONF['result_filename'],"w")
+    CONF['result_file'] = result_file
     s = "%35s %4s "%('Node','position')
     s += "%6s %6s %6s %6s "%('alphaX','betaX','emittX','normEmittX')
     s += "%6s %6s %6s %6s "%('alphaY','betaY','emittY','normEmittY')
@@ -330,8 +328,8 @@ def main():
     result_file.write(s+"\n")
 
     # console buffer preparation
-    # console_buffer_header = ['N','node','pos','sizeX','sizeY','sizeZ[deg]','eKin','Nparts']
-    console_buffer_header = ['N','node','pos','sizeX']
+    console_buffer_header = ['N','node','pos','sizeX','sizeY','sizeZ[deg]','eKin','Nparts']
+    # console_buffer_header = ['N','node','pos','sizeX']
     console_buffer_rows   = []
 
     # registration of actions
@@ -350,8 +348,8 @@ def main():
     print "RESULTS - RESULTS - RESULTS - RESULTS - RESULTS - RESULTS - RESULTS - RESULTS - RESULTS - RESULTS "
     print tblprnt(console_buffer_header,console_buffer_rows)
     #save structures data with json: here track results for plotting
-    with open(CONF["plot_data"],"w") as plot_file:
-       json.dump(plot_results,plot_file)
+    with open(CONF["plot_filename"],"w") as plot_file:
+       json.dump(CONF['plot_data'],plot_file)
 
 if __name__ == '__main__':
     main()

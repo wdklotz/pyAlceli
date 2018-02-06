@@ -4,11 +4,13 @@ CONF = {      ## CONFIG constants, names and units....
     'elementarladung'     : 1.602176565e-19,     # [coulomb] const
     'proton_mass'         : 938.272,             # [MeV/c**2] const
     'electron_mass'       : 0.5109989,           # [MeV/c**2] const
-    'plot_data'           : 'twiss.dat',
-    'result_data'         : 'result.dat',
-    'bunch_out_data'      : 'bunchi.dat'   ,
-    'bunch_in_data'       : 'bunchf.dat',
+    'plot_filename'           : 'twiss.dat',
+    'result_filename'         : 'result.dat',
+    'bunchOut_filename'       : 'bunchi.dat'   ,
+    'bunchIn_filename'        : 'bunchf.dat',
     'title'               : 'ALCELI',
+    'dumpBunchIN'           : False,
+    'dumpBunchOUT'          : True,
 #     'dWf': False,                # acceleration off/on flag
 #     'E0z_feld': 1.14,            # [MV/m] E(r=0,z)-field strength
 #     'spalt_laenge': 0.044,       # [m] rf gap length

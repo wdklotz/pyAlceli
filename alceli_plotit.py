@@ -146,33 +146,33 @@ def display2(bunch,whazit):
    plt.draw()
 
 ## ============ MAIN ============
-with open(CONF['plot_data'],"r") as f:
+with open(CONF['plot_filename'],"r") as f:
    twiss_data = json.load(f)     # get the whole file in ram
+   display1(twiss_data)
 
+if CONF['dumpBunchIN']:
+   bunch_in=[]
+   with open(CONF['bunchIn_filename'],'r') as file:
+      for line in file:
+         if line[0] == '%':
+            continue
+         else:
+            line = line[:-2].split(' ')
+            bunch_in.append(
+            dict(x=float(line[0]), px=float(line[1]), y=float(line[2]), py=float(line[3]), z=float(line[4]), pz=float(line[5])))
+   display2(bunch_in,'ENTRANCE')
 
-bunch_out=[]
-with open(CONF['bunch_out_data'],'r') as file:
-   for line in file:
-      if line[0] == '%':
-         continue
-      else:
-         line = line[:-2].split(' ')
-         bunch_out.append(
-         dict(x=float(line[0]), px=float(line[1]), y=float(line[2]), py=float(line[3]), z=float(line[4]), pz=float(line[5])))
+if CONF['dumpBunchOUT']:
+   bunch_out=[]
+   with open(CONF['bunchOut_filename'],'r') as file:
+      for line in file:
+         if line[0] == '%':
+            continue
+         else:
+            line = line[:-2].split(' ')
+            bunch_out.append(
+            dict(x=float(line[0]), px=float(line[1]), y=float(line[2]), py=float(line[3]), z=float(line[4]), pz=float(line[5])))
+   display2(bunch_out,'EXIT')
 
-# file = open(CONF['bunch_in'],'r')
-# bunch_in=[]
-# for line in file:
-#    if line[0] == '%':
-#       continue
-#    else:
-#       line = line[:-2].split(' ')
-#       bunch_in.append(
-#       dict(x=float(line[0]), px=float(line[1]), y=float(line[2]), py=float(line[3]), z=float(line[4]), pz=float(line[5])))
-# file.close()
-
-display1(twiss_data)
-# display2(bunch_in,'ENTRANCE')
-display2(bunch_out,'EXIT')
 plt.show()
 
