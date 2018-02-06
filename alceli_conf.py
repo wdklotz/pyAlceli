@@ -1,16 +1,16 @@
 ## CONF
 CONF = {      ## CONFIG constants, names and units....
-    'lichtgeschwindigkeit': 299792458.,          # [m/s] const
-    'elementarladung'     : 1.602176565e-19,     # [coulomb] const
-    'proton_mass'         : 938.272,             # [MeV/c**2] const
-    'electron_mass'       : 0.5109989,           # [MeV/c**2] const
+    'lichtgeschwindigkeit'    : 299792458.,          # [m/s] const
+    'elementarladung'         : 1.602176565e-19,     # [coulomb] const
+    'proton_mass'             : 938.272,             # [MeV/c**2] const
+    'electron_mass'           : 0.5109989,           # [MeV/c**2] const
     'plot_filename'           : 'twiss.dat',
     'result_filename'         : 'result.dat',
-    'bunchOut_filename'       : 'bunchi.dat'   ,
-    'bunchIn_filename'        : 'bunchf.dat',
-    'title'               : 'ALCELI',
-    'dumpBunchIN'           : False,
-    'dumpBunchOUT'          : True,
+    'bunchOut_filename'       : 'bunchf.dat'   ,
+    'bunchIn_filename'        : 'bunchi.dat',
+    'title'                   : 'ALCELI',
+    'dumpBunchIN'             : False,
+    'dumpBunchOUT'            : True,
 #     'dWf': False,                # acceleration off/on flag
 #     'E0z_feld': 1.14,            # [MV/m] E(r=0,z)-field strength
 #     'spalt_laenge': 0.044,       # [m] rf gap length

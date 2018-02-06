@@ -145,7 +145,7 @@ def display2(bunch,whazit):
    make_scatter(ax4,z,pz,'z,pz')     #z,pz
    plt.draw()
 
-## ============ MAIN ============
+# ============ MAIN ============
 with open(CONF['plot_filename'],"r") as f:
    twiss_data = json.load(f)     # get the whole file in ram
    display1(twiss_data)
