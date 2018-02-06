@@ -17,6 +17,7 @@ import math
 import random
 import time
 import json
+import pprint
 
 # from linac & bunch import the C++ RF gap classes
 from linac import BaseRfGap, MatrixRfGap, RfGapTTF
@@ -35,8 +36,29 @@ from orbit.py_linac.lattice_modifications import Replace_BaseRF_Gap_to_AxisField
 
 from alceli_linac_bunch_generator import ALCELI_Linac_BunchGenerator
 from alceli_linac_lattice_factory import ALCELI_LinacLatticeFactory
-
 from alceli_conf import CONF
+
+PP = pprint.PrettyPrinter(indent=4).pprint
+
+# DEBUG
+import inspect
+def lineno():
+   return (inspect.getframeinfo(inspect.currentframe()).filename,inspect.currentframe().f_lineno)
+def DEBUG(arg):
+   if isinstance(arg,str):
+      print'DEBUG{}: '.format(lineno())+arg
+   elif isinstance(arg,(tuple,list,dict)):
+      for i in arg:
+         print 'DEBUG{}: '.format(lineno())
+         PP(i)
+   else:
+      print'DEBUG{}: '.format(lineno()),repr(arg)
+def DEBUG_ON(*args):
+    DEBUG(args)
+def DEBUG_OFF(args):
+    pass
+
+DEBUG_PYO = DEBUG_ON
 
 def tblprnt(headr,records):
     """
@@ -57,7 +79,6 @@ def tblprnt(headr,records):
             s+=" | ".join((val.ljust(width) for val,width in zip(row, widths)))+'\n'
     return s
 
-## =========== Main ==================
 def main():
     def action_entrance(paramsDict):
         node     = paramsDict["node"]
@@ -105,10 +126,10 @@ def main():
         console_buffer_row.append(  '%25s'%node.getName())
         console_buffer_row.append( '%4.5f'%(pos+pos_start))
         console_buffer_row.append( '%5.3f'%x_rms)
-        console_buffer_row.append( '%5.3f'%y_rms)
-        console_buffer_row.append( '%5.3f'%z_rms_deg)
-        console_buffer_row.append('%10.6f'%eKin)
-        console_buffer_row.append(   '%8d'%nParts)
+        # console_buffer_row.append( '%5.3f'%y_rms)
+        # console_buffer_row.append( '%5.3f'%z_rms_deg)
+        # console_buffer_row.append('%10.6f'%eKin)
+        # console_buffer_row.append(   '%8d'%nParts)
         console_buffer_rows.append(console_buffer_row)
 
         # plot result to memory Buffer
@@ -146,8 +167,7 @@ def main():
     # keep twiss results
     plot_results = []
     #---- the XML input file name with the linac structure
-    # xml_file_name = "./alceli.xml"
-    xml_file_name = "lattice.xml"
+    xml_file_name = "../lattice.xml"
 
     #---- create the factory instance
     alceli_linac_factory = ALCELI_LinacLatticeFactory()
@@ -156,17 +176,17 @@ def main():
     ## make lattice from XML file
     accLattice = alceli_linac_factory.getLinacAccLattice(names,xml_file_name)
     print "Linac lattice is ready. L=",accLattice.getLength()
-
     #----set up RF Gap Model -------------
     #---- There are three available models at this moment
     #---- BaseRfGap  uses only E0TL*cos(phi)*J0(kr) with E0TL = const
     #---- MatrixRfGap uses a matrix approach like envelope codes
     #---- RfGapTTF uses Transit Time Factors (TTF) like PARMILA
-    cppGapModel = BaseRfGap
-    #cppGapModel = MatrixRfGap
+    # cppGapModel = BaseRfGap
+    cppGapModel = MatrixRfGap
     # cppGapModel = RfGapTTF
     rf_gaps = accLattice.getRF_Gaps()
     for rf_gap in rf_gaps:
+        DEBUG_PYO(rf_gap)
         rf_gap.setCppGapModel(cppGapModel())
 
     #------------------------------------------------------------------
@@ -310,7 +330,8 @@ def main():
     result_file.write(s+"\n")
 
     # console buffer preparation
-    console_buffer_header = ['N','node','pos','sizeX','sizeY','sizeZ[deg]','eKin','Nparts']
+    # console_buffer_header = ['N','node','pos','sizeX','sizeY','sizeZ[deg]','eKin','Nparts']
+    console_buffer_header = ['N','node','pos','sizeX']
     console_buffer_rows   = []
 
     # registration of actions

@@ -6,6 +6,6 @@ source ../pyOrbit/customEnvironment.sh 1>/dev/null
 elif [ $HOST = 'Linux' ]
 then
 #echo $HOST
-source ../pyOrbit/setupEnvironment.sh
+source ../py-orbit/activate
 fi
 python alceli_plotit.py

@@ -9,7 +9,34 @@ The ALCELI Linac Lattice Factory uses a predefined set of Linac Acc Elements.
 
 import os
 import sys
+import string
 import math
+import pprint
+
+PP = pprint.PrettyPrinter(indent=4).pprint
+
+# DEBUG
+import pprint
+import inspect
+PP = pprint.PrettyPrinter(indent=4).pprint
+def lineno():
+   return inspect.currentframe().f_back.f_lineno
+def DEBUG(line,arg):
+    if isinstance(arg,str):
+        print'DEBUG[{}]: '.format(line)+arg
+    elif isinstance(arg,(tuple,list,dict)):
+        print'DEBUG[{}]: '.format(line)
+        for i in arg:
+            PP(i)
+    else:
+        print'DEBUG[{}]: '.format(line)+repr(arg)
+def DEBUG_ON(*args):
+    DEBUG(*args)
+def DEBUG_OFF(*args):
+    pass
+
+DEBUG_FAC = DEBUG_ON
+EXIT      = sys.exit
 
 # import the XmlDataAdaptor XML parser
 from orbit.utils.xml import XmlDataAdaptor
@@ -27,9 +54,6 @@ from orbit.lattice import AccNode
 
 # import pyORBIT Python utilities classes for objects with names, types, and dictionary parameters
 from orbit.utils import orbitFinalize
-
-import pprint
-PP = pprint.PrettyPrinter(indent=4).pprint
 
 class ALCELI_LinacLatticeFactory():
    """
@@ -68,8 +92,11 @@ class ALCELI_LinacLatticeFactory():
          orbitFinalize(msg)
       #----- let's parse the XML file
       acc_da = XmlDataAdaptor.adaptorForFile(xml_file_name)
-      return self.getLinacAccLatticeFromDA(names,acc_da)
-
+      # DEBUG_FAC(lineno(),acc_da)
+      # DEBUG_FAC(lineno(),acc_da.__dict__)
+      lattice = self.getLinacAccLatticeFromDA(names,acc_da)
+      EXIT(9)
+      return lattice
    def getLinacAccLatticeFromDA(self,names,acc_da):
       """
       Returns the linac accelerator lattice for specified sequence names.
@@ -80,15 +107,17 @@ class ALCELI_LinacLatticeFactory():
          msg = msg + "Stop."
          msg = msg + os.linesep
          orbitFinalize(msg)
+      # DEBUG_FAC(lineno(),acc_da.getName())
       #----- let's parse the XML DataAdaptor
       accSeq_da_arr = acc_da.childAdaptors()
+      # DEBUG_FAC(lineno(),accSeq_da_arr[0].makeXmlText())
       #-----let's filter and check that the names in good order
       accSeq_da_arr = self.filterSequences_and_OptionalCheck(accSeq_da_arr,names)
-      # for i in accSeq_da_arr:  print'DEBUG: ',;PP( i.getAttributes())
-      #----make linac lattice
-      # print'DEBUG: ',;PP(acc_da.getName())
+      # DEBUG_FAC(lineno(),accSeq_da_arr)
+      # DEBUG_FAC(lineno(),string.join(['{}'.format(i.getAttributes()) for i in accSeq_da_arr]))
+      #----make linac latticeaccSeq
       linacAccLattice = LinacAccLattice(acc_da.getName())
-      # print'DEBUG: ',;PP(linacAccLattice.__dict__)
+      # DEBUG_FAC(lineno(),linacAccLattice.__dict__)
       #There are the folowing possible types of elements in the linac tree:
       #QUAD - quadrupole
       #RFGAP - RF Gap
@@ -112,8 +141,8 @@ class ALCELI_LinacLatticeFactory():
       accRF_Cavs = []
       seqPosition = 0.
       for seq_da in accSeq_da_arr:
-         # print'DEBUG:seq: ',;PP(seq_da.getName())
          accSeq = Sequence(seq_da.getName())
+         # DEBUG_FAC(lineno(),'seq: {}'.format(accSeq.getName()))
          accSeq.setLinacAccLattice(linacAccLattice)
          accSeq.setLength(seq_da.doubleValue("length"))
          accSeq.setPosition(seqPosition)
@@ -124,12 +153,12 @@ class ALCELI_LinacLatticeFactory():
             accSeq.addParam("bpmFrequency",bpmFrequency)
          #-----------------------------------------
          accSeqs.append(accSeq)
-         # for i in accSeqs: print'DEBUG:accSeqs: ',;PP(i.__dict__)
+         # DEBUG_FAC(lineno(),'sequences: '+string.join(['{}'.format(i.getName()) for i in accSeqs]))
          #---- create RF Cavities
          if(len(seq_da.childAdaptors("Cavities")) == 1):
             cavs_da = seq_da.childAdaptors("Cavities")[0]
             cav_da_arr = cavs_da.childAdaptors("Cavity")
-            # for i in cav_da_arr: print'DEBUG:cav_da_arr: ',;PP(i.__dict__)
+            # DEBUG_FAC(lineno(),'Cavities: '+string.join(['{}'.format(i.stringValue('name')) for i in cav_da_arr]))
             for cav_da in cav_da_arr:
                frequency = cav_da.doubleValue("frequency")
                cav_amp = cav_da.doubleValue("ampl")
@@ -140,6 +169,7 @@ class ALCELI_LinacLatticeFactory():
                cav.setFrequency(frequency)
                cav.setPosition(cav_pos)
                accSeq.addRF_Cavity(cav)
+               # DEBUG_FAC(lineno(),cav.__dict__)
          #----------------------------
          #node_da_arr - array of nodes. These nodes are not AccNodes. They are XmlDataAdaptor class instances
          node_da_arr = seq_da.childAdaptors("accElement")
@@ -152,11 +182,13 @@ class ALCELI_LinacLatticeFactory():
          #of this method
          thinNodes = []
          for node_da in node_da_arr:
-            # i=node_da; print'DEBUG:node_da: ',;PP( i.getName()+' '+i.stringValue('name')+' '+i.stringValue('pos'))
-            params_da = node_da.childAdaptors("parameters")[0]
-            node_type = node_da.stringValue("type")
-            node_length = node_da.doubleValue("length")
-            node_pos = node_da.getParam("pos")
+            params_da    = node_da.childAdaptors("parameters")[0]
+            node_tagname = node_da.getName()
+            node_name    = node_da.stringValue('name')
+            node_type    = node_da.stringValue("type")
+            node_length  = node_da.doubleValue("length")
+            node_pos     = node_da.getParam("pos")
+            # DEBUG_FAC(lineno(),'node_da: {} {} {} len= {} pos={}'.format( node_tagname,node_name,node_type,node_length,node_pos))
             #------------QUAD-----------------
             if(node_type == "QUAD"):
                accNode = Quad(node_da.stringValue("name"))
@@ -183,7 +215,7 @@ class ALCELI_LinacLatticeFactory():
                   accNode.setParam("radOut",params_da.doubleValue("radOut"))
                accNode.setParam("pos",node_pos)
                accSeq.addNode(accNode)
-#                print'DEBUG:accNode: ',;PP(accNode.__dict__)
+               # DEBUG_FAC(lineno(),'accNode: {}'.format(accNode.__dict__))
             #------------BEND-----------------
             elif(node_type == "BEND"):
                accNode = Bend(node_da.stringValue("name"))
@@ -222,17 +254,11 @@ class ALCELI_LinacLatticeFactory():
                cav.addRF_GapNode(accNode)
                if(accNode.isFirstRFGap()):
                   cav.setPhase(accNode.getParam("gap_phase"))
-               # print'DEBUG:accNode: ',;PP(accNode.__dict__)
                #---- TTFs parameters
                ttfs_da = node_da.childAdaptors("TTFs")[0]
-               # print'DEBUG:ttfs_da: ',;PP(ttfs_da.__dict__)
                accNode.setParam("beta_min",ttfs_da.doubleValue("beta_min"))
                accNode.setParam("beta_max",ttfs_da.doubleValue("beta_max"))
                (polyT,polyS,polyTp,polySp) = accNode.getTTF_Polynimials()
-               # print'DEBUG:ttfs_da.childAdaptors("polyT"): ',;PP(ttfs_da.childAdaptors("polyT"))
-               # print'DEBUG:ttfs_da.childAdaptors("polyS"): ',;PP(ttfs_da.childAdaptors("polyS"))
-               # print'DEBUG:ttfs_da.childAdaptors("polyTP"): ',;PP(ttfs_da.childAdaptors("polyTP"))
-               # print'DEBUG:ttfs_da.childAdaptors("polySP"): ',;PP(ttfs_da.childAdaptors("polySP"))
                polyT_da = ttfs_da.childAdaptors("polyT")[0]
                polyS_da = ttfs_da.childAdaptors("polyS")[0]
                polyTp_da = ttfs_da.childAdaptors("polyTP")[0]
@@ -243,7 +269,6 @@ class ALCELI_LinacLatticeFactory():
                polySp.order(polySp_da.intValue("order"))
                coef_arr = polyT_da.doubleArrayValue("pcoefs")
                for coef_ind in range(len(coef_arr)):
-                  # print'DEBUG:coef_ind,range(len(coef_arr): ',;PP((coef_ind,range(len(coef_arr))))
                   polyT.coefficient(coef_ind,coef_arr[coef_ind])
                coef_arr = polyS_da.doubleArrayValue("pcoefs")
                for coef_ind in range(len(coef_arr)):
@@ -259,7 +284,7 @@ class ALCELI_LinacLatticeFactory():
                   accNode.setParam("aperture",params_da.doubleValue("aperture"))
                accNode.setParam("pos",node_pos)
                accSeq.addNode(accNode)
-               # print'DEBUG:accNode: ',;PP(accNode.__dict__)
+               # DEBUG_FAC(lineno(),'accNode: '+string.join(['\n\t{} : {}'.format(k,v) for k,v in accNode.__dict__.items()]))
             else:
                if(node_length != 0.):
                   msg = "The LinacLatticeFactory method getLinacAccLattice(names): there is a strange element!"
@@ -310,14 +335,15 @@ class ALCELI_LinacLatticeFactory():
          newAccNodes.sort(positionComp)
          accSeq.setNodes(newAccNodes)
          #insert the drifts ======================start ===========================
-         #-----now check the integrety quads and rf_gaps should not overlap
+         #-----now check the integrity quads and rf_gaps should not overlap
          #-----and create drifts
          copyAccNodes = accSeq.getNodes()[:]
+         # DEBUG_FAC(lineno(),copyAccNodes)
          firstNode = copyAccNodes[0]
          lastNode = copyAccNodes[len(copyAccNodes)-1]
          driftNodes_before = []
          driftNodes_after = []
-         #insert the drift before the first element if its half length less than its position
+         #insert the drift before the first element if its half length is less than its position
          if(math.fabs(firstNode.getLength()/2.0 - firstNode.getParam("pos")) > self.zeroDistance):
             if(firstNode.getLength()/2.0 > firstNode.getParam("pos")):
                msg = "The LinacLatticeFactory method getLinacAccLattice(names): the first node is too long!"
@@ -376,7 +402,7 @@ class ALCELI_LinacLatticeFactory():
             newAccNodes.append(accNode0)
             accNode1 = copyAccNodes[node_ind+1]
             dist = accNode1.getParam("pos") - accNode1.getLength()/2 - (accNode0.getParam("pos") + accNode0.getLength()/2)
-#             print 'DEBUG:dist(ance) (from,to,[m]): ',;PP((accNode0.getName(),accNode1.getName(),'%8.4f' % dist))
+            # DEBUG_FAC(lineno(),'distance from {},to {}, {:8.4f}[m]'.format(accNode0.getName(),accNode1.getName(),dist))
             if(abs(dist)<1.e-10): dist = 0.
             if(dist < 0.):
                msg = "The LinacLatticeFactory method getLinacAccLattice(names): two nodes are overlapping!"
@@ -409,6 +435,15 @@ class ALCELI_LinacLatticeFactory():
             linacAccLattice.addNode(accNode)
       #------- finalize the lattice construction
       linacAccLattice.initialize()
+      nodes = linacAccLattice.getNodes()
+      if DEBUG_FAC == DEBUG_ON:
+         DEBUG_FAC(lineno(),'LinacAccLattice')
+         for i in range(0,len(nodes)-1):
+            sl = nodes[i].getLength()
+            sm = nodes[i].getParam("pos")
+            s0 = sm-sl/2.
+            s1 = sm+sl/2.
+            print('{} \t(s0,sm,sl) ({},{},{})'.format(nodes[i],s0,sm,s1))
       return linacAccLattice
 
    def filterSequences_and_OptionalCheck(self,accSeq_da_arr,names):
