@@ -8,4 +8,4 @@ then
 #echo $HOST
 source ../pyOrbit/activate
 fi
-./START.sh alceli_pyorbit_linac.py 1
+./START.sh alceli_linac.py 1

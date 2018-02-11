@@ -4,13 +4,16 @@ CONF = {      ## CONFIG constants, names and units....
     'elementarladung'         : 1.602176565e-19,     # [coulomb] const
     'proton_mass'             : 938.272,             # [MeV/c**2] const
     'electron_mass'           : 0.5109989,           # [MeV/c**2] const
-    'plot_filename'           : 'twiss.dat',
+    'twiss_filename'          : 'twiss.dat',
     'result_filename'         : 'result.dat',
     'bunchOut_filename'       : 'bunchf.dat'   ,
     'bunchIn_filename'        : 'bunchi.dat',
     'title'                   : 'ALCELI',
-    'dumpBunchIN'             : False,
+    'dumpBunchIN'             : True,
     'dumpBunchOUT'            : True,
+    'twissPlot'               : False,
+     }
+
 #     'dWf': False,                # acceleration off/on flag
 #     'E0z_feld': 1.14,            # [MV/m] E(r=0,z)-field strength
 #     'spalt_laenge': 0.044,       # [m] rf gap length
@@ -34,5 +37,3 @@ CONF = {      ## CONFIG constants, names and units....
 #     'E0L': -0.0500e-3,           # [GeV] E0L average gap voltage
 #     'nRFG': 10,                  # nboff gaps per rf sektion
 #     'nbZell': 200,               # nboff fodo cells
-     }
-

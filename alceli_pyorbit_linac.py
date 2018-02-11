@@ -12,6 +12,7 @@ The usual BaseRF_Gap nodes have a zero length.
 The apertures are added to the lattice.
 """
 
+import os
 import sys
 import math
 import random
@@ -42,22 +43,23 @@ import pprint
 import inspect
 PP = pprint.PrettyPrinter(indent=4).pprint
 def lineno():
-   return inspect.currentframe().f_back.f_lineno
+    return inspect.currentframe().f_back.f_lineno
 def DEBUG(line,arg):
+    file = os.path.basename(__file__)
     if isinstance(arg,str):
-        print'DEBUG[{}]: '.format(line)+arg
+        print'DEBUG[{}-{}]: '.format(line,file)+arg
     elif isinstance(arg,(tuple,list,dict)):
-        print'DEBUG[{}]: '.format(line)
+        print'DEBUG[{}-{}]: '.format(line,file),
         for i in arg:
             PP(i)
     else:
-        print'DEBUG[{}]: '.format(line)+repr(arg)
+        print'DEBUG[{}-{}]: '.format(line,file)+repr(arg)
 def DEBUG_ON(*args):
     DEBUG(*args)
 def DEBUG_OFF(*args):
     pass
 
-DEBUGmain = DEBUG_OFF
+DEBUG_MAIN = DEBUG_OFF
 
 def tblprnt(headr,records):
     """
@@ -85,8 +87,10 @@ def main():
         lattice  = paramsDict["lattice"]
         end_node = lattice.getNodes()[-1]
         if CONF['dumpBunchOUT'] and end_node == node:
+            DEBUG_MAIN('bunch.getSize(): ',bunch.getSize())
             bunch.dumpBunch(CONF['bunchOut_filename'])
         pos = paramsDict["path_length"]
+        DEBUG_MAIN(lineno(),'path_length {}'.format(pos))
         if(paramsDict["old_pos"] == pos): return
         if(paramsDict["old_pos"] + paramsDict["pos_step"] > pos): return
         paramsDict["old_pos"] = pos
@@ -178,12 +182,12 @@ def main():
     #---- BaseRfGap  uses only E0TL*cos(phi)*J0(kr) with E0TL = const
     #---- MatrixRfGap uses a matrix approach like envelope codes
     #---- RfGapTTF uses Transit Time Factors (TTF) like PARMILA
-    # cppGapModel = BaseRfGap
+    # cppGapModel = BaseRfGap()
     cppGapModel = MatrixRfGap()
     # cppGapModel = RfGapTTF
     rf_gaps = accLattice.getRF_Gaps()
     for rf_gap in rf_gaps:
-        DEBUGmain(lineno(),rf_gap)
+        DEBUG_MAIN(lineno(),rf_gap)
         rf_gap.setCppGapModel(cppGapModel)
 
     #------------------------------------------------------------------
@@ -264,7 +268,6 @@ def main():
     (alphaX,betaX,emittX) = (-1.9620, 0.1831, 0.21)
     (alphaY,betaY,emittY) = ( 1.7681, 0.1620, 0.21)
     (alphaZ,betaZ,emittZ) = ( 0.0196, 0.5844, 0.24153)
-    alphaZ = -alphaZ
 
     #---make emittances un-normalized XAL units [m*rad]
     emittX = 1.0e-6*emittX/(gamma*beta)
@@ -291,7 +294,7 @@ def main():
     twissY = TwissContainer(alphaY,betaY,emittY)
     twissZ = TwissContainer(alphaZ,betaZ,emittZ)
 
-    ## bunch generation
+    # bunch generation
     print "Start Bunch Generation",
     bunch_gen = ALCELI_Linac_BunchGenerator(twissX,twissY,twissZ)
     #set the initial kinetic energy in GeV
@@ -305,13 +308,13 @@ def main():
         bunch_in.dumpBunch(CONF['bunchIn_filename'])
     print " - finished"
 
-    ## design tracking
+    # design tracking
     print "Design tracking started",
     #set up design
     accLattice.trackDesignBunch(bunch_in)
     print " - finished"
 
-    ## bunch tracking preparation
+    # bunch tracking preparation
     actionContainer = AccActionsContainer("Test Design Bunch Tracking")
     pos_start = 0.
     twiss_analysis = BunchTwissAnalysis()
@@ -333,10 +336,10 @@ def main():
     console_buffer_rows   = []
 
     # registration of actions
-    actionContainer.addAction(action_entrance, AccActionsContainer.ENTRANCE)
+    # actionContainer.addAction(action_entrance, AccActionsContainer.ENTRANCE)
     actionContainer.addAction(action_exit, AccActionsContainer.EXIT)
 
-    ## bunch tracking
+    # bunch tracking
     print "Bunch tracking started",
     time_start = time.clock()
     accLattice.trackBunch(bunch_in, paramsDict = paramsDict, actionContainer = actionContainer)
@@ -344,12 +347,13 @@ def main():
     print " - finished in {:4.2f} [sec]".format(time_exec)
     result_file.close()
 
-    ## results
+    # results
     print "RESULTS - RESULTS - RESULTS - RESULTS - RESULTS - RESULTS - RESULTS - RESULTS - RESULTS - RESULTS "
     print tblprnt(console_buffer_header,console_buffer_rows)
-    #save structures data with json: here track results for plotting
-    with open(CONF["plot_filename"],"w") as plot_file:
-       json.dump(CONF['plot_data'],plot_file)
+    if CONF['twissPlot']:
+        #save structures data with json: here track results for plotting
+        with open(CONF["twiss_filename"],"w") as file:
+            json.dump(CONF['plot_data'], file)
 
 if __name__ == '__main__':
     main()

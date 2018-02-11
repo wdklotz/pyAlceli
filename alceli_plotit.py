@@ -125,13 +125,12 @@ def make_scatter(axScatter,x,y,whazit):
 def display2(bunch,whazit):
    x=[]; px=[]; y=[]; py=[];z=[]; pz=[]
    for item in bunch:
-#       print item
-      x.append (item['x']*1.e3)     #[mm]
-      px.append(item['px']*1.e3)    #[mrad]?
-      y.append (item['y']*1.e3)     #[mm]
-      py.append(item['py']*1.e3)    #[mrad]?
-      z.append (item['z']*1.e3)     #[mm]
-      pz.append(item['pz']*1.e6)    #[??]
+      x.append (item[0]*1.e3)     #[mm]
+      px.append(item[1]*1.e3)     #[mrad]?
+      y.append (item[2]*1.e3)     #[mm]
+      py.append(item[3]*1.e3)     #[mrad]?
+      z.append (item[4]*1.e3)     #[mm]
+      pz.append(item[5]*1.e6)     #[??]
 
    width= 9.;   height = 9.
    fig = plt.figure(CONF['title']+", scatter plots@"+whazit,figsize=(width,height))
@@ -146,9 +145,10 @@ def display2(bunch,whazit):
    plt.draw()
 
 # ============ MAIN ============
-with open(CONF['plot_filename'],"r") as f:
-   twiss_data = json.load(f)     # get the whole file in ram
-   display1(twiss_data)
+if CONF['twissPlot']:
+   with open(CONF['twiss_filename'],"r") as f:
+      twiss_data = json.load(f)     # get the whole file in ram
+      display1(twiss_data)
 
 if CONF['dumpBunchIN']:
    bunch_in=[]
@@ -157,9 +157,9 @@ if CONF['dumpBunchIN']:
          if line[0] == '%':
             continue
          else:
-            line = line[:-2].split(' ')
-            bunch_in.append(
-            dict(x=float(line[0]), px=float(line[1]), y=float(line[2]), py=float(line[3]), z=float(line[4]), pz=float(line[5])))
+            line = line.split(' ')
+            kovector = [float(line[i]) for i in range(len(line)-1)]
+            bunch_in.append(kovector)
    display2(bunch_in,'ENTRANCE')
 
 if CONF['dumpBunchOUT']:
@@ -169,9 +169,9 @@ if CONF['dumpBunchOUT']:
          if line[0] == '%':
             continue
          else:
-            line = line[:-2].split(' ')
-            bunch_out.append(
-            dict(x=float(line[0]), px=float(line[1]), y=float(line[2]), py=float(line[3]), z=float(line[4]), pz=float(line[5])))
+            line = line.split(' ')
+            kovector = [float(line[i]) for i in range(len(line)-1)]
+            bunch_out.append(kovector)
    display2(bunch_out,'EXIT')
 
 plt.show()
