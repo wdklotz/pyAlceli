@@ -34,7 +34,7 @@ from orbit.py_linac.lattice_modifications import AddScrapersAperturesToLattice
 # Option: BaseRF_Gap to  AxisFieldRF_Gap replacement
 from orbit.py_linac.lattice_modifications import Replace_BaseRF_Gap_to_AxisField_Nodes
 
-# import python customized for ALCELI
+# import python modules customized for ALCELI
 from acBunchGenerator import AcLinacBunchGenerator
 from acLatticeFactory import AcLinacLatticeFactory
 from acConf import CONF
@@ -67,9 +67,8 @@ def action_exit(paramsDict):
     bunch = paramsDict["bunch"]
     gamma = bunch.getSyncParticle().gamma()
     beta  = bunch.getSyncParticle().beta()
-    if CONF['dumpBunchOUT']:
-        DEBUG_MAIN(__file__,lineno(),'bunch.getSize(): {}'.format(bunch.getSize()))
-        bunch.dumpBunch(CONF['bunchOut_filename'])
+    node  = paramsDict["node"]
+    DEBUG_ON(__file__,lineno(),'exit action at node: {}'.format(node.getName()))
     
 
 def main():
@@ -190,15 +189,15 @@ def main():
         node.trackActions(actionContainer, paramsDict=paramsDict)
     # last node
     end_node = nodes[-1]
-    DEBUG_MAIN(__file__,lineno(),end_node)
     actionContainer.addAction(action_exit, AccActionsContainer.EXIT)    
     end_node.trackActions(actionContainer, paramsDict=paramsDict)
     time_exec = time.clock() - time_start
     print " - finished in {:4.2f} [sec]".format(time_exec)
+    # DEBUG_ON(__file__,lineno(),'last node: {}'.format(end_node.getName()))
 
     # DUMP bunch at lattice end
     if CONF['dumpBunchOUT']:
-        DEBUG_MAIN(__file__,lineno(),'bunch.getSize(): {}'.format(bunch.getSize()))
+        # DEBUG_MAIN(__file__,lineno(),'bunch.getSize(): {}'.format(bunch.getSize()))
         bunch.dumpBunch(CONF['bunchOut_filename'])
 
 if __name__ == '__main__':

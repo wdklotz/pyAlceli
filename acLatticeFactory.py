@@ -32,7 +32,7 @@ from orbit.utils import orbitFinalize
 # DEBUG
 from orbit.utils.debugHelpers import caller_name, lineno, DEBUG_ON, DEBUG_OFF, DEXIT
 
-DEBUG_FACTORY = DEBUG_ON
+DEBUG_FACTORY = DEBUG_OFF
 
 class AcLinacLatticeFactory():
    """
