@@ -1,4 +1,4 @@
-echo "running alceli_pyorbit_linac - wait"
+echo "running acLinac - wait"
 ./runit
 echo "plotting results - wait"
 ./plotit

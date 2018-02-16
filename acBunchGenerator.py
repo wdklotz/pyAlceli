@@ -24,7 +24,7 @@ from orbit.bunch_generators import TwissAnalysis
 
 from bunch import Bunch
 
-class ALCELI_LinacBunchGenerator:
+class AcLinacBunchGenerator:
 	"""
 	Generates the pyORBIT ALCELI Linac Bunches.
 	Twiss parameters has the fol following units: x in [m], xp in [rad]

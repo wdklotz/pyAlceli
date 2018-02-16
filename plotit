@@ -8,4 +8,4 @@ then
 #echo $HOST
 source ../py-orbit/activate
 fi
-python alceli_plotit.py
+python acPlotit.py

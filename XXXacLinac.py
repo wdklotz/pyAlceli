@@ -33,33 +33,16 @@ from orbit.py_linac.lattice_modifications import AddMEBTChopperPlatesAperturesTo
 from orbit.py_linac.lattice_modifications import AddScrapersAperturesToLattice
 # Option: BaseRF_Gap to  AxisFieldRF_Gap replacement
 from orbit.py_linac.lattice_modifications import Replace_BaseRF_Gap_to_AxisField_Nodes
+
 # import python customized for ALCELI
-from alceli_linac_bunch_generator import ALCELI_Linac_BunchGenerator
-from alceli_linac_lattice_factory import ALCELI_LinacLatticeFactory
-from alceli_conf import CONF
+from acBunchGenerator import AcLinacBunchGenerator
+from acLatticeFactory import AcLinacLatticeFactory
+from acConf import CONF
 
 # DEBUG
-import pprint
-import inspect
-PP = pprint.PrettyPrinter(indent=4).pprint
-def lineno():
-    return inspect.currentframe().f_back.f_lineno
-def DEBUG(line,arg):
-    file = os.path.basename(__file__)
-    if isinstance(arg,str):
-        print'DEBUG[{}-{}]: '.format(line,file)+arg
-    elif isinstance(arg,(tuple,list,dict)):
-        print'DEBUG[{}-{}]: '.format(line,file),
-        for i in arg:
-            PP(i)
-    else:
-        print'DEBUG[{}-{}]: '.format(line,file)+repr(arg)
-def DEBUG_ON(*args):
-    DEBUG(*args)
-def DEBUG_OFF(*args):
-    pass
+from orbit.utils.debugHelpers import caller_name, lineno, DEBUG_ON, DEBUG_OFF, DEXIT
 
-DEBUG_MAIN = DEBUG_OFF
+DEBUG_MAIN = DEBUG_ON
 
 def tblprnt(headr,records):
     """
@@ -88,10 +71,10 @@ def action_exit(paramsDict):
     pos_start = paramsDict['pos_start']
     end_node = lattice.getNodes()[-1]
     if CONF['dumpBunchOUT'] and end_node == node:
-        DEBUG_MAIN('bunch.getSize(): ',bunch.getSize())
+        # DEBUG_MAIN(__file__,lineno(),'bunch.getSize(): {}'.format(bunch.getSize()))
         bunch.dumpBunch(CONF['bunchOut_filename'])
     pos = paramsDict["path_length"]
-    DEBUG_MAIN(lineno(),'path_length {}'.format(pos))
+    # DEBUG_MAIN(__file__,lineno(),'path_length {}'.format(pos))
     if(paramsDict["old_pos"] == pos): return
     if(paramsDict["old_pos"] + paramsDict["pos_step"] > pos): return
     paramsDict["old_pos"] = pos
@@ -161,6 +144,7 @@ def action_exit(paramsDict):
         nparts        = nParts,
         viseo         = viseo)
     CONF['plot_data'].append(plot_result)
+    # print(''.join(['{} k {} v {}\n'.format(lineno(), k, v) for k,v in plot_result.items()]))
 
 # def action_exit(paramsDict):
 #         action_entrance(paramsDict)
@@ -175,9 +159,10 @@ def main():
     xml_file_name = "../lattice.xml"
 
     #---- create the factory instance
-    alceli_linac_factory = ALCELI_LinacLatticeFactory()
+    alceli_linac_factory = AcLinacLatticeFactory()
     alceli_linac_factory.setMaxDriftLength(0.01)
     accLattice = alceli_linac_factory.getLinacAccLattice(names,xml_file_name)
+    DEBUG_MAIN(__file__,lineno(),accLattice)
     print "Linac lattice is ready. L=",accLattice.getLength()
     #----set up RF Gap Model -------------
     #---- There are three available models at this moment
@@ -189,9 +174,20 @@ def main():
     # cppGapModel = RfGapTTF
     rf_gaps = accLattice.getRF_Gaps()
     for rf_gap in rf_gaps:
-        DEBUG_MAIN(lineno(),rf_gap)
+        # DEBUG_MAIN(__file__,lineno(),rf_gap)
         rf_gap.setCppGapModel(cppGapModel)
-
+    quads = accLattice.getQuads()
+    for cnt,quad in enumerate(quads):
+        quad.setUsageFringeFieldOUT(usage = False)
+        quad.setUsageFringeFieldIN(usage = False)
+        if cnt == 1:
+            # DEBUG_MAIN(__file__,lineno(),quad.__dict__)
+            # DEBUG_MAIN(__file__,lineno(),quad.getNodeFringeFieldIN().__dict__)
+            # DEBUG_MAIN(__file__,lineno(),quad.getNodeFringeFieldOUT().__dict__)
+            # DEBUG_MAIN(__file__,lineno(),quad.getNodeTiltIN().__dict__)
+            # DEBUG_MAIN(__file__,lineno(),quad.getNodeTiltOUT().__dict__)
+            pass
+        
     # twiss parameters at the entrance
     # transverse emittances are unnormalized and in pi*mm*mrad
     # longitudinal emittance is in pi*eV*sec
@@ -249,7 +245,7 @@ def main():
 
     # BUNCH generation
     print "Start Bunch Generation",
-    bunch_gen  = ALCELI_Linac_BunchGenerator(twissX,twissY,twissZ)
+    bunch_gen  = AcLinacBunchGenerator(twissX,twissY,twissZ)
     paramsDict = {'BunchGenerator':bunch_gen}
     #set the initial kinetic energy in GeV
     bunch_gen.setKinEnergy(Tkin)
@@ -267,6 +263,8 @@ def main():
     accLattice.trackDesignBunch(bunch_in)
     print " - finished"
 
+    # DEXIT()
+    
     # BUNCH tracking preparation
     actionContainer         = AccActionsContainer("Test Design Bunch Tracking")
     paramsDict["old_pos"]   = -1.
@@ -284,7 +282,7 @@ def main():
     # actionContainer.addAction(action_entrance, AccActionsContainer.ENTRANCE)
     actionContainer.addAction(action_exit, AccActionsContainer.EXIT)
 
-    # bunch tracking
+    # BUNCH tracking
     print "Bunch tracking started",
     time_start = time.clock()
     accLattice.trackBunch(bunch_in, paramsDict = paramsDict, actionContainer = actionContainer)
@@ -325,7 +323,7 @@ if __name__ == '__main__':
     # from spacecharge import SpaceChargeCalcUnifEllipse, SpaceChargeCalc3D
     # sc_path_length_min = 0.02
     #
-    # print "Set up Space Charge nodes. "
+    # print "Set up Space Charge nodes. "trackActions
 
     # set of uniformly charged ellipses Space Charge
     # nEllipses = 1
