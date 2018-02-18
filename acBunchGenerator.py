@@ -27,7 +27,7 @@ from bunch import Bunch
 class AcLinacBunchGenerator:
 	"""
 	Generates the pyORBIT ALCELI Linac Bunches.
-	Twiss parameters has the fol following units: x in [m], xp in [rad]
+	Twiss parameters has the following units: x in [m], xp in [rad]
 	and the X and Y emittances are un-normalized. The longitudinal emittance 
 	is in [GeV*m].
 	"""
