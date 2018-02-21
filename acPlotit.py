@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 from mpl_toolkits.axes_grid1 import make_axes_locatable
 import json
 
-from alceli_conf import CONF
+from acConf import CONF
 
 def display1(track_results):
    z=[]
@@ -144,7 +144,7 @@ def display2(bunch,whazit):
    make_scatter(ax4,z,pz,'z,pz')     #z,pz
    plt.draw()
 
-# ============ MAIN ============
+## ============ MAIN ============
 if CONF['twissPlot']:
    with open(CONF['twiss_filename'],"r") as f:
       twiss_data = json.load(f)     # get the whole file in ram

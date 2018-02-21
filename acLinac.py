@@ -44,7 +44,7 @@ from acConf import CONF
 # DEBUG
 from orbit.utils.debugHelpers import caller_name, lineno, DEBUG_ON, DEBUG_OFF, DEXIT
 
-DEBUG_MAIN = DEBUG_ON
+DEBUG_MAIN = DEBUG_OFF
 
 def tblprnt(headr,records):
     """
@@ -104,9 +104,9 @@ def action_exit(paramsDict):
     m0c2  = paramsDict['m0c2']
     Tkfin = m0c2*(gamma-1.)*1.e3
     if isinstance(node, FringeField):
-        DEBUG_ON(__file__,lineno(),'exit action at node: {} --> usage: {}'.format(node.getName(),node.getUsage()))
+        DEBUG_MAIN(__file__,lineno(),'exit action at node: {} --> usage: {}'.format(node.getName(),node.getUsage()))
     elif isinstance(node,TiltElement):
-        DEBUG_ON(__file__,lineno(),'exit action at node: {} --> tilt angle: {}'.format(node.getName(),node.getTiltAngle()))
+        DEBUG_MAIN(__file__,lineno(),'exit action at node: {} --> tilt angle: {}'.format(node.getName(),node.getTiltAngle()))
     else:
         DEBUG_ON(__file__,lineno(),'exit action at node: {} --> Tkin[MeV] {}'.format(node.getName(),Tkfin))
     
@@ -156,34 +156,41 @@ def main():
     # twiss parameters at the entrance
     # transverse emitcoupe barbe de 3 jourstances are unnormalized and in pi*mm*mrad
     # longitudinal emittance is in pi*eV*sec
-    Tkin      = 70.e-3                          # in [GeV]
+    Tkin      = CONF['injection_energy']*1.e-3  # in [GeV]
     mass      = CONF['proton_mass']*1.e-3       # in [GeV]
-    frequency = 816.e+6                         # in [Hz]
+    frequency = CONF['frequenz']                # in [Hz]
     clight    = CONF['lichtgeschwindigkeit']    # in [m/sec]
     gamma     = (mass + Tkin)/mass
-    beta      = math.sqrt(gamma*gamma - 1.0)/gamma
+    beta      = math.sqrt(gamma**2 - 1.0)/gamma
+    betax_i   =CONF['betax_i']    # [m]
+    betay_i   =CONF['betay_i']
+    betaz_i   =CONF['betaz_i']
+    alfax_i   =CONF['alfax_i']    # []
+    alfay_i   =CONF['alfay_i']
+    alfaz_i   =CONF['alfaz_i']
+    emitx_i   =CONF['emitx_i']*(gamma*beta)*1.e-6     # [m*rad]
+    emity_i   =CONF['emity_i']*(gamma*beta)*1.e-6     # [m*rad]
+    emitz_i   =CONF['emitz_i']*(gamma**3*beta)*1.e-6  # [m*rad]
     print "At injection: T= {}[GeV], gamma= {}, beta= {}".format(Tkin, gamma, beta)
 
-    #------ emittances are normalized - transverse by gamma*beta and long. by gamma**3*beta
-    (alphaX,betaX,emittX) = (-1.9620, 0.1831, 0.21)
-    (alphaY,betaY,emittY) = (+1.7681, 0.1620, 0.21)
-    (alphaZ,betaZ,emittZ) = ( 0.0196, 0.5844, 0.24153)
-    # (alphaY,betaY,emittY) = (-1.9620, 0.1831, 0.21)
-    # (alphaX,betaX,emittX) = ( 1.7681, 0.1620, 0.21)
-    # (alphaZ,betaZ,emittZ) = ( 0.0196, 0.5844, 0.24153)
+    #------ emittances normalized - transverse by gamma*beta and long. by gamma**3*beta
+    (alphaX,betaX,emittX) = (alfax_i, betax_i, emitx_i)
+    (alphaY,betaY,emittY) = (alfay_i, betay_i, emity_i)
+    (alphaZ,betaZ,emittZ) = (alfaz_i, betaz_i, emitz_i)
 
+    alphaZ = - alphaZ
+    
     #---make emittances un-normalized XAL units [m*rad]
-    emittX = 1.0e-6*emittX/(gamma*beta)
-    emittY = 1.0e-6*emittY/(gamma*beta)
-    emittZ = 1.0e-6*emittZ/(gamma**3*beta)
+    emittX = emittX/(gamma*beta)
+    emittY = emittY/(gamma*beta)
+    emittZ = emittZ/(gamma**3*beta)
     print " ========= Twiss parameters at injection ==========="
     print " aplha beta emitt[mm*mrad] X= %6.4f %6.4f %6.4f "%(alphaX,betaX,emittX*1.0e+6)
     print " aplha beta emitt[mm*mrad] Y= %6.4f %6.4f %6.4f "%(alphaY,betaY,emittY*1.0e+6)
     print " aplha beta emitt[mm*mrad] Z= %6.4f %6.4f %6.4f "%(alphaZ,betaZ,emittZ*1.0e+6)
 
-    #---- long. size in mm
+    #---- long. size in [mm]
     sizeZ = math.sqrt(emittZ*betaZ)*1.0e+3
-
     #---- transform to pyORBIT emittance[GeV*m]
     emittZ = emittZ*gamma**3*beta**2*mass
     betaZ  = betaZ/(gamma**3*beta**2*mass)
@@ -191,7 +198,7 @@ def main():
     print " ========= PyORBIT parameters at injection ==========="
     print " aplha beta emitt[mm*mrad] X= %6.4f %6.4f %6.4f "%(alphaX,betaX,emittX*1.0e+6)
     print " aplha beta emitt[mm*mrad] Y= %6.4f %6.4f %6.4f "%(alphaY,betaY,emittY*1.0e+6)
-    print " aplha beta emitt[mm*MeV] Z= %6.4f %6.4f %6.4f  "%(alphaZ,betaZ,emittZ*1.0e+6)
+    print " aplha beta emitt[mm*MeV]  Z= %6.4f %6.4f %6.4f "%(alphaZ,betaZ,emittZ*1.0e+6)
 
     twissX = TwissContainer(alphaX,betaX,emittX)
     twissY = TwissContainer(alphaY,betaY,emittY)
@@ -206,7 +213,7 @@ def main():
     #set the beam peak current in mA
     bunch_gen.setBeamCurrent(0.)
     bunch = bunch_gen.getBunch(nParticles = 3000, distributorClass = GaussDist3D)
-    bunch.charge(1)
+    bunch.charge(+1)
     print 'with bunch charge[e-charge]: {:+}'.format(bunch.charge())
 
     # DUMP bunch at lattice entrance
@@ -220,30 +227,32 @@ def main():
     print "-> finished"
 
     # BUNCH tracking preparation
+    accLattice.setLinacTracker(switch=False)
     paramsDict = {"old_pos":-1.,"count":0,"pos_step":0.1,'m0c2':mass}
-    nodes      = accLattice.getNodes()[:-2]
-    last_node  = accLattice.getNodes()[-1]
+    last_node_index = len(accLattice.getNodes())-1
+    nodes      = accLattice.getNodes()[:last_node_index-1]
+    last_node  = accLattice.getNodes()[last_node_index]
     # DEBUG_MAIN(__file__,lineno(),nodes)
+    DEBUG_ON(__file__,lineno(),'last node: {}'.format(last_node.getName()))
 
     # BUNCH tracking
     print "-> Bunch tracking started"
     time_start = time.clock()
     # all but last node
     for node in nodes:
-        node.trackBunch(bunch,paramsDict=paramsDict)
+        node.trackBunch(bunch, paramsDict=paramsDict)
     # last node
-    actionsContainer = AccActionsContainer("Bunch Tracking")
-    actionsContainer.addAction(action_exit, AccActionsContainer.EXIT)    
-    last_node.trackBunch(bunch, paramsDict=paramsDict, actionContainer=actionsContainer)
+    actionContainer = AccActionsContainer("Bunch Tracking")
+    actionContainer.addAction(action_exit, AccActionsContainer.EXIT)    
+    last_node.trackBunch(bunch, paramsDict=paramsDict, actionContainer=actionContainer)
     time_exec = time.clock() - time_start
     print "-> Bunch tracking finished in {:4.2f} [sec]".format(time_exec)
-    # DEBUG_ON(__file__,lineno(),'last node: {}'.format(last_node.getName()))
 
     # DUMP bunch at lattice end
     if CONF['dumpBunchOUT']:
         # DEBUG_MAIN(__file__,lineno(),'bunch.getSize(): {}'.format(bunch.getSize()))
-        # bunch.dumpBunch(CONF['bunchOut_filename'])
-        dumpBunch(bunch,CONF['bunchOut_filename'])
+        bunch.dumpBunch(CONF['bunchOut_filename'])
+        # dumpBunch(bunch,CONF['bunchOut_filename'])
 
 if __name__ == '__main__':
     main()
