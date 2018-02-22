@@ -118,7 +118,7 @@ def main():
     names = ["HE"]
 
     #---- the XML input file name with the linac structure
-    xml_file_name = "../lattice.xml"
+    xml_file_name = "lattice.xml"
 
     #---- create the FOCTORY instance
     linac_factory = AcLinacLatticeFactory()
@@ -227,11 +227,11 @@ def main():
     print "-> finished"
 
     # BUNCH tracking preparation
-    accLattice.setLinacTracker(switch=False)
+    accLattice.setLinacTracker(switch=False)    # use TeapotBase tracking
     paramsDict = {"old_pos":-1.,"count":0,"pos_step":0.1,'m0c2':mass}
     last_node_index = len(accLattice.getNodes())-1
-    nodes      = accLattice.getNodes()[:last_node_index-1]
-    last_node  = accLattice.getNodes()[last_node_index]
+    nodes           = accLattice.getNodes()[:last_node_index-1]
+    last_node       = accLattice.getNodes()[last_node_index]
     # DEBUG_MAIN(__file__,lineno(),nodes)
     DEBUG_ON(__file__,lineno(),'last node: {}'.format(last_node.getName()))
 

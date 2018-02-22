@@ -1,11 +1,11 @@
 HOST=`uname -s`
 if [ $HOST = 'Darwin' ]
 then
-echo "on $HOST"
+echo "$HOST"
 source ../pyOrbit/customEnvironment.sh 1>/dev/null
 elif [ $HOST = 'Linux' ]
 then
-echo "on $HOST"
+echo "$HOST"
 #source ../py-orbit/activate
 fi
 python acPlotit.py
