@@ -6,6 +6,11 @@ source ../pyOrbit/customEnvironment.sh 1>/dev/null
 elif [ $HOST = 'Linux' ]
 then
 #echo $HOST
-source ../pyOrbit/activate
+    if [ -a ../pyOrbit/activate ]
+    then
+    source ../pyOrbit/activate
+    else
+    source ../pyOrbit/setupEnvironment.sh
+    fi
 fi
 ./START.sh acLinac.py 1
