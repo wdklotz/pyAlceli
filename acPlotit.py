@@ -44,7 +44,7 @@ def display1(track_results):
    viseo2 = [0.2*y2max*x for x in viseo]     #scaling of lattice element plot
 
    width=20; height=10
-   plt.figure(CONF['title'],figsize=(width,height))
+   plt.figure(CONF['title'],figsize=(width,height),tight_layout=True)
    splot = plt.subplot(221)
    splot.set_title('twiss: beta(X), beta(Y)')
    plt.plot(z,betaX,label=r'$\beta$-x [mm*mrad]',color='blue',linestyle='-')
@@ -124,15 +124,34 @@ def make_scatter(axScatter,x,y,whazit):
 
 def display2(bunch,whazit):
    x=[]; px=[]; y=[]; py=[];z=[]; pz=[]
-   for item in bunch:
-      x.append (item[0]*1.e3)     #[mm]
-      px.append(item[1]*1.e3)     #[mrad]?
-      y.append (item[2]*1.e3)     #[mm]
-      py.append(item[3]*1.e3)     #[mrad]?
-      z.append (item[4]*1.e3)     #[mm]
-      pz.append(item[5]*1.e6)     #[??]
-
-   width= 9.;   height = 9.
+   count_NaNs = 0
+   count_out_limits = 0
+   for bunchItem in bunch:
+      # skip items with NaNs
+      found_NaN = False
+      for i in range(6):
+         found_NaN = bunchItem[i] != bunchItem[i]
+      if found_NaN: 
+         count_NaNs += 1
+         continue
+      x0  = bunchItem[0]*1.e3     #[mm]
+      px0 = bunchItem[1]*1.e3     #[mrad]?
+      y0  = bunchItem[2]*1.e3     #[mm]
+      py0 = bunchItem[3]*1.e3     #[mrad]?
+      z0  = bunchItem[4]*1.e3     #[mm]
+      pz0 = bunchItem[5]*1.e6     #[??]
+      if CONF['limx'] <= abs(x0) or CONF['limxp'] <= abs(px0) or CONF['limy'] <= abs(y0) or CONF['limyp'] <= abs(py0) or CONF['limz'] <= abs(z0) or CONF['limzp'] <= abs(pz0): 
+         count_out_limits += 1
+         continue
+      x.append(x0)
+      px.append(px0)
+      y.append(y0)
+      py.append(py0)
+      z.append(z0)
+      pz.append(pz0)
+   print '{} table entries with NaN and {}/{} with coordinates off-limits'.format(count_NaNs,count_out_limits,len(bunch))
+   
+   width= 9.;   height = 8.
    fig = plt.figure(CONF['title']+", scatter plots@"+whazit,figsize=(width,height))
    ax1 = plt.subplot(221)
    make_scatter(ax1,x,px,'x,px')     #x,px
@@ -142,37 +161,38 @@ def display2(bunch,whazit):
    make_scatter(ax3,x,y,'x,y')       #x,y
    ax4 = plt.subplot(224)
    make_scatter(ax4,z,pz,'z,pz')     #z,pz
-   plt.draw()
 
-## ============ MAIN ============
-if CONF['twissPlot']:
-   with open(CONF['twiss_filename'],"r") as f:
-      twiss_data = json.load(f)     # get the whole file in ram
-      display1(twiss_data)
+def main():
+   if CONF['twissPlot']:
+      with open(CONF['twiss_filename'],"r") as f:
+         twiss_data = json.load(f)     # get the whole file in ram
+         display1(twiss_data)
+   
+   if CONF['dumpBunchIN']:
+      bunch_in=[]
+      with open(CONF['bunchIn_filename'],'r') as file:
+         for line in file:
+            if line[0] == '%':
+               continue
+            else:
+               line = line.split(' ')
+               kovector = [float(line[i]) for i in range(len(line)-1)]
+               bunch_in.append(kovector)
+      display2(bunch_in,'ENTRANCE')
+   
+   if CONF['dumpBunchOUT']:
+      bunch_out=[]
+      with open(CONF['bunchOut_filename'],'r') as file:
+         for line in file:
+            if line[0] == '%':
+               continue
+            else:
+               line = line.split(' ')
+               kovector = [float(line[i]) for i in range(len(line)-1)]
+               bunch_out.append(kovector)
+      display2(bunch_out,'EXIT')
+   
+   plt.show()
 
-if CONF['dumpBunchIN']:
-   bunch_in=[]
-   with open(CONF['bunchIn_filename'],'r') as file:
-      for line in file:
-         if line[0] == '%':
-            continue
-         else:
-            line = line.split(' ')
-            kovector = [float(line[i]) for i in range(len(line)-1)]
-            bunch_in.append(kovector)
-   display2(bunch_in,'ENTRANCE')
-
-if CONF['dumpBunchOUT']:
-   bunch_out=[]
-   with open(CONF['bunchOut_filename'],'r') as file:
-      for line in file:
-         if line[0] == '%':
-            continue
-         else:
-            line = line.split(' ')
-            kovector = [float(line[i]) for i in range(len(line)-1)]
-            bunch_out.append(kovector)
-   display2(bunch_out,'EXIT')
-
-plt.show()
-
+if __name__ == '__main__':
+   main()

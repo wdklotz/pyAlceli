@@ -31,6 +31,14 @@ CONF = {      ## CONFIG constants, names and units....
     'dumpBunchIN'             : True,
     'dumpBunchOUT'            : True,
     'twissPlot'               : False,
+    
+    # display limits
+    'limx'                    : 10,
+    'limxp'                   : 10,
+    'limy'                    : 10,
+    'limyp'                   : 10,
+    'limz'                    : 5000,
+    'limzp'                   : 5000,
     }
 
 #     'dWf': False,                # acceleration off/on flag

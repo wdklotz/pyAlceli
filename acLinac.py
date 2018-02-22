@@ -131,11 +131,11 @@ def main():
 
     #----set up RF Gap Model -------------
     #---- There are three available models at this moment
-    #---- BaseRfGap  uses only E0TL*cos(phi)*J0(kr) with E0TL = const
     #---- MatrixRfGap uses a matrix approach like envelope codes
+    #---- BaseRfGap  uses only E0TL*cos(phi)*J0(kr) with E0TL = const
     #---- RfGapTTF uses Transit Time Factors (TTF) like PARMILA
-    cppGapModel = BaseRfGap()
     # cppGapModel = MatrixRfGap()
+    cppGapModel = BaseRfGap()
     # cppGapModel = RfGapTTF
     rf_gaps = accLattice.getRF_Gaps()
     for rf_gap in rf_gaps:
@@ -227,7 +227,7 @@ def main():
     print "-> finished"
 
     # BUNCH tracking preparation
-    accLattice.setLinacTracker(switch=False)    # use TeapotBase tracking
+    accLattice.setLinacTracker(switch=False)    # use TeapotBase (TPB) tracking
     paramsDict = {"old_pos":-1.,"count":0,"pos_step":0.1,'m0c2':mass}
     last_node_index = len(accLattice.getNodes())-1
     nodes           = accLattice.getNodes()[:last_node_index-1]
