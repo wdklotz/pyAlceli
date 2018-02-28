@@ -69,18 +69,18 @@ def tblprnt(headr,records):
 def dumpBunch(bunch,fileName):
     placeholders = [
     '% placeholer --> PARTICLE_ATTRIBUTES_CONTROLLERS_NAMES',
-    '% placeholer --> BUNCH_ATTRIBUTE_DOUBLE charge   -1',
-    '% placeholer --> BUNCH_ATTRIBUTE_DOUBLE classical_radius   1.5347e-18',
-    '% placeholer --> BUNCH_ATTRIBUTE_DOUBLE macro_size   5168.95 ',
-    '% placeholer --> BUNCH_ATTRIBUTE_DOUBLE mass   0.939294 ',
-    '% placeholer --> SYNC_PART_COORDS 0 0 0  x, y, z positions in [m]',
-    '% placeholer --> SYNC_PART_MOMENTUM 0 0 0.3693252766871  px, py, pz momentum component in GeV/c',
-    '% placeholer --> SYNC_PART_X_AXIS 1 0 0  nxx, nxy, pxz - x-axis ort coordinates',
-    '% placeholer --> info only: energy of the synchronous particle [GeV] = 0.07 ',
-    '% placeholer --> info only: momentum of the synchronous particle [GeV/c] = 0.3693252766871 ',
-    '% placeholer --> info only: beta=v/c of the synchronous particle = 0.36592437554082 ',
-    '% placeholer --> info only: gamma=1/sqrt(1-(v/c)**2) of the synchronous particle = 1.0745240574304 ',
-    '% placeholer --> SYNC_PART_TIME 9.566888121437e-07  time in [sec]',
+    '% placeholer --> BUNCH_ATTRIBUTE_DOUBLE charge',
+    '% placeholer --> BUNCH_ATTRIBUTE_DOUBLE classical_radius',
+    '% placeholer --> BUNCH_ATTRIBUTE_DOUBLE macro_size',
+    '% placeholer --> BUNCH_ATTRIBUTE_DOUBLE mass',
+    '% placeholer --> SYNC_PART_COORDS x, y, z positions in [m]',
+    '% placeholer --> SYNC_PART_MOMENTUM px, py, pz momentum component in GeV/c',
+    '% placeholer --> SYNC_PART_X_AXIS x-axis ort coordinates',
+    '% placeholer --> info only: energy of the synchronous particle [GeV]',
+    '% placeholer --> info only: momentum of the synchronous particle [GeV/c]',
+    '% placeholer --> info only: beta=v/c of the synchronous particle',
+    '% placeholer --> info only: gamma=1/sqrt(1-(v/c)**2) of the synchronous particle',
+    '% placeholer --> SYNC_PART_TIME time in [sec]',
     '% x[m] px[rad] y[m] py[rad] z[m]  (pz or dE [GeV]) '
     ]
     nParticles = bunch.getSize()
@@ -135,7 +135,7 @@ def main():
     #---- MatrixRfGap uses a matrix approach like envelope codes
     #---- BaseRfGap  uses only E0TL*cos(phi)*J0(kr) with E0TL = const
     #---- RfGapTTF uses Transit Time Factors (TTF) like PARMILA
-    # cppGapModel = MatrixRfGap()
+    cppGapModel = MatrixRfGap()
     cppGapModel = BaseRfGap()
     # cppGapModel = RfGapTTF
     rf_gaps = accLattice.getRF_Gaps()
@@ -243,9 +243,9 @@ def main():
     for node in nodes:
         node.trackBunch(bunch, paramsDict=paramsDict)
     # last node
-    actionContainer = AccActionsContainer("Bunch Tracking")
-    actionContainer.addAction(action_exit, AccActionsContainer.EXIT)    
-    last_node.trackBunch(bunch, paramsDict=paramsDict, actionContainer=actionContainer)
+    actionsContainer = AccActionsContainer("Bunch Tracking")
+    actionsContainer.addAction(action_exit, AccActionsContainer.EXIT)    
+    last_node.trackBunch(bunch, paramsDict=paramsDict, actionContainer=actionsContainer)
     time_exec = time.clock() - time_start
     print "-> Bunch tracking finished in {:4.2f} [sec], T-final[MeV] {}".format(time_exec,bunch.getSyncParticle().kinEnergy()*1.e3)
 
