@@ -4,6 +4,7 @@ CONF = {      ## CONFIG constants, names and units....
     'elementarladung'         : 1.602176565e-19,     # [coulomb] const
     'proton_mass'             : 938.272,             # [MeV/c**2] const
     'electron_mass'           : 0.5109989,           # [MeV/c**2] const
+    'charge'                  : +1.,                 # [|q(electron)|]
     'frequenz'                : 816.6e6,             # [Hz] frequency
     'injection_energy'        : 70.,                 # [MeV] eKin-in
     'emitx_i'                 : 2.0,                 # [mm*mrad] emittance-x @ entrance

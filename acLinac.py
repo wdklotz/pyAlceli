@@ -46,6 +46,8 @@ from orbit.utils.debugHelpers import caller_name, lineno, DEBUG_ON, DEBUG_OFF, D
 
 DEBUG_MAIN = DEBUG_OFF
 
+simulinacRoot = os.getenv('SIMULINAC_ROOT')
+
 def tblprnt(headr,records):
     """
     Custom helper to print a nice table to memory (clever!?)
@@ -108,7 +110,7 @@ def action_exit(paramsDict):
     elif isinstance(node,TiltElement):
         DEBUG_MAIN(__file__,lineno(),'exit action at node: {} --> tilt angle: {}'.format(node.getName(),node.getTiltAngle()))
     else:
-        DEBUG_ON(__file__,lineno(),'exit action at node: {} --> Tkin[MeV] {}'.format(node.getName(),Tkfin))
+        DEBUG_MAIN(__file__,lineno(),'exit action at node: {} --> Tkin[MeV] {}'.format(node.getName(),Tkfin))
     
 
 def main():
@@ -118,7 +120,7 @@ def main():
     names = ["HE"]
 
     #---- the XML input file name with the linac structure
-    xml_file_name = "lattice.xml"
+    xml_file_name = simulinacRoot+"/lattice.xml"
 
     #---- create the FOCTORY instance
     linac_factory = AcLinacLatticeFactory()
@@ -205,26 +207,26 @@ def main():
     twissZ = TwissContainer(alphaZ,betaZ,emittZ)
 
     # BUNCH generation
-    print "-> Start Bunch Generation",
-    bunch_gen  = AcLinacBunchGenerator(twissX,twissY,twissZ)
+    print "-> Start Bunch Generation"
+    bunch_gen  = AcLinacBunchGenerator(twissX,twissY,twissZ,frequency=CONF['frequenz'])
     paramsDict = {'BunchGenerator': bunch_gen}
     #set the initial kinetic energy in GeV
     bunch_gen.setKinEnergy(Tkin)
     #set the beam peak current in mA
-    bunch_gen.setBeamCurrent(0.)
-    bunch = bunch_gen.getBunch(nParticles = 3000, distributorClass = GaussDist3D)
-    bunch.charge(+1)
-    print 'with bunch charge[e-charge]: {:+}'.format(bunch.charge())
+    # bunch_gen.setBeamCurrent(CONF['elementarladung']*CONF['frequenz']*1.e3)   # 1 e-charge per bunch
+    bunch_gen.setBeamCurrent(0.1)
+    bunch = bunch_gen.getBunch(nParticles = 5000, distributorClass = GaussDist3D)
+    # print '\npossible particle attributes names:\n'+''.join(['\t"{}"\n'.format(i) for i in bunch.getPossiblePartAttrNames()])
 
     # DUMP bunch at lattice entrance
     if CONF['dumpBunchIN']:
         bunch.dumpBunch(CONF['bunchIn_filename'])
-    print "-> finished"
+    print "-> Bunch Generation finished"
 
     # DESIGN tracking
     print "-> Design tracking started"
     accLattice.trackDesignBunch(bunch)
-    print "-> finished"
+    print "-> Design tracking finished "
 
     # BUNCH tracking preparation
     accLattice.setLinacTracker(switch=False)    # use TeapotBase (TPB) tracking
@@ -233,10 +235,10 @@ def main():
     nodes           = accLattice.getNodes()[:last_node_index-1]
     last_node       = accLattice.getNodes()[last_node_index]
     # DEBUG_MAIN(__file__,lineno(),nodes)
-    DEBUG_ON(__file__,lineno(),'last node: {}'.format(last_node.getName()))
+    DEBUG_MAIN(__file__,lineno(),'last node: {}'.format(last_node.getName()))
 
     # BUNCH tracking
-    print "-> Bunch tracking started"
+    print "-> Bunch tracking started "
     time_start = time.clock()
     # all but last node
     for node in nodes:
@@ -246,7 +248,7 @@ def main():
     actionContainer.addAction(action_exit, AccActionsContainer.EXIT)    
     last_node.trackBunch(bunch, paramsDict=paramsDict, actionContainer=actionContainer)
     time_exec = time.clock() - time_start
-    print "-> Bunch tracking finished in {:4.2f} [sec]".format(time_exec)
+    print "-> Bunch tracking finished in {:4.2f} [sec], T-final[MeV] {}".format(time_exec,bunch.getSyncParticle().kinEnergy()*1.e3)
 
     # DUMP bunch at lattice end
     if CONF['dumpBunchOUT']:

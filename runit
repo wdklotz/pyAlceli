@@ -5,12 +5,15 @@ then
 source ../pyOrbit/customEnvironment.sh 1>/dev/null
 elif [ $HOST = 'Linux' ]
 then
-#echo $HOST
-    if [ -a ../pyOrbit/activate ]
+    export  pyALCELI_ROOT=~/pyAlceli
+    export SIMULINAC_ROOT=~/SIMULINAC
+    export   pyORBIT_ROOT=~/pyOrbit
+    echo $HOST $SIMULINAC_ROOT $pyORBIT_ROOT $pyALCELI_ROOT
+    if [ -a $pyORBIT_ROOT/activate ]
     then
-    source ../pyOrbit/activate
+    source $pyORBIT_ROOT/activate
     else
-    source ../pyOrbit/setupEnvironment.sh
+    source $pyORBIT_ROOT/setupEnvironment.sh
     fi
 fi
 ./START.sh acLinac.py 1

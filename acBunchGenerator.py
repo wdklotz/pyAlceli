@@ -24,6 +24,11 @@ from orbit.bunch_generators import TwissAnalysis
 
 from bunch import Bunch
 
+# DEBUG
+from orbit.utils.debugHelpers import caller_name, lineno, DEBUG_ON, DEBUG_OFF, DEXIT
+
+DEBUG_BUNCH = DEBUG_OFF
+
 class AcLinacBunchGenerator:
 	"""
 	Generates the pyORBIT ALCELI Linac Bunches.
@@ -39,7 +44,7 @@ class AcLinacBunchGenerator:
 		#set H- mass
 		#self.bunch.mass(0.9382723 + 2*0.000511)
 		self.bunch.mass(0.939294)
-		self.bunch.charge(-1.0)
+		self.bunch.charge(+1.0)
 		syncPart.kinEnergy(0.0025)
 		self.c = 2.99792458e+8    # speed of light in m/sec
 		self.beam_current = 38.0  # beam current in mA , design = 38 mA
@@ -89,8 +94,10 @@ class AcLinacBunchGenerator:
 		main_rank = 0		
 		bunch = Bunch()
 		self.bunch.copyEmptyBunchTo(bunch)		
-		macrosize = (self.beam_current*1.0e-3/self.bunch_frequency)
-		macrosize /= (math.fabs(bunch.charge())*self.si_e_charge)
+		macrosize = (self.beam_current*1.0e-3/self.bunch_frequency)  # [Coul]
+		DEBUG_BUNCH(__file__,lineno(), 'macrosize(1)[Coul]= {}'.format(macrosize))
+		macrosize /= (math.fabs(bunch.charge())*self.si_e_charge)    # [nbof particles] to make current
+		DEBUG_BUNCH(__file__,lineno(), 'macrosize(2)[n#]= {}'.format(macrosize))
 		distributor = None
 		if(distributorClass == WaterBagDist3D):
 			distributor = distributorClass(self.twiss[0],self.twiss[1],self.twiss[2])
@@ -102,8 +109,10 @@ class AcLinacBunchGenerator:
 			(x,xp,y,yp,z,dE) = orbit_mpi.MPI_Bcast((x,xp,y,yp,z,dE),data_type,main_rank,comm)
 			if(i%size == rank):
 				bunch.addParticle(x,xp,y,yp,z,dE)
-		nParticlesGlobal = bunch.getSizeGlobal()
-		bunch.macroSize(macrosize/nParticlesGlobal)
+		nParticlesGlobal = bunch.getSizeGlobal()       #[macro-particles]
+		DEBUG_BUNCH(__file__,lineno(), 'nParticlesGlobal[macro-particles]= {}'.format(nParticlesGlobal))
+		bunch.macroSize(macrosize/nParticlesGlobal)    # [particles/macro-particle]
+		DEBUG_ON(__file__,lineno(), 'bunch.macrosize[particles/macro-particle]= {}'.format(bunch.macroSize()))
 		return bunch
 	
 
