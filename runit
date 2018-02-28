@@ -9,6 +9,9 @@ then
     export SIMULINAC_ROOT=~/SIMULINAC
     export   pyORBIT_ROOT=~/pyOrbit
     echo $HOST $SIMULINAC_ROOT $pyORBIT_ROOT $pyALCELI_ROOT
+
+    export PYTHONPATH=$SIMULINAC_ROOT:$PYTHONPATH
+
     if [ -a $pyORBIT_ROOT/activate ]
     then
     source $pyORBIT_ROOT/activate

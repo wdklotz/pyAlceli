@@ -35,17 +35,16 @@ from orbit.py_linac.lattice_modifications import AddScrapersAperturesToLattice
 from orbit.py_linac.lattice_modifications import Replace_BaseRF_Gap_to_AxisField_Nodes
 from orbit.py_linac.lattice.LinacAccNodes import TiltElement,FringeField
 import orbit
-
 # import python modules customized for ALCELI
 from acBunchGenerator import AcLinacBunchGenerator
 from acLatticeFactory import AcLinacLatticeFactory
-from acConf import CONF
-
+from acConf  import CONF
+# import from SIMULINAC
+from setutil import PARAMS
 # DEBUG
 from orbit.utils.debugHelpers import caller_name, lineno, DEBUG_ON, DEBUG_OFF, DEXIT
-
 DEBUG_MAIN = DEBUG_OFF
-
+# root dir of SIMULINAC
 simulinacRoot = os.getenv('SIMULINAC_ROOT')
 
 def tblprnt(headr,records):
@@ -156,23 +155,23 @@ def main():
             pass
         
     # twiss parameters at the entrance
-    # transverse emitcoupe barbe de 3 jourstances are unnormalized and in pi*mm*mrad
+    # transverse emittances are unnormalized and in pi*mm*mrad
     # longitudinal emittance is in pi*eV*sec
-    Tkin      = CONF['injection_energy']*1.e-3  # in [GeV]
-    mass      = CONF['proton_mass']*1.e-3       # in [GeV]
-    frequency = CONF['frequenz']                # in [Hz]
-    clight    = CONF['lichtgeschwindigkeit']    # in [m/sec]
+    Tkin      = PARAMS['injection_energy']*1.e-3  # in [GeV]
+    mass      = PARAMS['proton_mass']*1.e-3       # in [GeV]
+    frequency = PARAMS['frequenz']                # in [Hz]
+    clight    = PARAMS['lichtgeschwindigkeit']    # in [m/sec]
     gamma     = (mass + Tkin)/mass
     beta      = math.sqrt(gamma**2 - 1.0)/gamma
-    betax_i   =CONF['betax_i']    # [m]
-    betay_i   =CONF['betay_i']
-    betaz_i   =CONF['betaz_i']
-    alfax_i   =CONF['alfax_i']    # []
-    alfay_i   =CONF['alfay_i']
-    alfaz_i   =CONF['alfaz_i']
-    emitx_i   =CONF['emitx_i']*(gamma*beta)*1.e-6     # [m*rad]
-    emity_i   =CONF['emity_i']*(gamma*beta)*1.e-6     # [m*rad]
-    emitz_i   =CONF['emitz_i']*(gamma**3*beta)*1.e-6  # [m*rad]
+    betax_i   =PARAMS['betax_i']    # [m]
+    betay_i   =PARAMS['betay_i']    # [m]
+    betaz_i   =PARAMS['betaz_i']    # [m]
+    alfax_i   =PARAMS['alfax_i']    # []
+    alfay_i   =PARAMS['alfay_i']    # []
+    alfaz_i   =PARAMS['alfaz_i']    # []
+    emitx_i   =PARAMS['emitx_i']*(gamma*beta)     # [m*rad]
+    emity_i   =PARAMS['emity_i']*(gamma*beta)     # [m*rad]
+    emitz_i   =PARAMS['emitz_i']*(gamma**3*beta)  # [m*rad]
     print "At injection: T= {}[GeV], gamma= {}, beta= {}".format(Tkin, gamma, beta)
 
     #------ emittances normalized - transverse by gamma*beta and long. by gamma**3*beta
@@ -208,13 +207,13 @@ def main():
 
     # BUNCH generation
     print "-> Start Bunch Generation"
-    bunch_gen  = AcLinacBunchGenerator(twissX,twissY,twissZ,frequency=CONF['frequenz'])
+    bunch_gen  = AcLinacBunchGenerator(twissX,twissY,twissZ,frequency=PARAMS['frequenz'])
     paramsDict = {'BunchGenerator': bunch_gen}
     #set the initial kinetic energy in GeV
     bunch_gen.setKinEnergy(Tkin)
     #set the beam peak current in mA
-    # bunch_gen.setBeamCurrent(CONF['elementarladung']*CONF['frequenz']*1.e3)   # 1 e-charge per bunch
-    bunch_gen.setBeamCurrent(0.1)
+    # bunch_gen.setBeamCurrent(PARAMS['elementarladung']*PARAMS['frequenz']*1.e3)   # 1 e-charge per bunch
+    bunch_gen.setBeamCurrent(10.)
     bunch = bunch_gen.getBunch(nParticles = 5000, distributorClass = GaussDist3D)
     # print '\npossible particle attributes names:\n'+''.join(['\t"{}"\n'.format(i) for i in bunch.getPossiblePartAttrNames()])
 
