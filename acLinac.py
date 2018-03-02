@@ -42,7 +42,7 @@ from acConf  import CONF
 # import from SIMULINAC
 from setutil import PARAMS
 # DEBUG
-from orbit.utils.debugHelpers import caller_name, lineno, DEBUG_ON, DEBUG_OFF, DEXIT
+from debugHelpers import caller_name, lineno, DEBUG_ON, DEBUG_OFF, DEXIT
 DEBUG_MAIN = DEBUG_OFF
 # root dir of SIMULINAC
 simulinacRoot = os.getenv('SIMULINAC_ROOT')
