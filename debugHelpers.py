@@ -50,7 +50,7 @@ def caller_name(skip=2):
     if codename != '<module>':  # top level usually
         name.append( codename ) # function or a method
     
-    ## Avoid circular refs and frame leaks
+    # Avoid circular refs and frame leaks
     #  https://docs.python.org/2.7/library/inspect.html#the-interpreter-stack
     del parentframe, stack
     

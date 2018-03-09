@@ -1,4 +1,4 @@
 echo "running acLinac - wait"
-./runit
+./trackit
 echo "plotting results - wait"
 ./plotit
