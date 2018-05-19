@@ -25,7 +25,7 @@ from orbit.bunch_generators import TwissAnalysis
 from bunch import Bunch
 
 # DEBUG
-from debugHelpers import caller_name, lineno, DEBUG_ON, DEBUG_OFF, DEXIT
+from acDebugHelpers import caller_name, lineno, DEBUG_ON, DEBUG_OFF, DEXIT
 
 DEBUG_BUNCH = DEBUG_OFF
 

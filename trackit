@@ -4,7 +4,8 @@ then
     export  pyALCELI_ROOT=~/Desktop/pyAlceli
     export  SIMULINAC_ROOT=~/Desktop/SIMULINAC
     export  pyORBIT_ROOT=~/Desktop/pyOrbit
-    echo $HOST $SIMULINAC_ROOT $pyORBIT_ROOT $pyALCELI_ROOT
+#    echo "on $HOST with: $SIMULINAC_ROOT $pyORBIT_ROOT $pyALCELI_ROOT"
+    echo "on $HOST"
 
     export PYTHONPATH=$SIMULINAC_ROOT:$PYTHONPATH
 
@@ -12,7 +13,7 @@ then
 
 elif [ $HOST = 'Linux' ]
 then
-    echo $HOST
+    echo "on $HOST"
     export  pyALCELI_ROOT=~/pyAlceli
     export  SIMULINAC_ROOT=~/SIMULINAC
     export  pyORBIT_ROOT=~/pyOrbit

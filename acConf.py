@@ -13,12 +13,13 @@ CONF = {
     'dumpBunchIN'             : True,
     'dumpBunchOUT'            : True,
     'twissPlot'               : False,
-    
+
     # display limits
+    'ingnore_limits'          : False,
     'limx'                    : 101,
     'limxp'                   : 101,
     'limy'                    : 101,
     'limyp'                   : 101,
     'limz'                    : 101,
-    'limzp'                   : 1010,
+    'limzp'                   : 50010,
     }

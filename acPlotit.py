@@ -131,7 +131,7 @@ def display2(bunch,whazit):
       found_NaN = False
       for i in range(6):
          found_NaN = bunchItem[i] != bunchItem[i]
-      if found_NaN: 
+      if found_NaN:
          count_NaNs += 1
          continue
       x0  = bunchItem[0]*1.e3     #[mm]
@@ -140,7 +140,7 @@ def display2(bunch,whazit):
       py0 = bunchItem[3]*1.e3     #[mrad]?
       z0  = bunchItem[4]*1.e3     #[mm]
       pz0 = bunchItem[5]*1.e6     #[??]
-      if CONF['limx'] <= abs(x0) or CONF['limxp'] <= abs(px0) or CONF['limy'] <= abs(y0) or CONF['limyp'] <= abs(py0) or CONF['limz'] <= abs(z0) or CONF['limzp'] <= abs(pz0): 
+      if not CONF['ingnore_limits'] and (CONF['limx'] <= abs(x0) or CONF['limxp'] <= abs(px0) or CONF['limy'] <= abs(y0) or CONF['limyp'] <= abs(py0) or CONF['limz'] <= abs(z0) or CONF['limzp'] <= abs(pz0)):
          count_out_limits += 1
          continue
       x.append(x0)
@@ -150,7 +150,7 @@ def display2(bunch,whazit):
       z.append(z0)
       pz.append(pz0)
    print '{} table entries with NaN and {}/{} with coordinates off-limits'.format(count_NaNs,count_out_limits,len(bunch))
-   
+
    width= 9.;   height = 8.
    fig = plt.figure(CONF['title']+", scatter plots@"+whazit,figsize=(width,height))
    ax1 = plt.subplot(221)
@@ -167,7 +167,7 @@ def main():
       with open(CONF['twiss_filename'],"r") as f:
          twiss_data = json.load(f)     # get the whole file in ram
          display1(twiss_data)
-   
+
    if CONF['dumpBunchIN']:
       bunch_in=[]
       with open(CONF['bunchIn_filename'],'r') as file:
@@ -179,7 +179,7 @@ def main():
                kovector = [float(line[i]) for i in range(len(line)-1)]
                bunch_in.append(kovector)
       display2(bunch_in,'ENTRANCE')
-   
+
    if CONF['dumpBunchOUT']:
       bunch_out=[]
       with open(CONF['bunchOut_filename'],'r') as file:
@@ -191,7 +191,7 @@ def main():
                kovector = [float(line[i]) for i in range(len(line)-1)]
                bunch_out.append(kovector)
       display2(bunch_out,'EXIT')
-   
+
    plt.show()
 
 if __name__ == '__main__':
