@@ -41,9 +41,11 @@ from acLatticeFactory import AcLinacLatticeFactory
 from acConf  import CONF
 # import from SIMULINAC
 from setutil import PARAMS
+
 # DEBUG
-from debugHelpers import caller_name, lineno, DEBUG_ON, DEBUG_OFF, DEXIT
+from acDebugHelpers import caller_name, lineno, DEBUG_ON, DEBUG_OFF, DEXIT
 DEBUG_MAIN = DEBUG_OFF
+
 # root dir of SIMULINAC
 simulinacRoot = os.getenv('SIMULINAC_ROOT')
 
@@ -121,12 +123,12 @@ def main():
     #---- the XML input file name with the linac structure
     xml_file_name = simulinacRoot+"/lattice.xml"
 
-    #---- create the FOCTORY instance
+    #---- create the FACTORY instance
     linac_factory = AcLinacLatticeFactory()
     linac_factory.setMaxDriftLength(0.01)
     
     #---- call FACTORY
-    accLattice = linac_factory.getLinacAccLattice(names,xml_file_name)
+    (accLattice,acc_da) = linac_factory.getLinacAccLattice(names,xml_file_name)
     DEBUG_MAIN(__file__,lineno(),accLattice)
     print "Linac lattice is ready. L=",accLattice.getLength()
 
@@ -153,25 +155,64 @@ def main():
             # DEBUG_MAIN(__file__,lineno(),quad.getNodeTiltIN().__dict__)
             # DEBUG_MAIN(__file__,lineno(),quad.getNodeTiltOUT().__dict__)
             pass
-        
+
+    # get PARAMS from xml-lattice
+    [params_da] = acc_da.childAdaptors(name='PARAMS')
+    DEBUG_MAIN(__file__,lineno(),params_da.getAttributes())
+
     # twiss parameters at the entrance
     # transverse emittances are unnormalized and in pi*mm*mrad
     # longitudinal emittance is in pi*eV*sec
-    Tkin      = PARAMS['injection_energy']*1.e-3  # in [GeV]
-    mass      = PARAMS['proton_mass']*1.e-3       # in [GeV]
-    frequency = PARAMS['frequenz']                # in [Hz]
-    clight    = PARAMS['lichtgeschwindigkeit']    # in [m/sec]
+    Tkin      = params_da.doubleValue('injection_energy')*1.e-3  # in [GeV]
+    mass      = params_da.doubleValue('proton_mass')*1.e-3       # in [GeV]
+    frequency = params_da.doubleValue('frequenz')                # in [Hz]
+    clight    = params_da.doubleValue('lichtgeschwindigkeit')    # in [m/sec]
     gamma     = (mass + Tkin)/mass
     beta      = math.sqrt(gamma**2 - 1.0)/gamma
-    betax_i   =PARAMS['betax_i']    # [m]
-    betay_i   =PARAMS['betay_i']    # [m]
-    betaz_i   =PARAMS['betaz_i']    # [m]
-    alfax_i   =PARAMS['alfax_i']    # []
-    alfay_i   =PARAMS['alfay_i']    # []
-    alfaz_i   =PARAMS['alfaz_i']    # []
-    emitx_i   =PARAMS['emitx_i']*(gamma*beta)     # [m*rad]
-    emity_i   =PARAMS['emity_i']*(gamma*beta)     # [m*rad]
-    emitz_i   =PARAMS['emitz_i']*(gamma**3*beta)  # [m*rad]
+    betax_i   = params_da.doubleValue('betax_i')    # [m]
+    betay_i   = params_da.doubleValue('betay_i')    # [m]
+    betaz_i   = params_da.doubleValue('betaz_i')    # [m]
+    alfax_i   = params_da.doubleValue('alfax_i')    # []
+    alfay_i   = params_da.doubleValue('alfay_i')    # []
+    alfaz_i   = params_da.doubleValue('alfaz_i')    # []
+    emitx_i   = params_da.doubleValue('emitx_i')*(gamma*beta)     # [m*rad]
+    emity_i   = params_da.doubleValue('emity_i')*(gamma*beta)     # [m*rad]
+    emitz_i   = params_da.doubleValue('emitz_i')*(gamma**3*beta)  # [m*rad]
+    # emz = params_da.doubleValue('emitz_i')
+
+    # Tkin1       = PARAMS['injection_energy']*1.e-3  # in [GeV]
+    # mass1       = PARAMS['proton_mass']*1.e-3       # in [GeV]
+    # frequency1  = PARAMS['frequenz']                # in [Hz]
+    # clight1     = PARAMS['lichtgeschwindigkeit']    # in [m/sec]
+    # gamma1      = (mass1 + Tkin1)/mass1
+    # beta1       = math.sqrt(gamma1**2 - 1.0)/gamma1
+    # betax_i1    = PARAMS['betax_i']    # [m]
+    # betay_i1    = PARAMS['betay_i']    # [m]
+    # betaz_i1    = PARAMS['betaz_i']    # [m]
+    # alfax_i1    = PARAMS['alfax_i']    # []
+    # alfay_i1    = PARAMS['alfay_i']    # []
+    # alfaz_i1    = PARAMS['alfaz_i']    # []
+    # emitx_i1    = PARAMS['emitx_i']*(gamma1*beta1)     # [m*rad]
+    # emity_i1    = PARAMS['emity_i']*(gamma1*beta1)     # [m*rad]
+    # emitz_i1    = PARAMS['emitz_i']*(gamma1**3*beta1)  # [m*rad]
+    # emz1 = PARAMS['emitz_i']
+
+    # print('Tkin ',Tkin,Tkin1)
+    # print('mass ',mass,mass1)
+    # print('frequency ',frequency,frequency1)
+    # print('clight ',clight,clight1)
+    # print('gamma ',gamma,gamma1)
+    # print('beta ',beta,beta1)
+    # print('betax_i ',betax_i,betax_i1)
+    # print('betay_i ',betay_i,betay_i1)
+    # print('betaz_i ',betaz_i,betaz_i1)
+    # print('alfax_i ',alfax_i,alfax_i1)
+    # print('alfay_i ',alfay_i,alfay_i1)
+    # print('alfaz_i ',alfaz_i,alfaz_i1)
+    # print('emitx_i ',emitx_i,emitx_i1)
+    # print('emity_i ',emity_i,emity_i1)
+    # print('emitz_i ',emitz_i,emitz_i1)
+    # print('emz ',emz,emz1)
     print "At injection: T= {}[GeV], gamma= {}, beta= {}".format(Tkin, gamma, beta)
 
     #------ emittances normalized - transverse by gamma*beta and long. by gamma**3*beta

@@ -30,7 +30,7 @@ from orbit.lattice import AccNode
 from orbit.utils import orbitFinalize
 
 # DEBUG
-from debugHelpers import caller_name, lineno, DEBUG_ON, DEBUG_OFF, DEXIT
+from acDebugHelpers import caller_name, lineno, DEBUG_ON, DEBUG_OFF, DEXIT
 
 DEBUG_FACTORY = DEBUG_OFF
 
@@ -75,7 +75,8 @@ class AcLinacLatticeFactory():
       # DEBUG_FACTORY(__file__,lineno(),acc_da)
       # DEBUG_FACTORY(__file__,lineno(),acc_da.__dict__)
       lattice = self.getLinacAccLatticeFromDA(names,acc_da)
-      return lattice
+      return (lattice,acc_da)
+
    def getLinacAccLatticeFromDA(self,names,acc_da):
       """
       Returns the linac accelerator lattice for specified sequence names.
