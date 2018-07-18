@@ -1,31 +1,25 @@
 HOST=`uname -s`
 if [ $HOST = 'Darwin' ]
 then
+    echo -n "on $HOST"
     export  pyALCELI_ROOT=~/Desktop/pyAlceli
     export  SIMULINAC_ROOT=~/Desktop/SIMULINAC
     export  pyORBIT_ROOT=~/Desktop/pyOrbit
-#    echo "on $HOST with: $SIMULINAC_ROOT $pyORBIT_ROOT $pyALCELI_ROOT"
+    echo " with: $SIMULINAC_ROOT $pyORBIT_ROOT $pyALCELI_ROOT"
     echo "on $HOST"
 
     export PYTHONPATH=$SIMULINAC_ROOT:$PYTHONPATH
-
     source $pyORBIT_ROOT/customEnvironment.sh 1>/dev/null
 
 elif [ $HOST = 'Linux' ]
 then
-    echo "on $HOST"
+    echo -n "on $HOST"
     export  pyALCELI_ROOT=~/pyAlceli
     export  SIMULINAC_ROOT=~/SIMULINAC
     export  pyORBIT_ROOT=~/pyOrbit
-    echo $HOST $SIMULINAC_ROOT $pyORBIT_ROOT $pyALCELI_ROOT
+    echo " with: $SIMULINAC_ROOT $pyORBIT_ROOT $pyALCELI_ROOT"
 
     export PYTHONPATH=$SIMULINAC_ROOT:$PYTHONPATH
-
-    if [ -a $pyORBIT_ROOT/activate ]
-    then
-    source $pyORBIT_ROOT/activate
-    else
     source $pyORBIT_ROOT/setupEnvironment.sh
-    fi
 fi
 ./START.sh acLinac.py 1
