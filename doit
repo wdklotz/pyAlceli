@@ -1,6 +1,4 @@
 #!/bin/bash
-ALCELI_ROOT=`pwd`
-cd $ALCELI_ROOT
 echo "running acLinac.py - wait"
 ./trackit
 echo "plotting results - wait"
