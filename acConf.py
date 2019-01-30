@@ -8,11 +8,12 @@ CONF = {
     'result_filename'         : 'result.dat',
     'bunchOut_filename'       : 'bunchf.dat'   ,
     'bunchIn_filename'        : 'bunchi.dat',
-    'title'                   : 'ALCELI',
+    'title'                   : 'pyALCELI',
 
     'dumpBunchIN'             : True,
     'dumpBunchOUT'            : True,
-    'twissPlot'               : False,
+#todo: twissplot
+    'twissPlot'               : False,  
 
     # display limits
     'ingnore_limits'          : False,

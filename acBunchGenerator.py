@@ -112,7 +112,7 @@ class AcLinacBunchGenerator:
 		nParticlesGlobal = bunch.getSizeGlobal()       #[macro-particles]
 		DEBUG_BUNCH(__file__,lineno(), 'nParticlesGlobal[macro-particles]= {}'.format(nParticlesGlobal))
 		bunch.macroSize(macrosize/nParticlesGlobal)    # [particles/macro-particle]
-		DEBUG_ON(__file__,lineno(), 'bunch.macrosize[particles/macro-particle]= {}'.format(bunch.macroSize()))
+		DEBUG_BUNCH(__file__,lineno(), 'bunch.macrosize[particles/macro-particle]= {}'.format(bunch.macroSize()))
 		return bunch
 	
 

@@ -74,7 +74,7 @@ def dumpBunch(bunch,fileName):
     '% placeholer --> BUNCH_ATTRIBUTE_DOUBLE charge',
     '% placeholer --> BUNCH_ATTRIBUTE_DOUBLE classical_radius',
     '% placeholer --> BUNCH_ATTRIBUTE_DOUBLE macro_size',
-    '% placeholer --> BUNCH_ATTRIBUTE_DOUBLE mass',
+    '% placeholer --> BUNCH_ATTRIBUTE_DOUBLE m0c2',
     '% placeholer --> SYNC_PART_COORDS x, y, z positions in [m]',
     '% placeholer --> SYNC_PART_MOMENTUM px, py, pz momentum component in GeV/c',
     '% placeholer --> SYNC_PART_X_AXIS x-axis ort coordinates',
@@ -118,7 +118,7 @@ def main():
     random.seed(100)
 
     # section list
-    names = ["HE"]
+    names = ["S25to200"]
 
     #---- the XML input file name with the linac structure
     xml_file_name = simulinacRoot+"/lattice.xml"
@@ -161,90 +161,42 @@ def main():
     DEBUG_MAIN(__file__,lineno(),params_da.getAttributes())
 
     # twiss parameters at the entrance
-    # transverse emittances are unnormalized and in pi*mm*mrad
-    # longitudinal emittance is in pi*eV*sec
     Tkin      = params_da.doubleValue('injection_energy')*1.e-3  # in [GeV]
-    mass      = params_da.doubleValue('proton_mass')*1.e-3       # in [GeV]
+    m0c2      = params_da.doubleValue('proton_mass')*1.e-3       # in [GeV]
     frequency = params_da.doubleValue('frequenz')                # in [Hz]
-    clight    = params_da.doubleValue('lichtgeschwindigkeit')    # in [m/sec]
-    gamma     = (mass + Tkin)/mass
+    clight    = params_da.doubleValue('clight')                  # in [m/sec]
+    lamb      = clight/frequency                                 # in [m]
+    gamma     = (m0c2 + Tkin)/m0c2
     beta      = math.sqrt(gamma**2 - 1.0)/gamma
     betax_i   = params_da.doubleValue('betax_i')    # [m]
     betay_i   = params_da.doubleValue('betay_i')    # [m]
-    betaz_i   = params_da.doubleValue('betaz_i')    # [m]
+    betaz_i   = params_da.doubleValue('betaz_i')    # [m/rad]
     alfax_i   = params_da.doubleValue('alfax_i')    # []
     alfay_i   = params_da.doubleValue('alfay_i')    # []
     alfaz_i   = params_da.doubleValue('alfaz_i')    # []
-    emitx_i   = params_da.doubleValue('emitx_i')*(gamma*beta)     # [m*rad]
-    emity_i   = params_da.doubleValue('emity_i')*(gamma*beta)     # [m*rad]
-    emitz_i   = params_da.doubleValue('emitz_i')*(gamma**3*beta)  # [m*rad]
-    # emz = params_da.doubleValue('emitz_i')
+    emitx_i   = params_da.doubleValue('emitx_i')    # [m*rad]
+    emity_i   = params_da.doubleValue('emity_i')    # [m*rad]
+    emitz_i   = params_da.doubleValue('emitz_i')    # [m*rad]
 
-    # Tkin1       = PARAMS['injection_energy']*1.e-3  # in [GeV]
-    # mass1       = PARAMS['proton_mass']*1.e-3       # in [GeV]
-    # frequency1  = PARAMS['frequenz']                # in [Hz]
-    # clight1     = PARAMS['lichtgeschwindigkeit']    # in [m/sec]
-    # gamma1      = (mass1 + Tkin1)/mass1
-    # beta1       = math.sqrt(gamma1**2 - 1.0)/gamma1
-    # betax_i1    = PARAMS['betax_i']    # [m]
-    # betay_i1    = PARAMS['betay_i']    # [m]
-    # betaz_i1    = PARAMS['betaz_i']    # [m]
-    # alfax_i1    = PARAMS['alfax_i']    # []
-    # alfay_i1    = PARAMS['alfay_i']    # []
-    # alfaz_i1    = PARAMS['alfaz_i']    # []
-    # emitx_i1    = PARAMS['emitx_i']*(gamma1*beta1)     # [m*rad]
-    # emity_i1    = PARAMS['emity_i']*(gamma1*beta1)     # [m*rad]
-    # emitz_i1    = PARAMS['emitz_i']*(gamma1**3*beta1)  # [m*rad]
-    # emz1 = PARAMS['emitz_i']
-
-    # print('Tkin ',Tkin,Tkin1)
-    # print('mass ',mass,mass1)
-    # print('frequency ',frequency,frequency1)
-    # print('clight ',clight,clight1)
-    # print('gamma ',gamma,gamma1)
-    # print('beta ',beta,beta1)
-    # print('betax_i ',betax_i,betax_i1)
-    # print('betay_i ',betay_i,betay_i1)
-    # print('betaz_i ',betaz_i,betaz_i1)
-    # print('alfax_i ',alfax_i,alfax_i1)
-    # print('alfay_i ',alfay_i,alfay_i1)
-    # print('alfaz_i ',alfaz_i,alfaz_i1)
-    # print('emitx_i ',emitx_i,emitx_i1)
-    # print('emity_i ',emity_i,emity_i1)
-    # print('emitz_i ',emitz_i,emitz_i1)
-    # print('emz ',emz,emz1)
     print "At injection: T= {}[GeV], gamma= {}, beta= {}".format(Tkin, gamma, beta)
 
-    #------ emittances normalized - transverse by gamma*beta and long. by gamma**3*beta
-    (alphaX,betaX,emittX) = (alfax_i, betax_i, emitx_i)
-    (alphaY,betaY,emittY) = (alfay_i, betay_i, emity_i)
-    (alphaZ,betaZ,emittZ) = (alfaz_i, betaz_i, emitz_i)
-
-    alphaZ = - alphaZ
-    
-    #---make emittances un-normalized XAL units [m*rad]
-    emittX = emittX/(gamma*beta)
-    emittY = emittY/(gamma*beta)
-    emittZ = emittZ/(gamma**3*beta)
     print " ========= Twiss parameters at injection ==========="
-    print " aplha beta emitt[mm*mrad] X= %6.4f %6.4f %6.4f "%(alphaX,betaX,emittX*1.0e+6)
-    print " aplha beta emitt[mm*mrad] Y= %6.4f %6.4f %6.4f "%(alphaY,betaY,emittY*1.0e+6)
-    print " aplha beta emitt[mm*mrad] Z= %6.4f %6.4f %6.4f "%(alphaZ,betaZ,emittZ*1.0e+6)
+    print " aplha beta emitt[mm*mrad] X= %6.4f %6.4f %6.4f "%(alfax_i,betax_i,emitx_i*1.0e+6)
+    print " aplha beta emitt[mm*mrad] Y= %6.4f %6.4f %6.4f "%(alfay_i,betay_i,emity_i*1.0e+6)
+    print " aplha beta emitt[mm*mrad] Z= %6.4f %6.4f %6.4f "%(alfaz_i,betaz_i,emitz_i*1.0e+6)
 
-    #---- long. size in [mm]
-    sizeZ = math.sqrt(emittZ*betaZ)*1.0e+3
     #---- transform to pyORBIT emittance[GeV*m]
-    emittZ = emittZ*gamma**3*beta**2*mass
-    betaZ  = betaZ/(gamma**3*beta**2*mass)
+    emittZ = m0c2*gamma*beta**2*emitz_i        # [GeV*m]
+    betaZ  = betaz_i*gamma/(gamma**2-1)/m0c2   # [m/GeV]
 
     print " ========= PyORBIT parameters at injection ==========="
-    print " aplha beta emitt[mm*mrad] X= %6.4f %6.4f %6.4f "%(alphaX,betaX,emittX*1.0e+6)
-    print " aplha beta emitt[mm*mrad] Y= %6.4f %6.4f %6.4f "%(alphaY,betaY,emittY*1.0e+6)
-    print " aplha beta emitt[mm*MeV]  Z= %6.4f %6.4f %6.4f "%(alphaZ,betaZ,emittZ*1.0e+6)
+    print " aplha beta emitt[mm*mrad] X= %6.4f %6.4f %6.4f "%(alfax_i,betax_i,emitx_i*1.0e+6)
+    print " aplha beta emitt[mm*mrad] Y= %6.4f %6.4f %6.4f "%(alfay_i,betay_i,emity_i*1.0e+6)
+    print " aplha beta emitt[mm*MeV]  Z= %6.4f %6.4f %6.4f "%(alfaz_i,betaZ,emittZ*1.0e+6)
 
-    twissX = TwissContainer(alphaX,betaX,emittX)
-    twissY = TwissContainer(alphaY,betaY,emittY)
-    twissZ = TwissContainer(alphaZ,betaZ,emittZ)
+    twissX = TwissContainer(alfax_i,betax_i,emitx_i)
+    twissY = TwissContainer(alfay_i,betay_i,emity_i)
+    twissZ = TwissContainer(alfaz_i,betaZ,emittZ)
 
     # BUNCH generation
     print "-> Start Bunch Generation"
@@ -270,7 +222,7 @@ def main():
 
     # BUNCH tracking preparation
     accLattice.setLinacTracker(switch=False)    # use TeapotBase (TPB) tracking
-    paramsDict = {"old_pos":-1.,"count":0,"pos_step":0.1,'m0c2':mass}
+    paramsDict = {"old_pos":-1.,"count":0,"pos_step":0.1,'m0c2':m0c2}
     last_node_index = len(accLattice.getNodes())-1
     nodes           = accLattice.getNodes()[:last_node_index-1]
     last_node       = accLattice.getNodes()[last_node_index]

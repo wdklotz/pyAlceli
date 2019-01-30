@@ -149,7 +149,7 @@ def display2(bunch,whazit):
       py.append(py0)
       z.append(z0)
       pz.append(pz0)
-   print '{} table entries with NaN and {}/{} with coordinates off-limits'.format(count_NaNs,count_out_limits,len(bunch))
+   print '{} NaN, {}/{} off-limits/total'.format(count_NaNs,count_out_limits,len(bunch))
 
    width= 9.;   height = 8.
    fig = plt.figure(CONF['title']+", scatter plots@"+whazit,figsize=(width,height))
@@ -160,7 +160,7 @@ def display2(bunch,whazit):
    ax3 = plt.subplot(223)
    make_scatter(ax3,x,y,'x,y')       #x,y
    ax4 = plt.subplot(224)
-   make_scatter(ax4,z,pz,'z,pz')     #z,pz
+   make_scatter(ax4,z,pz,'z,dp/p')   #z,pz
 
 def main():
    if CONF['twissPlot']:
@@ -178,7 +178,7 @@ def main():
                line = line.split(' ')
                kovector = [float(line[i]) for i in range(len(line)-1)]
                bunch_in.append(kovector)
-      display2(bunch_in,'ENTRANCE')
+      display2(bunch_in,'IN')
 
    if CONF['dumpBunchOUT']:
       bunch_out=[]
@@ -190,7 +190,7 @@ def main():
                line = line.split(' ')
                kovector = [float(line[i]) for i in range(len(line)-1)]
                bunch_out.append(kovector)
-      display2(bunch_out,'EXIT')
+      display2(bunch_out,'OUT')
 
    plt.show()
 

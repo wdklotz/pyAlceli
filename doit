@@ -1,7 +1,5 @@
 #!/bin/bash
-ALCELI_ROOT=$HOME/Desktop/pyAlceli
-cd $ALCELI_ROOT
-#echo "running acLinac - wait"
+echo "running acLinac.py - wait"
 ./trackit
 echo "plotting results - wait"
 ./plotit
