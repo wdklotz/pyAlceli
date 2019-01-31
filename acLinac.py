@@ -190,7 +190,7 @@ def main():
     print " ========= Twiss parameters at injection ==========="
     print " aplha beta emitt[mm*mrad] X= %6.3g %6.3g %6.3g "%(alfax_i,betax_i,emitx_i*1.0e+6)
     print " aplha beta emitt[mm*mrad] Y= %6.3g %6.3g %6.3g "%(alfay_i,betay_i,emity_i*1.0e+6)
-    print " aplha beta emitt[mm*rad]  Z= %6.3g %6.3g %6.3g "%(alfaz_i,betaz_i,emitz_i*1.0e+3)
+    print " aplha beta emitt[mm*mrad] Z= %6.3g %6.3g %6.3g "%(alfaz_i,betaz_i,emitz_i*1.0e+6)
 
     #-----TWISS Parameters at the entrance of MEBT ---------------
     #-----transverse emittances are unnormalized and in [pi*mm*mrad]
@@ -199,6 +199,7 @@ def main():
     #---- transform to pyORBIT (apparently {z-DW} phase space)
     emitzW  = m0c2*gamma*beta**2*emitz_i*1.e-3        # [m*GeV]
     betazW  = 1./(m0c2*gamma*beta**2)*betaz_i*1.e+3   # [m/GeV]
+    Tkin    = tkin*1.e-3                              # [GeV]      
     
     print " ========= PyORBIT parameters at injection ==========="
     print " aplha beta[mm/mrad] emitt[mm*mrad] X= %6.3g %6.3g %6.3g "%(alfax_i,betax_i,emitx_i*1.0e+6)
@@ -216,7 +217,7 @@ def main():
     paramsDict = {'BunchGenerator': bunch_gen}
     #----------------------------------------
     # set the initial kinetic energy in [GeV]
-    bunch_gen.setKinEnergy(tkin*1.e-3)
+    bunch_gen.setKinEnergy(Tkin)
     #----------------------------------------
     #set the beam peak current in mA
     # bunch_gen.setBeamCurrent(PARAMS['elementarladung']*PARAMS['frequenz']*1.e3)   # 1 e-charge per bunch
