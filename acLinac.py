@@ -114,6 +114,11 @@ def action_exit(paramsDict):
         DEBUG_MAIN(__file__,lineno(),'exit action at node: {} --> tkin[MeV] {}'.format(node.getName(),Tkfin))
     
 
+#todo: use WConverter
+#todo: strukturieren - zu viel sphargetti code!
+#todo: use AxisField models
+#todo: make twiss plots
+#todo: read parameter from simu.py instead from xml-input
 def main():
     random.seed(100)
 
@@ -191,7 +196,7 @@ def main():
     #-----transverse emittances are unnormalized and in [pi*mm*mrad]
     #-----longitudinal emittance is in [pi*m*GeV]
 
-    #---- transform to pyORBIT
+    #---- transform to pyORBIT (apparently {z-DW} phase space)
     emitzW  = m0c2*gamma*beta**2*emitz_i*1.e-3        # [m*GeV]
     betazW  = 1./(m0c2*gamma*beta**2)*betaz_i*1.e+3   # [m/GeV]
     
@@ -207,7 +212,7 @@ def main():
 
     # BUNCH generation
     print "-> Start Bunch Generation"
-    bunch_gen  = AcLinacBunchGenerator(twissX,twissY,twissZ,frequency=PARAMS['frequenz'])
+    bunch_gen  = AcLinacBunchGenerator(twissX,twissY,twissZ,frequency=frequency)
     paramsDict = {'BunchGenerator': bunch_gen}
     #----------------------------------------
     # set the initial kinetic energy in [GeV]
@@ -244,7 +249,7 @@ def main():
     # all but last node
     for node in nodes:
         node.trackBunch(bunch, paramsDict=paramsDict)
-    # last node acctoin
+    # last node action
     actionsContainer = AccActionsContainer("Bunch Tracking")
     actionsContainer.addAction(action_exit, AccActionsContainer.EXIT)    
     last_node.trackBunch(bunch, paramsDict=paramsDict, actionContainer=actionsContainer)

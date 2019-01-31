@@ -1,5 +1,3 @@
 #!/bin/bash
-echo "running acLinac.py - wait"
 ./trackit
-echo "plotting results - wait"
 ./plotit
