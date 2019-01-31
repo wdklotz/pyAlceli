@@ -40,7 +40,7 @@ from acBunchGenerator import AcLinacBunchGenerator
 from acLatticeFactory import AcLinacLatticeFactory
 from acConf  import CONF
 # import from SIMULINAC
-from setutil import PARAMS
+from setutil import PARAMS,WConverter
 
 # DEBUG
 from acDebugHelpers import caller_name, lineno, DEBUG_ON, DEBUG_OFF, DEXIT
@@ -105,13 +105,13 @@ def action_exit(paramsDict):
     beta  = bunch.getSyncParticle().beta()
     node  = paramsDict["node"]
     m0c2  = paramsDict['m0c2']
-    Tkfin = m0c2*(gamma-1.)*1.e3
+    Tkfin = m0c2*(gamma-1.)   # m0c2 in [MeV]
     if isinstance(node, FringeField):
         DEBUG_MAIN(__file__,lineno(),'exit action at node: {} --> usage: {}'.format(node.getName(),node.getUsage()))
     elif isinstance(node,TiltElement):
         DEBUG_MAIN(__file__,lineno(),'exit action at node: {} --> tilt angle: {}'.format(node.getName(),node.getTiltAngle()))
     else:
-        DEBUG_MAIN(__file__,lineno(),'exit action at node: {} --> Tkin[MeV] {}'.format(node.getName(),Tkfin))
+        DEBUG_MAIN(__file__,lineno(),'exit action at node: {} --> tkin[MeV] {}'.format(node.getName(),Tkfin))
     
 
 def main():
@@ -161,12 +161,13 @@ def main():
     DEBUG_MAIN(__file__,lineno(),params_da.getAttributes())
 
     # twiss parameters at the entrance
-    Tkin      = params_da.doubleValue('injection_energy')*1.e-3  # in [GeV]
-    m0c2      = params_da.doubleValue('proton_mass')*1.e-3       # in [GeV]
+    tkin      = params_da.doubleValue('injection_energy')        # in [MeV]
+    m0c2      = params_da.doubleValue('proton_mass')             # in [MeV]
     frequency = params_da.doubleValue('frequenz')                # in [Hz]
     clight    = params_da.doubleValue('clight')                  # in [m/sec]
     lamb      = clight/frequency                                 # in [m]
-    gamma     = (m0c2 + Tkin)/m0c2
+    gamma     = (m0c2 + tkin)/m0c2
+    pi        = math.pi
     beta      = math.sqrt(gamma**2 - 1.0)/gamma
     betax_i   = params_da.doubleValue('betax_i')    # [m]
     betay_i   = params_da.doubleValue('betay_i')    # [m]
@@ -177,33 +178,41 @@ def main():
     emitx_i   = params_da.doubleValue('emitx_i')    # [m*rad]
     emity_i   = params_da.doubleValue('emity_i')    # [m*rad]
     emitz_i   = params_da.doubleValue('emitz_i')    # [m*rad]
-
-    print "At injection: T= {}[GeV], gamma= {}, beta= {}".format(Tkin, gamma, beta)
+    emitw_i   = params_da.doubleValue('emitw_i')    # [rad]
+    
+    print "At injection: T= {}[GeV], gamma= {}, beta= {}".format(tkin, gamma, beta)
 
     print " ========= Twiss parameters at injection ==========="
-    print " aplha beta emitt[mm*mrad] X= %6.4f %6.4f %6.4f "%(alfax_i,betax_i,emitx_i*1.0e+6)
-    print " aplha beta emitt[mm*mrad] Y= %6.4f %6.4f %6.4f "%(alfay_i,betay_i,emity_i*1.0e+6)
-    print " aplha beta emitt[mm*mrad] Z= %6.4f %6.4f %6.4f "%(alfaz_i,betaz_i,emitz_i*1.0e+6)
+    print " aplha beta emitt[mm*mrad] X= %6.3g %6.3g %6.3g "%(alfax_i,betax_i,emitx_i*1.0e+6)
+    print " aplha beta emitt[mm*mrad] Y= %6.3g %6.3g %6.3g "%(alfay_i,betay_i,emity_i*1.0e+6)
+    print " aplha beta emitt[mm*rad]  Z= %6.3g %6.3g %6.3g "%(alfaz_i,betaz_i,emitz_i*1.0e+3)
 
-    #---- transform to pyORBIT emittance[GeV*m]
-    emittZ = m0c2*gamma*beta**2*emitz_i        # [GeV*m]
-    betaZ  = betaz_i*gamma/(gamma**2-1)/m0c2   # [m/GeV]
+    #-----TWISS Parameters at the entrance of MEBT ---------------
+    #-----transverse emittances are unnormalized and in [pi*mm*mrad]
+    #-----longitudinal emittance is in [pi*m*GeV]
 
+    #---- transform to pyORBIT
+    emitzW  = m0c2*gamma*beta**2*emitz_i*1.e-3        # [m*GeV]
+    betazW  = 1./(m0c2*gamma*beta**2)*betaz_i*1.e+3   # [m/GeV]
+    
     print " ========= PyORBIT parameters at injection ==========="
-    print " aplha beta emitt[mm*mrad] X= %6.4f %6.4f %6.4f "%(alfax_i,betax_i,emitx_i*1.0e+6)
-    print " aplha beta emitt[mm*mrad] Y= %6.4f %6.4f %6.4f "%(alfay_i,betay_i,emity_i*1.0e+6)
-    print " aplha beta emitt[mm*MeV]  Z= %6.4f %6.4f %6.4f "%(alfaz_i,betaZ,emittZ*1.0e+6)
+    print " aplha beta[mm/mrad] emitt[mm*mrad] X= %6.3g %6.3g %6.3g "%(alfax_i,betax_i,emitx_i*1.0e+6)
+    print " aplha beta[mm/mrad] emitt[mm*mrad] Y= %6.3g %6.3g %6.3g "%(alfay_i,betay_i,emity_i*1.0e+6)
+    print " aplha beta[m/Gev]   emitt[m*GeV]   Z= %6.3g %6.3g %6.3g "%(alfaz_i,betazW,emitzW)
 
+    #-----longitudinal emittance is in [pi*m*GeV]
     twissX = TwissContainer(alfax_i,betax_i,emitx_i)
     twissY = TwissContainer(alfay_i,betay_i,emity_i)
-    twissZ = TwissContainer(alfaz_i,betaZ,emittZ)
+    twissZ = TwissContainer(alfaz_i,betazW,emitzW)
 
     # BUNCH generation
     print "-> Start Bunch Generation"
     bunch_gen  = AcLinacBunchGenerator(twissX,twissY,twissZ,frequency=PARAMS['frequenz'])
     paramsDict = {'BunchGenerator': bunch_gen}
-    #set the initial kinetic energy in GeV
-    bunch_gen.setKinEnergy(Tkin)
+    #----------------------------------------
+    # set the initial kinetic energy in [GeV]
+    bunch_gen.setKinEnergy(tkin*1.e-3)
+    #----------------------------------------
     #set the beam peak current in mA
     # bunch_gen.setBeamCurrent(PARAMS['elementarladung']*PARAMS['frequenz']*1.e3)   # 1 e-charge per bunch
     bunch_gen.setBeamCurrent(10.)
@@ -235,7 +244,7 @@ def main():
     # all but last node
     for node in nodes:
         node.trackBunch(bunch, paramsDict=paramsDict)
-    # last node
+    # last node acctoin
     actionsContainer = AccActionsContainer("Bunch Tracking")
     actionsContainer.addAction(action_exit, AccActionsContainer.EXIT)    
     last_node.trackBunch(bunch, paramsDict=paramsDict, actionContainer=actionsContainer)

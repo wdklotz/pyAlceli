@@ -135,11 +135,11 @@ def display2(bunch,whazit):
          count_NaNs += 1
          continue
       x0  = bunchItem[0]*1.e3     #[mm]
-      px0 = bunchItem[1]*1.e3     #[mrad]?
+      px0 = bunchItem[1]*1.e3     #[mrad]
       y0  = bunchItem[2]*1.e3     #[mm]
-      py0 = bunchItem[3]*1.e3     #[mrad]?
+      py0 = bunchItem[3]*1.e3     #[mrad]
       z0  = bunchItem[4]*1.e3     #[mm]
-      pz0 = bunchItem[5]*1.e6     #[??]
+      pz0 = bunchItem[5]*1.e3     #[MeV]
       if not CONF['ingnore_limits'] and (CONF['limx'] <= abs(x0) or CONF['limxp'] <= abs(px0) or CONF['limy'] <= abs(y0) or CONF['limyp'] <= abs(py0) or CONF['limz'] <= abs(z0) or CONF['limzp'] <= abs(pz0)):
          count_out_limits += 1
          continue
@@ -154,13 +154,13 @@ def display2(bunch,whazit):
    width= 9.;   height = 8.
    fig = plt.figure(CONF['title']+", scatter plots@"+whazit,figsize=(width,height))
    ax1 = plt.subplot(221)
-   make_scatter(ax1,x,px,'x,px')     #x,px
+   make_scatter(ax1,x,px,'x[mm],px[mrad]')     #x,px
    ax2 = plt.subplot(222)
-   make_scatter(ax2,y,py,'y,py')     #y,py
+   make_scatter(ax2,y,py,'y[mm],py[mrad]')     #y,py
    ax3 = plt.subplot(223)
-   make_scatter(ax3,x,y,'x,y')       #x,y
+   make_scatter(ax3,x,y,'x[mm],y[mm]')         #x,y
    ax4 = plt.subplot(224)
-   make_scatter(ax4,z,pz,'z,dp/p')   #z,pz
+   make_scatter(ax4,z,pz,'z[mm],dW[Mev]')      #z,pz
 
 def main():
    if CONF['twissPlot']:

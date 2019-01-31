@@ -17,10 +17,10 @@ CONF = {
 
     # display limits
     'ingnore_limits'          : False,
-    'limx'                    : 101,
-    'limxp'                   : 101,
-    'limy'                    : 101,
-    'limyp'                   : 101,
-    'limz'                    : 101,
-    'limzp'                   : 50010,
+    'limx'                    : 201,
+    'limxp'                   : 201,
+    'limy'                    : 201,
+    'limyp'                   : 201,
+    'limz'                    : 161,
+    'limzp'                   : 121,
     }
