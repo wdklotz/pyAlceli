@@ -8,7 +8,7 @@ import argparse
 
 parser = argparse.ArgumentParser()
 # group  = parser.add_mutually_exclusive_group()
-parser.add_argument ("--path", default="/home/wdklotz/py-orbit/examples+/SNS_Linac/pyorbit_linac_model", help="path to data source")
+parser.add_argument ("--path", default="/home/wdklotz/pyOrbit/examples+/SNS_Linac/pyorbit_linac_model", help="path to data source")
 parser.add_argument ("--file", default="pyorbit_twiss_sizes_ekin.dat", help="data source file")
 parser.add_argument ("--x", default="position", help="Abscissa (def = position")
 parser.add_argument ("--y1", default="betaX", help="Ordinate (def = betaX")
